@@ -1,3 +1,0 @@
-/home/sszg/CLionProjects/Travel_Recommend_system/cmake-build-debug/CMakeFiles/Travel_Recommend_system.dir
-/home/sszg/CLionProjects/Travel_Recommend_system/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/sszg/CLionProjects/Travel_Recommend_system/cmake-build-debug/CMakeFiles/rebuild_cache.dir
