@@ -14,6 +14,24 @@ public:
     char hour;
     char minute;
     Time(int y,char m,char d,char h,char min){year=y,month=m,day=d,hour=h,minute=min;};
+    int day2int(){//輸入日期，返回在這一年中的第幾天
+        int days[]={31,28,31,30,31,30,31,31,30,31,30,31};
+        if(year%4==0){
+            if(year%400==0)
+                days[1]=29;
+        }
+        else{
+            days[1]=29;
+        }
+        if(month>12||day>days[month-1]){
+            cout<<"date error!"<<endl;
+            return 0;
+        }
+        for(int i=0;i<month-1;i++)
+            sum+=days[i];
+        sum+=day;
+        return sum;
+    };
 };
 
 

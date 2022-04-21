@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Travel_Recommend_system"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Travel_Recommend_system">
+				<Option output="/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Travel_Recommend_system" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Makefile&quot;  VERBOSE=1 Travel_Recommend_system"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Travel_Recommend_system/fast">
+				<Option output="/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Travel_Recommend_system" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Makefile&quot;  VERBOSE=1 Travel_Recommend_system/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/sszg/AirTicket/Travel_Recommend_system/Flight.cpp">
+			<Option target="Travel_Recommend_system"/>
+		</Unit>
+		<Unit filename="/home/sszg/AirTicket/Travel_Recommend_system/Flight.h">
+			<Option target="Travel_Recommend_system"/>
+		</Unit>
+		<Unit filename="/home/sszg/AirTicket/Travel_Recommend_system/FlightAns.cpp">
+			<Option target="Travel_Recommend_system"/>
+		</Unit>
+		<Unit filename="/home/sszg/AirTicket/Travel_Recommend_system/FlightAns.h">
+			<Option target="Travel_Recommend_system"/>
+		</Unit>
+		<Unit filename="/home/sszg/AirTicket/Travel_Recommend_system/FlightRequest.cpp">
+			<Option target="Travel_Recommend_system"/>
+		</Unit>
+		<Unit filename="/home/sszg/AirTicket/Travel_Recommend_system/FlightRequest.h">
+			<Option target="Travel_Recommend_system"/>
+		</Unit>
+		<Unit filename="/home/sszg/AirTicket/Travel_Recommend_system/FlightSet.cpp">
+			<Option target="Travel_Recommend_system"/>
+		</Unit>
+		<Unit filename="/home/sszg/AirTicket/Travel_Recommend_system/FlightSet.h">
+			<Option target="Travel_Recommend_system"/>
+		</Unit>
+		<Unit filename="/home/sszg/AirTicket/Travel_Recommend_system/Net.cpp">
+			<Option target="Travel_Recommend_system"/>
+		</Unit>
+		<Unit filename="/home/sszg/AirTicket/Travel_Recommend_system/Net.h">
+			<Option target="Travel_Recommend_system"/>
+		</Unit>
+		<Unit filename="/home/sszg/AirTicket/Travel_Recommend_system/PriceRule.cpp">
+			<Option target="Travel_Recommend_system"/>
+		</Unit>
+		<Unit filename="/home/sszg/AirTicket/Travel_Recommend_system/PriceRule.h">
+			<Option target="Travel_Recommend_system"/>
+		</Unit>
+		<Unit filename="/home/sszg/AirTicket/Travel_Recommend_system/Recommend_sys.cpp">
+			<Option target="Travel_Recommend_system"/>
+		</Unit>
+		<Unit filename="/home/sszg/AirTicket/Travel_Recommend_system/Recommend_sys.h">
+			<Option target="Travel_Recommend_system"/>
+		</Unit>
+		<Unit filename="/home/sszg/AirTicket/Travel_Recommend_system/RemainingSeat.cpp">
+			<Option target="Travel_Recommend_system"/>
+		</Unit>
+		<Unit filename="/home/sszg/AirTicket/Travel_Recommend_system/RemainingSeat.h">
+			<Option target="Travel_Recommend_system"/>
+		</Unit>
+		<Unit filename="/home/sszg/AirTicket/Travel_Recommend_system/Time.cpp">
+			<Option target="Travel_Recommend_system"/>
+		</Unit>
+		<Unit filename="/home/sszg/AirTicket/Travel_Recommend_system/Time.h">
+			<Option target="Travel_Recommend_system"/>
+		</Unit>
+		<Unit filename="/home/sszg/AirTicket/Travel_Recommend_system/main.cpp">
+			<Option target="Travel_Recommend_system"/>
+		</Unit>
+		<Unit filename="/home/sszg/AirTicket/Travel_Recommend_system/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

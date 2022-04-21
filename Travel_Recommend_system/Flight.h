@@ -7,23 +7,23 @@
 #include <string>
 #include "Time.h"
 using namespace std;
-class Flight{
+class Flight{//一個航班信息
 private:
     string carrier;        //承运人
     string flightNo;       //航班号
-    Time takeOffTime;           //起飞时间
-    Time arrivalTime;           //抵达时间
+    Time takeOffTime;      //起飞时间
+    Time arrivalTime;      //抵达时间
     string sCity;          //起飞城市
     string dCity;          //抵达城市
 
 public:
     //获取航班信息
-    string Return_carrier();
-    string Return_flightNo();
-    string Return_sCity();
-    string Return_dCity();
-    Time Return_takeOffTime();
-    Time Return_arrivalTime();
+    string carrierVal();
+    string flightNoVal();
+    string sCityVal();
+    string dCityVal();
+    Time takeOffTimeVal();
+    Time arrivalTimeVal();
 
 
 

@@ -5,26 +5,26 @@
 #include "Flight.h"
 
 //航班信息
-string Flight::Return_carrier() {
+string Flight::carrierVal() {
     return carrier;
 }
 
-string Flight::Return_flightNo() {
+string Flight::flightNoVal() {
     return flightNo;
 }
 
-string Flight::Return_sCity() {
+string Flight::sCityVal() {
     return sCity;
 }
 
-string Flight::Return_dCity() {
+string Flight::dCityVal() {
     return dCity;
 }
 
-Time Flight::Return_takeOffTime() {
+Time Flight::takeOffTimeVal() {
     return takeOffTime;
 }
 
-Time Flight::Return_arrivalTime() {
+Time Flight::arrivalTimeVal() {
     return arrivalTime;
 }
