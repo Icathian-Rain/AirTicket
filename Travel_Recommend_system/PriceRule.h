@@ -9,8 +9,8 @@
 
 class PriceRule {
 private:
-    int sequenceNo;         //序号
-    std::string carrier;    //承运人
+    int sequenceNo;         //序号，不可重復
+    std::string carrier;    //承运人，不能爲空
     std::string sCity;
     std::string dCity;
     std::string nextCarrier;    //后续衔接的航空公司，可为空
