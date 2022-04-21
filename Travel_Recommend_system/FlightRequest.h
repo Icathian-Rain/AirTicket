@@ -17,6 +17,12 @@ private:
     char passengerNum;      //乘客數目
     char maxAnsNUm;         //最大請求結果數目
 public:
+    //获取信息
     Time timeVal();
+    string Return_sCity();
+    string Return_dCity();
+    vector<string> Return_agency();
+    char Return_passengerNUm();
+    char Return_maxAnsNUm();
 }; 
 #endif //TRAVEL_RECOMMEND_SYSTEM_FLIGHTREQUEST_H

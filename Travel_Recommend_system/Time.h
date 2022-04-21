@@ -4,8 +4,8 @@
 
 #ifndef TRAVEL_RECOMMEND_SYSTEM_TIME_H
 #define TRAVEL_RECOMMEND_SYSTEM_TIME_H
-
-
+#include <iostream>
+using namespace std;
 class Time{             //时间
 public:
     int year;
@@ -27,6 +27,7 @@ public:
             cout<<"date error!"<<endl;
             return 0;
         }
+        int sum = 0;
         for(int i=0;i<month-1;i++)
             sum+=days[i];
         sum+=day;
