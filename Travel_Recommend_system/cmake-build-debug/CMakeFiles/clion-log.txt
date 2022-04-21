@@ -1,6 +1,4 @@
-"D:\SoftWare\CLion 2021.3.4\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" D:\Data\Code\AirTicket\Travel_Recommend_system
-CMake Error at CMakeLists.txt:1 (cmake_minimum_required):
-  CMake 3.22 or higher is required.  You are running version 3.21.1
-
-
--- Configuring incomplete, errors occurred!
+/snap/clion/189/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S /home/sszg/AirTicket/Travel_Recommend_system -B /home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug

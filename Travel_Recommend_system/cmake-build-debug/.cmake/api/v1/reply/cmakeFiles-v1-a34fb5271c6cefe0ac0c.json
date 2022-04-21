@@ -49,6 +49,21 @@
 		{
 			"isCMake" : true,
 			"isExternal" : true,
+			"path" : "/snap/clion/189/bin/cmake/linux/share/cmake-3.22/Modules/CMakeFindCodeBlocks.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/189/bin/cmake/linux/share/cmake-3.22/Modules/CMakeExtraGeneratorDetermineCompilerMacrosAndIncludeDirs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/189/bin/cmake/linux/share/cmake-3.22/Modules/ProcessorCount.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
 			"path" : "/snap/clion/189/bin/cmake/linux/share/cmake-3.22/Modules/CMakeCInformation.cmake"
 		},
 		{
@@ -125,8 +140,8 @@
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "/home/sszg/CLionProjects/Travel_Recommend_system/cmake-build-debug",
-		"source" : "/home/sszg/CLionProjects/Travel_Recommend_system"
+		"build" : "/home/sszg/AirTicket/Travel_Recommend_system/cmake-build-debug",
+		"source" : "/home/sszg/AirTicket/Travel_Recommend_system"
 	},
 	"version" : 
 	{
