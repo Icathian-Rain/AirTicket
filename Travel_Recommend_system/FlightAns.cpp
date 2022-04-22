@@ -5,7 +5,7 @@
 #include "FlightAns.h"
 
 //获取信息
-Flight FlightAns::Return_flight() {
+vector<Flight> FlightAns::Return_flight() {
     return flight;
 }
 
