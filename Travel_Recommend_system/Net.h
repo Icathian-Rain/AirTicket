@@ -8,9 +8,9 @@
 #include "Flight.h"
 #include "FlightAns.h"
 #include "FlightRequest.h"
-#include <string.h>
+#include <string>
 #include <vector>
-
+#include <algorithm>
 extern vector<string> mysplit(string str, string separator);
 
 #define CITYNUM 27
@@ -103,7 +103,7 @@ public:
             }
         }
     }
-    FlightAns request(FlightRequest req);   //單乘客單代理人情況
+    vector<Flight> request(FlightRequest req);   //單乘客單代理人情況
     FlightAns multiAgencyRequest(FlightRequest req);    //多代理人
     FlightAns multiPassengerRequest(FlightRequest req); //多乘客
     void update();

@@ -26,6 +26,7 @@ public:
     string dCityVal();
     Time takeOffTimeVal();
     Time arrivalTimeVal();
+    int Return_price();         //返回票价
     PriceRule rule;         //运价规则
     static bool comparePrice(const Flight &f1, const Flight &f2){       //自定义比较函数、用于sort、set
         return f1.price < f2.price;
