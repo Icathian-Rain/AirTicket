@@ -3,3 +3,5 @@ Travel_Recommend_system/cmake-build-debug/*
 # 忽略clion配置文件
 Travel_Recommend_system/.idea/*
 # 前端ignore位于Travel_Recommend_front/.ignore
+# 忽略.vscode
+.vscode/*
