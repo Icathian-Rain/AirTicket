@@ -12,7 +12,8 @@
 #include <unordered_map>
 #include <set>
 #include <algorithm>
-
+#include "Net.h"
+#include "SameDayFlight.h"
 //城市hash表，为每个城市分配一个索引
 unordered_map<string, int> City_index({{"HRB",0},{"MDG",1},{"NDG",2},{"JMU",3},     //黑龙江
                                        {"CGQ",4},{"YNJ",5},{"JIL",6},{"NBS",7},                            //吉林
@@ -46,10 +47,10 @@ class FlightSet {//所有航班集合
 private:
     Time today;     //今天的日期
     //vector <Flight> flightSet;  //未來所有天的航班按照日期排成數組
-    vector<Flight>flightSet[367][127];   //367x127，对应该年中每一天的航班，以及每一天中以某一城市为起飞城市的航班;
+    vector<Net> flightSet;         //存储所有航班信息
 public:
-    //int getDir(FlightRequest req){return req.timeVal().day2int()-today.day2int();};//獲取待搜索的日期在日期數組中的位置
-    int getDir(FlightRequest req){return req.timeVal().day2int();};//获取日期索引
+    int getDir(FlightRequest req){return req.timeVal().day2int()-today.day2int();};//獲取待搜索的日期在日期數組中的位置
+    void update();      //日期更新时对航班信息更新,pop_front,push_back
     vector <FlightAns> request(vector <FlightRequest> req); //輸入請求向量，獲取每一個請求的日期，分別調用當天航班的信息，最後返回結果向量
     vector <FlightAns> multiAgencyRequest(vector <FlightRequest> req);
     vector <FlightAns> multiPassengerRequest(vector <FlightRequest> req);
