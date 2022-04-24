@@ -6,7 +6,7 @@
                 <!-- 行程方式选择 -->
                 <div>
                     <div class="form-checkboxs" v-for="item in tripType">
-                        <input type="radio" :value="item" name="tripType" />
+                        <input type="radio" :value="item" name="tripType" v-model="selectedType"/>
                         {{ item }}
                     </div>
                 </div>
@@ -45,13 +45,22 @@
                 <div class="flt-box">
                     <!-- 起点 -->
                     <div class="flt-depart">
+                        <span>出发地</span>
+                        <input type="text" class="depart" v-model="depart">
                     </div>
                     <!-- 交换按钮 -->
-                    <div class="switch-button">
+                    <div class="switch-button" @click="exchange">
+                        <img src="/exchangeIcon.svg" alt="">
                     </div>
                     <!-- 终点 -->
                     <div class="flt-arrival">
+                        <span>目的地</span>
+                        <input type="text" class="arrival" v-model="arrival">
                     </div>
+                </div>
+                <div class="date-box">
+                    <span>出发日期</span>
+                    <input type="text" class="date" v-model="date"/>
                 </div>
             </div>
         </form>
@@ -64,16 +73,31 @@ export default {
         return {
             // 行程方式
             tripType: ["单程", "往返", "多程"],
-            seatClass: ["不限舱位", "经济舱", "公务舱位舱"],
+            // 选择的方式
+            selectedType: "",
+            // 座位类型
+            seatClass: ["不限舱位", "经济舱", "公务/头等舱"],
             // 选择的座位类型
             selectedSeat: "不限舱位",
+            // 座位类型选择框是否显示
             menuVisible: false,
+
+            // 出发地
+            depart: "",
+            // 目的地
+            arrival: "",
+
         };
     },
     methods: {
         formSubmit() {
             console.log("form submit");
         },
+        exchange () {
+            let temp = this.depart;
+            this.depart = this.arrival;
+            this.arrival = temp;
+        }
     },
 };
 </script>
@@ -103,7 +127,7 @@ export default {
     background: #fff;
     padding: 10px;
     margin: 0px 600px 0px 600px;
-    border-radius: 5%;
+    border-radius: 6px;
 }
 
 .search-form-top {
@@ -114,6 +138,7 @@ export default {
     flex-direction: row;
     align-items: center;
     /* width: auto; */
+    margin-bottom: 10px;
 }
 .form-checkboxs {
     display: inline-block;
@@ -140,19 +165,21 @@ export default {
 }
 
 .list {
-    width: 120px;
+    width: 130px;
     position: absolute;
     top: 25px;
     left: 840px;
     list-style: none;
     padding: 0px;
-    border: solid 1px;
+    border: solid  #ffffff 1px;
+    z-index: 1;
 }
 .list li {
     padding-bottom: 10px;
     padding: 5px;
     user-select: none;
     cursor: pointer;
+    background-color: #fff;
 }
 
 .list li:hover {
@@ -165,5 +192,121 @@ export default {
     top: 2px;
     padding-right: 3px;
 }
+
+
+.form-line {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+    background-color: #ffffff;
+    height: 64px;
+    width: 960px;
+}
+
+
+.flt-box {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    border-radius: 6px;
+    border: 1px solid #eee;
+    box-shadow: 0 0 12px 0 rgb(0 0 0 / 6%);
+}
+
+.flt-box:hover {
+    box-shadow: 0 0 12px 0 rgb(0 0 0 / 10%);
+}
+
+.flt-depart {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid, #eee;
+}
+
+.flt-depart span {
+    color: #3187f9;
+    font-size: 10px;
+    margin: 10px 0px 3px 10px;
+}
+
+.flt-depart input {
+    margin: 0px 3px 10px 10px;
+    border: none;
+    height: 20px;
+    width: 140px;
+}
+
+
+
+.switch-button {
+    position: relative;
+    border: 1px solid;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    left: -10px;
+    transform: translateX(-50%);
+    top: 15px;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+.switch-button:hover {
+    background-color: #f4f4f4;
+}
+
+.switch-button img {
+    height: 20px;
+    width: 20px;
+    position: relative;
+    left: 5px;
+    top: 5px;
+}
+
+.flt-arrival {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.flt-arrival span {
+    color: #3187f9;
+    font-size: 10px;
+    margin: 10px 0px 4px 10px;
+}
+
+.flt-arrival input {
+    margin: 0px 3px 10px 10px;
+    border: none;
+    height: 20px;
+    width: 140px;
+}
+
+.date-box {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid;
+    border-radius: 6px;
+    width: 300px;
+    border: 1px solid #eee;
+    box-shadow: 0 0 12px 0 rgb(0 0 0 / 6%);
+}
+.date-box:hover {
+    box-shadow: 0 0 12px 0 rgb(0 0 0 / 10%);
+}
+
+.date-box span {
+    color: #3187f9;
+    font-size: 10px;
+    margin: 10px 0px 3px 10px;
+}
+.date-box input{
+    margin: 0px 3px 10px 10px;
+    border: none;
+    height: 20px;
+    width: 250px;
+}
+
 </style>
 
