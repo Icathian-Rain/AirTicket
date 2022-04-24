@@ -9,11 +9,10 @@ using namespace std;
 class Time{             //时间
 public:
     int year;
-    char month;             //why?
+    char month;             
     char day;
     char hour;
     char minute;
-    Time(int y,char m,char d,char h,char min){year=y,month=m,day=d,hour=h,minute=min;};
     int day2int(){//輸入日期，返回在這一年中的第幾天
         int days[]={31,28,31,30,31,30,31,31,30,31,30,31};
         if(year%4==0){          //闰年
@@ -29,6 +28,9 @@ public:
             sum+=days[i];
         sum+=day;
         return sum;
+    };
+    void showTime(){
+        cout<<year<<"-"<<int(month)<<"-"<<int(day)<<" "<<int(hour)<<":"<<int(minute)<<endl;
     };
 };
 

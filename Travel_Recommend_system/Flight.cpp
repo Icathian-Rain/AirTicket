@@ -5,7 +5,7 @@
 #include "Flight.h"
 
 //航班信息
-string Flight::carrierVal() {
+vector <string> Flight::carrierVal() {
     return carrier;
 }
 
