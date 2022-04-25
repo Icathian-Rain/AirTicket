@@ -32,7 +32,7 @@ yarn build
 yarn preview
 ```
 
-添加了Element-Plus组件，已设置自动打入，可直接使用，运行前请执行yarn更新
+添加了Element-Plus组件，全局引入，运行前请执行yarn更新
 使用方法见官方文档
 https://element-plus.gitee.io/zh-CN/
 
