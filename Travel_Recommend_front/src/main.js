@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+// 导入路由
 import router from './router'
 // 导入全局样式
 import './assets/css/global.css'

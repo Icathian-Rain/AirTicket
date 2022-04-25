@@ -9,6 +9,18 @@
 
 路由使用 vue-router
 
+
+
+# 信息：
+    组件位于./src/components/内
+    assets 位于./src/assets
+    路由管理位于 ./src/router/index.js
+    
+
+
+
+
+
 开发环境下使用
 ```bash
 # 安装依赖包

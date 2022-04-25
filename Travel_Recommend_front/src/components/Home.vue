@@ -6,7 +6,12 @@
                 <!-- 行程方式选择 -->
                 <div>
                     <div class="form-checkboxs" v-for="item in tripType">
-                        <input type="radio" :value="item" name="tripType" v-model="selectedType"/>
+                        <input
+                            type="radio"
+                            :value="item"
+                            name="tripType"
+                            v-model="selectedType"
+                        />
                         {{ item }}
                     </div>
                 </div>
@@ -46,21 +51,26 @@
                     <!-- 起点 -->
                     <div class="flt-depart">
                         <span>出发地</span>
-                        <input type="text" class="depart" v-model="depart">
+                        <input type="text" class="depart" v-model="depart" />
                     </div>
                     <!-- 交换按钮 -->
                     <div class="switch-button" @click="exchange">
-                        <img src="/exchangeIcon.svg" alt="">
+                        <img src="/exchangeIcon.svg" alt="" />
                     </div>
                     <!-- 终点 -->
                     <div class="flt-arrival">
                         <span>目的地</span>
-                        <input type="text" class="arrival" v-model="arrival">
+                        <input type="text" class="arrival" v-model="arrival" />
                     </div>
                 </div>
                 <div class="date-box">
                     <span>出发日期</span>
-                    <input type="text" class="date" v-model="date"/>
+                    <el-date-picker
+                        v-model="departTime"
+                        type="date"
+                        placeholder="Pick a day"
+                        class="date-picker"
+                    />
                 </div>
             </div>
         </form>
@@ -70,7 +80,7 @@
 <script >
 export default {
     data() {
-        return {
+        return { 
             // 行程方式
             tripType: ["单程", "往返", "多程"],
             // 选择的方式
@@ -81,23 +91,23 @@ export default {
             selectedSeat: "不限舱位",
             // 座位类型选择框是否显示
             menuVisible: false,
-
             // 出发地
             depart: "",
             // 目的地
             arrival: "",
-
+            // 出发时间
+            departTime: "",
         };
     },
     methods: {
         formSubmit() {
             console.log("form submit");
         },
-        exchange () {
+        exchange() {
             let temp = this.depart;
             this.depart = this.arrival;
             this.arrival = temp;
-        }
+        },
     },
 };
 </script>
@@ -171,7 +181,7 @@ export default {
     left: 840px;
     list-style: none;
     padding: 0px;
-    border: solid  #ffffff 1px;
+    border: solid #ffffff 1px;
     z-index: 1;
 }
 .list li {
@@ -193,7 +203,6 @@ export default {
     padding-right: 3px;
 }
 
-
 .form-line {
     display: flex;
     flex-direction: row;
@@ -203,7 +212,6 @@ export default {
     height: 64px;
     width: 960px;
 }
-
 
 .flt-box {
     display: flex;
@@ -237,8 +245,6 @@ export default {
     width: 140px;
 }
 
-
-
 .switch-button {
     position: relative;
     border: 1px solid;
@@ -267,7 +273,6 @@ export default {
 .flt-arrival {
     display: flex;
     flex-direction: column;
-    
 }
 
 .flt-arrival span {
@@ -301,12 +306,11 @@ export default {
     font-size: 10px;
     margin: 10px 0px 3px 10px;
 }
-.date-box input{
-    margin: 0px 3px 10px 10px;
-    border: none;
-    height: 20px;
-    width: 250px;
+
+.date-picker {
+    margin-left: 10px;
 }
+
 
 </style>
 
