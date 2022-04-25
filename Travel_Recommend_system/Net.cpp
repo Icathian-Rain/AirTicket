@@ -42,7 +42,8 @@ vector<Flight> Net::request(FlightRequest req){
         //满足,存入res
         res.push_back(matrix[s][d][i]);
     }
-    sort(res.begin(),res.end(),Flight::comparePrice);       //按照票价升序排序
+    //sort(res.begin(),res.end(),Flight::comparePrice);       //按照票价升序排序
+    //不进行排序，节省一些时间
     return res;
 }
 
