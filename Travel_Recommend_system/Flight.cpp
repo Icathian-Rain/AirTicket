@@ -28,3 +28,7 @@ Time Flight::takeOffTimeVal() {
 Time Flight::arrivalTimeVal() {
     return arrivalTime;
 }
+
+int Flight::Return_price() {
+    return price;
+}
