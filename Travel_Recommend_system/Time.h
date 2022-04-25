@@ -40,13 +40,30 @@ public:
         return true;
     };
     static bool connect_ok(Time t1, Time t2){             //判断t1->t2是否满足大于120分钟的衔接要求
-        //t1,t2首先已经是同一天的了
+        //t1,t2首先已经是同一天的了，是否还需要二次验证?
         if(t2.hour - t1.hour < 2) return false;
         else if(t2.hour - t1.hour == 2) {
             if (t2.minute > t1.minute) return false;
             else return true;
         }
-    }
+    };
+    static bool compare_Time(Time t1, Time t2){             //判断t1>t2,  用于按照时间降序排序
+        bool ok = false;
+        if(t1.year > t2.year) ok= true;
+        else if(t1.year == t2.year){
+            if(t1.month > t2.month) ok= true;
+            else if(t1.month == t2.month){
+                if(t1.day > t2.day) ok= true;
+                else if (t1.day == t2.day){
+                    if(t1.hour > t2.hour) ok= true;
+                    else if(t1.hour == t2.hour){
+                        if(t1.minute > t2.minute) ok= true;
+                    }
+                }
+            }
+        }
+        return ok;
+    };
 };
 
 

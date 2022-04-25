@@ -29,24 +29,32 @@ vector<FlightAns> FlightSet::request(vector<FlightRequest> req) {
         //都存入类型SameDayFlight的二维数组中，对于同一天的进行合并
         if (flag) {   //如果与上一段在同一天，则进行组合
             int index = allowed_combinations.size() - 1;     //定位上一组
+            //按照抵达时间升序排序
+            sort(allowed_combinations[index].begin(),allowed_combinations[index].end(),SameDayFlight::compare_arriveTime);
+            //对当前航段按照起飞时间降序排序
+            sort(tmp[i].begin(),tmp[i].end(),Flight::compare_takeOffTime);
+            int sign = tmp[i].size();       //标记
             vector<SameDayFlight> newSection;
             for (int j = 0; j < allowed_combinations[index].size(); j++) {
-                for (int k = 0; k < tmp[i].size(); k++) {
+                for (int k = 0; k < sign; k++) {
                     if (Time::connect_ok(allowed_combinations[index][j].arriveTime, tmp[i][k].takeOffTimeVal())) {
                         //如果满足衔接要求
                         SameDayFlight element = allowed_combinations[index][j];     //copy
                         element.push_back(tmp[i][k]);
                         newSection.push_back(element);
                     }
+                    else{//剪枝
+                        sign = k;
+                        break;
+                    }
+                    if(sign == 0) break;
                 }
             }
-            sort(newSection.begin(), newSection.end(), SameDayFlight::comparePrice);  //按价格升序排序
-            //sort by price
             //删掉原来的，加入组合之后的
             allowed_combinations.pop_back();
             allowed_combinations.push_back(newSection);
 
-        } else {       //如果不在同一天，直接按照价格升序
+        } else {       //如果不在同一天
             vector<SameDayFlight> section;
             for (int j = 0; j < tmp[i].size(); j++) {
                 SameDayFlight p;
@@ -56,32 +64,8 @@ vector<FlightAns> FlightSet::request(vector<FlightRequest> req) {
             allowed_combinations.push_back(section);
         }
     }
-    //归并排序？得到20个结果
-
-
-        /*string sCity = req[i].Return_sCity();          //起止城市
-        string dCity = req[i].Return_dCity();
-        string agency = req[i].Return_agency()[0];        //代理人
-        int s = City_index[sCity];      //sCity_index起飞city
-        for(int j=0; j < flightSet[d][s].size(); j++)
-        {
-            //dCity
-            if(dCity != flightSet[d][s][j].dCityVal()) continue;
-            //余座暂时略
-            //agency
-            vector<string> agc = flightSet[d][s][j].rule.Return_agency();
-            bool ok = false;
-            for(int k=0; k < agc.size(); k++)
-            {
-                if(agency == agc[k]){
-                    ok = true;
-                    break;
-                }
-            }
-            if(!ok) continue;
-            //insert
-            tmp[i].push_back(flightSet[d][s][j]);
-        }*/
-        //sort(tmp[i].begin(), tmp[i].end(), Flight::comparePrice);       //快排，按照票价升序
+    //对每一段SameDayFlight的结果按照票价排序
+    for(int i = 0; i < allowed_combinations.size(); i++) sort(allowed_combinations[i].begin(),allowed_combinations[i].end(),SameDayFlight::comparePrice);
+    //得到20个low_price结果
 
 }
