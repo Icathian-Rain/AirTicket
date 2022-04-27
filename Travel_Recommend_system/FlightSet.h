@@ -14,6 +14,7 @@
 #include <algorithm>
 #include "Net.h"
 #include "SameDayFlight.h"
+#include <queue>
 //城市hash表，为每个城市分配一个索引
 unordered_map<string, int> City_index({{"HRB",0},{"MDG",1},{"NDG",2},{"JMU",3},     //黑龙江
                                        {"CGQ",4},{"YNJ",5},{"JIL",6},{"NBS",7},                            //吉林
