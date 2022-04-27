@@ -29,7 +29,7 @@ private:
         return -1;
     }
 public:
-    void initNet(vector<string> cityName, string t){
+    void initNet(vector<string> cityName, string t){            //初始化
         vexnum = cityName.size();
         for (int i = 0;i < vexnum;i++) {
             vertex[i] = cityName[i];

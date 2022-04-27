@@ -15,7 +15,7 @@ private:
     string dCity;
     char seatF;         //头等舱座位数量，0:无座，9:9坐，A：10座以上
     char seatC;         //商务舱
-    char seatY;         //经济cang
+    char seatY;         //经济舱
 
 public:
     //余座信息

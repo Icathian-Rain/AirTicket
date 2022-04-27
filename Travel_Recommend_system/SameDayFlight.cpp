@@ -12,3 +12,12 @@ bool SameDayFlight::push_back(Flight f) {       //航班合并
     totalPrice += f.Return_price();
     return true;
 }
+
+//返回航班信息
+vector<Flight> SameDayFlight::Return_all_flight() {
+    return sd_flight;
+}
+//返回当前总票价
+int SameDayFlight::Return_totalPrice() {
+    return totalPrice;
+}

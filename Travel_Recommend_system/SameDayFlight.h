@@ -25,6 +25,9 @@ public:
         if(t1.hour < t2.hour || (t1.hour == t2.hour)&& (t1.minute < t2.minute)) return true;
         return false;
     }
+
+    vector<Flight> Return_all_flight();//返回航班信息
+    int Return_totalPrice();        //返回当前总票价
 };
 
 
