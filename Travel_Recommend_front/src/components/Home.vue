@@ -5,15 +5,11 @@
             <div class="search-form-top">
                 <!-- 行程方式选择 -->
                 <div>
-                    <div class="form-checkboxs" v-for="item in tripType">
-                        <input
-                            type="radio"
-                            :value="item"
-                            name="tripType"
-                            v-model="selectedType"
-                        />
-                        {{ item }}
-                    </div>
+                    <el-radio-group v-model="selectedType">
+                        <el-radio :label="item" v-for="(item, i) in tripType">{{
+                            item
+                        }}</el-radio>
+                    </el-radio-group>
                 </div>
                 <!-- 座次选择 -->
                 <div class="seatclass">
@@ -51,7 +47,20 @@
                     <!-- 起点 -->
                     <div class="flt-depart">
                         <span>出发地</span>
-                        <input type="text" class="depart" v-model="depart" />
+                        <div class="select-box">
+                            <el-select
+                                v-model="depart"
+                                filterable
+                                placeholder="出发地"
+                            >
+                                <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value"
+                                />
+                            </el-select>
+                        </div>
                     </div>
                     <!-- 交换按钮 -->
                     <div class="switch-button" @click="exchange">
@@ -60,17 +69,31 @@
                     <!-- 终点 -->
                     <div class="flt-arrival">
                         <span>目的地</span>
-                        <input type="text" class="arrival" v-model="arrival" />
+                        <div class="select-box">
+                            <el-select
+                                v-model="arrival"
+                                filterable
+                                placeholder="出发地"
+                            >
+                                <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value"
+                                />
+                            </el-select>
+                        </div>
                     </div>
                 </div>
                 <div class="date-box">
                     <span>出发日期</span>
-                    <el-date-picker
-                        v-model="departTime"
-                        type="date"
-                        placeholder="Pick a day"
-                        class="date-picker"
-                    />
+                    <div class="date-picker">
+                        <el-date-picker
+                            v-model="departTime"
+                            type="date"
+                            placeholder="Pick a day"
+                        />
+                    </div>
                 </div>
             </div>
         </form>
@@ -80,7 +103,7 @@
 <script >
 export default {
     data() {
-        return { 
+        return {
             // 行程方式
             tripType: ["单程", "往返", "多程"],
             // 选择的方式
@@ -97,6 +120,184 @@ export default {
             arrival: "",
             // 出发时间
             departTime: "",
+            options: [
+                {
+                    value: "HRB",
+                    label: "哈尔滨(HRB)",
+                },
+                {
+                    value: "MDG",
+                    label: "牡丹江(MDG)",
+                },
+                {
+                    value: "NDG",
+                    label: "齐齐哈尔(NDG)",
+                },
+                {
+                    value: "JMU",
+                    label: "佳木斯(JMU)",
+                },
+                {
+                    value: "CGQ",
+                    label: "长春(CGQ)",
+                },
+                {
+                    value: "YNJ",
+                    label: "延吉(YNJ)",
+                },
+                {
+                    value: "JIL",
+                    label: "吉林(JIL)",
+                },
+                {
+                    value: "NBS",
+                    label: "白山(NBS)",
+                },
+                {
+                    value: "SHE",
+                    label: "沈阳(SHE)",
+                },
+                {
+                    value: "DDG",
+                    label: "丹东(DDG)",
+                },
+                {
+                    value: "JNZ",
+                    label: "锦州(JNZ)",
+                },
+                {
+                    value: "DLC",
+                    label: "",
+                },
+                {
+                    value: "CHG",
+                    label: "",
+                },
+                {
+                    value: "TNA",
+                    label: "",
+                },
+                {
+                    value: "TNA",
+                    label: "",
+                },
+                {
+                    value: "YNT",
+                    label: "",
+                },
+                {
+                    value: "WEF",
+                    label: "",
+                },
+                {
+                    value: "TAO",
+                    label: "",
+                },
+                {
+                    value: "WEH",
+                    label: "",
+                },
+                {
+                    value: "LYI",
+                    label: "",
+                },
+                {
+                    value: "TNA",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+                {
+                    value: "",
+                    label: "",
+                },
+            ],
         };
     },
     methods: {
@@ -114,54 +315,77 @@ export default {
 
 <style scoped>
 .home {
+    /* 相对定位 */
+    position: relative;
+    top: 30px;
     /* 页面100% */
-    width: 2179px;
+    /* width: 2179px; */
+    width: 100%;
     height: 100%;
     /* 以 flex 形式 */
     display: flex;
     /* 纵向排布 */
-    flex-direction: row;
+    flex-direction: column;
     /* 垂直居中 */
-    align-content: center;
+    align-items: center;
 }
 
+/* 搜索表单 */
 .search-form {
-    /* flex */
+    /* flex布局 */
     display: flex;
+    /* 纵向布局 */
     flex-direction: column;
+    /* 主轴居中对齐 */
     justify-content: center;
-    align-content: center;
+    /* 交叉轴上居中 */
+    align-items: center;
     position: relative;
-    width: 100%;
+    /* 宽度固定 */
+    width: 800px;
+    /* 高度100% */
     height: 100%;
+    /* 背景颜色 */
     background: #fff;
+    /* 边框 */
     padding: 10px;
-    margin: 0px 600px 0px 600px;
+    /* 圆角 */
     border-radius: 6px;
 }
 
 .search-form-top {
+    /* 相对定位 */
     position: relative;
     display: flex;
+    /* 宽度 100% */
+    width: 100%;
+    /* 不换行 */
     flex-wrap: nowrap;
+    /* space-button */
     justify-content: space-between;
+    /* 横向排布 */
     flex-direction: row;
+    /* 垂直居中 */
     align-items: center;
-    /* width: auto; */
+    /* 下margin */
     margin-bottom: 10px;
 }
 .form-checkboxs {
+    /* 选择行程类型 */
     display: inline-block;
     margin-right: 10px;
 }
 
 .chooseSeat {
     display: inline-block;
+    /* 无边框 */
     border-style: none;
     background-color: #ffffff;
     padding: 5px;
     margin: 0px;
+    /* 不可选中 */
     user-select: none;
+    border-radius: 6px;
 }
 .chooseSeat img {
     width: 13px;
@@ -178,7 +402,7 @@ export default {
     width: 130px;
     position: absolute;
     top: 25px;
-    left: 840px;
+    left: calc(50% + 265px);
     list-style: none;
     padding: 0px;
     border: solid #ffffff 1px;
@@ -205,12 +429,15 @@ export default {
 
 .form-line {
     display: flex;
+    /* 横向排布 */
     flex-direction: row;
+
     justify-content: space-between;
+    /* 相对定位 */
     position: relative;
     background-color: #ffffff;
-    height: 64px;
-    width: 960px;
+    height: 100%;
+    width: 100%;
 }
 
 .flt-box {
@@ -241,18 +468,18 @@ export default {
 .flt-depart input {
     margin: 0px 3px 10px 10px;
     border: none;
-    height: 20px;
+    height: 32px;
     width: 140px;
 }
 
 .switch-button {
+    /* 相对定位 */
     position: relative;
     border: 1px solid;
     border-radius: 50%;
     width: 30px;
     height: 30px;
-    left: -10px;
-    transform: translateX(-50%);
+
     top: 15px;
     cursor: pointer;
     background-color: #fff;
@@ -284,7 +511,8 @@ export default {
 .flt-arrival input {
     margin: 0px 3px 10px 10px;
     border: none;
-    height: 20px;
+    height: 32px;
+    font-size: 20px;
     width: 140px;
 }
 
@@ -293,7 +521,7 @@ export default {
     flex-direction: column;
     border: 1px solid;
     border-radius: 6px;
-    width: 300px;
+    width: 240px;
     border: 1px solid #eee;
     box-shadow: 0 0 12px 0 rgb(0 0 0 / 6%);
 }
@@ -309,8 +537,12 @@ export default {
 
 .date-picker {
     margin-left: 10px;
+    margin-bottom: 10px;
 }
 
-
+.select-box {
+    margin: 0px 10px 10px 10px;
+    width: 140px;
+}
 </style>
 

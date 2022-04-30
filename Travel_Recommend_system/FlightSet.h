@@ -14,8 +14,9 @@
 #include <algorithm>
 #include "Net.h"
 #include "SameDayFlight.h"
+#include <queue>
 //城市hash表，为每个城市分配一个索引
-extern unordered_map<string, int> City_index;
+extern vector<string> mysplit(string str, string separator);
 
 class FlightSet {//所有航班集合
 private:
@@ -24,6 +25,7 @@ private:
     vector<Net> flightSet;         //存储所有航班信息
 public:
     void initSet(vector<string> CityName, string t, int future_days);
+    void createSet(FILE *fp);
     int getDir(FlightRequest req){return req.timeVal().day2int()-today.day2int();};//獲取待搜索的日期在日期數組中的位置
     void update();      //日期更新时对航班信息更新,pop_front,push_back
     vector <FlightAns> request(vector <FlightRequest> req); //輸入請求向量，獲取每一個請求的日期，分別調用當天航班的信息，最後返回結果向量

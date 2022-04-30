@@ -21,5 +21,7 @@ int main() {
 //    net.showNet();
     FlightSet set;
     set.initSet(cityName, "2022-04-26", 10);
+    FILE *fp=fopen("../data.txt","r");
+    set.createSet(fp);
     return 0;
 }
