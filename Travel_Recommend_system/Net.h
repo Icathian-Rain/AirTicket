@@ -29,20 +29,12 @@ private:
         return -1;
     }
 public:
-    void initNet(vector<string> cityName, string t){
+    void initNet(vector<string> cityName, Time t){
         vexnum = cityName.size();
         for (int i = 0;i < vexnum;i++) {
             vertex[i] = cityName[i];
         }
-        int timearray[3],cnt=0;
-        for (int i = 0;i < 10;i++) {
-            timearray[cnt++] = atoi(&t[i]);
-            for(;isdigit(t[i])&&i<10;i++);
-        }
-        time.year = timearray[0];
-        time.month = timearray[1];
-        time.day = timearray[2];
-        time.hour = time.minute = 0;
+        time=t;
         for (int i = 0;i < CITYNUM;i++) {
             for (int j = 0;j < CITYNUM;j++) {
                 matrix[i][j] = vector<Flight>();

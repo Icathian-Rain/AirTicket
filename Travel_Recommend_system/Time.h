@@ -30,6 +30,17 @@ public:
         sum+=day;
         return sum;
     };
+    void tomorrow() {
+        day++;
+        if(day>31){
+            day = 1;
+            month++;
+            if(month>12){
+                month = 1;
+                year++;
+            }
+        }
+    }
     void showTime(){
         cout<<year<<"-"<<int(month)<<"-"<<int(day)<<" "<<int(hour)<<":"<<int(minute)<<endl;
     };
