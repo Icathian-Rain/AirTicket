@@ -31,7 +31,7 @@ public:
         sum+=day;
         return sum;
     };
-    int timeInterval(Time t) {
+    int timeInterval(Time t) {//output |t-(this->time)|
         int C=0;
         int m[13]={0,31,28,31,30,31,30,31,31,30,31,30,31};
         if(t.year-year==0){
@@ -63,7 +63,7 @@ public:
         }
         return 0;
     }
-    void string2time(string str) {
+    void string2time(string str) {//input like 2020-02-23 or 2020-01-24 22:34:11
         const char *t=str.c_str();
         year = atoi(t);
         month = atoi(&t[5]);
@@ -76,7 +76,7 @@ public:
             minute = atoi(&t[14]);
         }
     }
-    void tomorrow() {
+    void tomorrow() {//add one day
         day++;
         if(day>31){
             day = 1;

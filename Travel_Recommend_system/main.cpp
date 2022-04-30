@@ -23,5 +23,6 @@ int main() {
     set.initSet(cityName, "2022-04-26", 10);
     FILE *fp=fopen("../data.txt","r");
     set.createSet(fp);
+    set.showSet();
     return 0;
 }

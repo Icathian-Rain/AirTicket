@@ -33,18 +33,10 @@ extern unordered_map<string, int> City_index
 {"XNN",124},{"GOQ",125},        //青海
 {"LXA",126}});      //西藏拉萨
 
-void FlightSet::initSet(vector<string> CityName, string t, int future_days) {
-    int timearray[3],cnt=0;
-    for (int i = 0;i < 10;i++) {
-        timearray[cnt++] = atoi(&t[i]);
-        for(;isdigit(t[i])&&i<10;i++);
-    }
-    today.year = timearray[0];
-    today.month = timearray[1];
-    today.day = timearray[2];
-    today.hour = today.minute = 0;
+void FlightSet::initSet(vector<string> CityName, string t, int future_days) {//初始化Set，输入城市节点信息，当天日期t和未来航班天数future_days
+    today.string2time(t);
     Time temp = today;
-    for (int i = 0;i < future_days;i++) {
+    for (int i = 0;i < future_days;i++) {//
         Net net;
         temp.tomorrow();
         net.initNet(CityName, temp);
@@ -72,6 +64,12 @@ void FlightSet::createSet(FILE *fp){
         vector<string> carriers = mysplit(carrier, ",");
         int index=today.timeInterval(tTime);
         flightSet[index].addFlight(sCity,dCity,flightNo,carriers,tTime,aTime,price);
+    }
+}
+
+void FlightSet::showSet(){
+    for(int i=0;i<flightSet.size();i++){
+        flightSet[i].showNet();
     }
 }
 
