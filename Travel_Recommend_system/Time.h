@@ -5,6 +5,7 @@
 #ifndef TRAVEL_RECOMMEND_SYSTEM_TIME_H
 #define TRAVEL_RECOMMEND_SYSTEM_TIME_H
 #include <iostream>
+#include "string.h"
 using namespace std;
 class Time{             //时间
 public:
@@ -13,7 +14,7 @@ public:
     char day;
     char hour;
     char minute;
-    //Time(int y,char m,char d,char h,char min){year=y,month=m,day=d,hour=h,minute=min;};
+    Time T(int y, int m, int d, int h, int min) { year = y, month = m, day = d, hour = h, minute = min; };
     int day2int(){//輸入日期，返回在這一年中的第幾天
         int days[]={31,28,31,30,31,30,31,31,30,31,30,31};
         if(year%4==0){          //闰年
@@ -30,6 +31,62 @@ public:
         sum+=day;
         return sum;
     };
+    int timeInterval(Time t) {//output |t-(this->time)|
+        int C=0;
+        int m[13]={0,31,28,31,30,31,30,31,31,30,31,30,31};
+        if(t.year-year==0){
+            if((year%4==0&&year%100!=0)||(year%400==0))
+                m[2]=29;
+            for(int i=month;i<t.month;i++){
+                if(i==month)
+                    C=m[i]-day;
+                else
+                    C+=m[i];
+            }
+            C+=t.day;
+            if(t.month==month)C=t.day-day;
+            return C>0?C:-C;
+        }
+        else{
+            for(int i=year;i<t.year;i++){
+                if(i%4==0&&i%100!=0||i%400==0) C+=366;
+                else C+=365;
+            }
+            if(year%4==0&&year%100!=0||year%400==0) m[2]=29;
+            for(int i=1;i<month;i++) C-=m[i];
+            C-=day;
+            if(t.year%4==0&&t.year%100!=0||t.year%400==0) m[2]=29;
+            else m[2]=28;
+            for(int i=1;i<t.month;i++)C+=m[i];
+            C+=t.day;
+            return C>0?C:-C;
+        }
+        return 0;
+    }
+    void string2time(string str) {//input like 2020-02-23 or 2020-01-24 22:34:11
+        const char *t=str.c_str();
+        year = atoi(t);
+        month = atoi(&t[5]);
+        day = atoi(&t[8]);
+        if (strlen(t) < 11) {
+            hour=minute=0;
+        }
+        else {
+            hour = atoi(&t[11]);
+            minute = atoi(&t[14]);
+        }
+    }
+    void tomorrow() {//add one day
+        day++;
+        if(day>31){
+            day = 1;
+            month++;
+            if(month>12){
+                month = 1;
+                year++;
+            }
+        }
+    }
     void showTime(){
         cout<<year<<"-"<<int(month)<<"-"<<int(day)<<" "<<int(hour)<<":"<<int(minute)<<endl;
     };

@@ -4,7 +4,7 @@
 
 #include "Net.h"
 
-extern vector<string> mysplit(string str, string separator) {
+extern vector<string> mysplit(string str, string separator) {//split string str by separator，like split “a+b+c” by "+" into "a""b""c"
     vector<string> result;
     int cutAt;
     while( (cutAt = str.find_first_of(separator)) != str.npos ){
