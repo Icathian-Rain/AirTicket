@@ -20,8 +20,12 @@ int main() {
 //    net.createNet(fp);
 //    net.showNet();
     FlightSet set;
-    set.initSet(cityName, "2022-04-26", 10);
-    FILE *fp=fopen("../data.txt","r");
+    set.initSet(cityName, "20220503000000", 10);
+    FILE *fp=fopen("../flight.txt","r");
+    if(fp==NULL){
+        cout<<"error filename!";
+        return -1;
+    }
     set.createSet(fp);
     set.showSet();
     return 0;

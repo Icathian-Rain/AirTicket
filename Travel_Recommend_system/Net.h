@@ -10,8 +10,11 @@
 #include "FlightRequest.h"
 #include <string>
 #include <vector>
+#include <map>
 #include <algorithm>
+
 extern vector<string> mysplit(string str, string separator);
+static map<string,string> city={{"BJS","北京"},{"SHA","上海"},{"CAN","广州"},{"SZX","深圳"},{"HKG","香港"},{"MFM","澳门"},{"SHE","沈阳"},{"TAO","青岛"},{"TNA","济南"},{"WUH","武汉"},{"XMN","厦门"},{"SIA","西安"},{"CSX","长沙"},{"NKG","南京"},{"HGH","杭州"},{"CKG","重庆"},{"CTU","成都"},{"KMG","昆明"},{"KWE","贵阳"},{"SYX","三亚"},{"HAK","海口"},{"URC","乌鲁木齐"},{"XNN","西宁"},{"LHW","兰州"},{"INC","银川"},{"LXA","拉萨"}};
 
 #define CITYNUM 27
 class Net {
@@ -41,9 +44,9 @@ public:
             }
         }
     }
-    void addFlight(string sCity,string dCity,string flightNo,vector<string> carriers,Time tT,Time aT,int price){//add one flight
-        int sCityIndex = FindIndex(sCity);
-        int dCityIndex = FindIndex(dCity);
+    void addFlight(string sCity,string dCity,string flightNo,string carriers,Time tT,Time aT,int price){//add one flight
+        int sCityIndex = FindIndex(city[sCity]);
+        int dCityIndex = FindIndex(city[dCity]);
         if(sCityIndex==-1||dCityIndex==-1){
             cout<<"error"<<endl;
             return ;
