@@ -63,18 +63,13 @@ public:
         }
         return 0;
     }
-    void string2time(string str) {//input like 2020-02-23 or 2020-01-24 22:34:11
-        const char *t=str.c_str();
-        year = atoi(t);
-        month = atoi(&t[5]);
-        day = atoi(&t[8]);
-        if (strlen(t) < 11) {
-            hour=minute=0;
-        }
-        else {
-            hour = atoi(&t[11]);
-            minute = atoi(&t[14]);
-        }
+    void string2time(string str) {//input like 20220503000000
+        string temp;
+        year = atoi(temp.assign(str,0,4).c_str());
+        month = atoi(temp.assign(str,4,2).c_str());
+        day = atoi(temp.assign(str,6,2).c_str());
+        hour = atoi(temp.assign(str,8,2).c_str());
+        minute = atoi(temp.assign(str,10,2).c_str());
     }
     void tomorrow() {//add one day
         day++;

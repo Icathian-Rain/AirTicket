@@ -10,7 +10,7 @@
 using namespace std;
 class Flight{//一個航班信息
 private:
-    vector<string> carrier;        //承运人
+    string carrier;        //承运人
     string flightNo;       //航班号
     Time takeOffTime;      //起飞时间
     Time arrivalTime;      //抵达时间
@@ -20,7 +20,7 @@ private:
 
 public:
     //获取航班信息
-    vector <string> carrierVal();
+    string carrierVal();
     string flightNoVal();
     string sCityVal();
     string dCityVal();
@@ -31,7 +31,7 @@ public:
     static bool comparePrice(const Flight &f1, const Flight &f2){       //自定义比较函数、用于sort、set
         return f1.price < f2.price;
     }
-    void createFlight(vector <string> carr,string flightN,Time tTime,Time aTime,string sCi,string dCi,int pri){carrier=carr,flightNo=flightN,takeOffTime=tTime,arrivalTime=aTime,sCity=sCi,dCity=dCi,price=pri;};
+    void createFlight(string carr,string flightN,Time tTime,Time aTime,string sCi,string dCi,int pri){carrier=carr,flightNo=flightN,takeOffTime=tTime,arrivalTime=aTime,sCity=sCi,dCity=dCi,price=pri;};
     void showFlight(){
         cout<<"航班号："<<flightNo<<endl;
         cout << "起飞时间：";
