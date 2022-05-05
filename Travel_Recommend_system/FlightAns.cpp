@@ -22,7 +22,9 @@ bool FlightAns::Return_status() {
 }
 
 
-void FlightAns::Add(SameDayFlight sdf) {
+void FlightAns::Add(SameDayFlight sdf, string target_agency) {
+    if(agency == target_agency || agency.length()==0) agency = target_agency;
+    else return;            //二次检验代理人是否一致
     vector<Flight> new_flight = sdf.Return_all_flight();
     for( int i = 0; i < new_flight.size(); i++){    //存入航班，记录总票价
         flight.push_back(new_flight[i]);
