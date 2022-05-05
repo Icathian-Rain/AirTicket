@@ -27,7 +27,7 @@ public:
     static bool comparePrice(const FlightAns &a1, const FlightAns &a2){       //自定义比较函数、用于sort、set
         return a1.ticketPrice < a2.ticketPrice;
     }
-    void Add(SameDayFlight sdf);                //添加航段到Ans当中
+    void Add(SameDayFlight sdf, string target_agency);                //添加航段到Ans当中
     void Virtual_FlightAns();                   //将该航班回应设置为虚拟回应，票价设置为最大值，用于低价行程推荐中初始化优先队列
 };
 

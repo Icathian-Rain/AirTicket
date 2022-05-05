@@ -66,7 +66,7 @@ public:
             }
         }
     }
-    vector<Flight> request(FlightRequest req);   //單乘客單代理人情況
+    vector<Flight> request(FlightRequest req, string target_agency);   //單乘客單代理人情況
     FlightAns multiAgencyRequest(FlightRequest req);    //多代理人
     FlightAns multiPassengerRequest(FlightRequest req); //多乘客
     void update();

@@ -82,7 +82,7 @@ struct cmp{             //FlightAns 总票价越高，优先级越高
     }
 };
 
-vector<FlightAns> FlightSet::request(vector<FlightRequest> req) {           //低价行程推荐
+vector<FlightAns> FlightSet::request(vector<FlightRequest> req, string target_agency) {           //低价行程推荐
     int req_size = req.size();      //航班请求数量
     vector<Flight> tmp[req_size];       //暂存每一段航班的搜索结果
     vector<vector<SameDayFlight> >allowed_combinations; //允许的航班组合,由这个结构处理时间衔接问题
@@ -98,7 +98,7 @@ vector<FlightAns> FlightSet::request(vector<FlightRequest> req) {           //�
             else flag = false;
         }
         int d = getDir(req[i]);     //date_index日期索引
-        tmp[i] = flightSet[d].request(req[i]);  //调用当天的Net搜索满足条件的所有航班
+        tmp[i] = flightSet[d].request(req[i], target_agency);  //调用当天的Net搜索满足条件的所有航班
         if(tmp[i].empty()){
             cout<<"第"<<i+1<<"航段查询不到，请重新选择!"<<endl;
             ok = false;     //记录查询结果为失败
@@ -154,7 +154,7 @@ vector<FlightAns> FlightSet::request(vector<FlightRequest> req) {           //�
         //num == 1时直接得到20个result, num > 1
         for(int i = 0; i < allowed_combinations[0].size() && i <20; i++){    //初始化,使i<20，做一点剪枝
             FlightAns tmp_ans;
-            tmp_ans.Add(allowed_combinations[0][i]);
+            tmp_ans.Add(allowed_combinations[0][i],target_agency);
             ans.push_back(tmp_ans);
         }
         if(num > 1){
@@ -169,7 +169,7 @@ vector<FlightAns> FlightSet::request(vector<FlightRequest> req) {           //�
                     FlightAns top = p.top();
                     if(allowed_combinations[i][j].Return_totalPrice() + ans[0].Return_ticketPrice() < top.Return_ticketPrice()){
                         FlightAns tmp_ans = ans[0];
-                        tmp_ans.Add(allowed_combinations[i][j]);
+                        tmp_ans.Add(allowed_combinations[i][j],target_agency);
                         p.pop();
                         p.push(tmp_ans);
                     }
@@ -178,7 +178,7 @@ vector<FlightAns> FlightSet::request(vector<FlightRequest> req) {           //�
                         FlightAns Piletop = p.top();
                         if(allowed_combinations[i][j].Return_totalPrice() + ans[k].Return_ticketPrice() < Piletop.Return_ticketPrice()){   //比堆顶小，pop_top，新元素入堆
                             FlightAns tmp_ans = ans[k];    //copy 一份
-                            tmp_ans.Add(allowed_combinations[i][j]);
+                            tmp_ans.Add(allowed_combinations[i][j],target_agency);
                             p.pop();
                             p.push(tmp_ans);
                         }
@@ -188,14 +188,11 @@ vector<FlightAns> FlightSet::request(vector<FlightRequest> req) {           //�
 
                 //更新ans
                 ans.clear();                //clear清空
-                FlightAns top = p.top();
-                while(!top.Return_status() && !p.empty()){    //去除虚拟的回应
-                    p.pop();
-                    top = p.top();
-                }
                 vector<FlightAns> reverse_order;        //先存一个反序的
                 while(!p.empty()){
-                    reverse_order.push_back(p.top());
+                    FlightAns top = p.top();
+                    if(top.Return_status())         //如果不是虚拟响应，输出到ans
+                        reverse_order.push_back(top);
                     p.pop();
                 }
                 for(int j = reverse_order.size() - 1; j > 0; j--){  //再反序更新到ans
@@ -208,4 +205,38 @@ vector<FlightAns> FlightSet::request(vector<FlightRequest> req) {           //�
     else{       //查询失败
         return ans;     //返回一个空向量，或者可以用一个FlightAns记录下查询失败的航段
     }
+}
+
+vector<FlightAns> FlightSet::multiAgencyRequest(vector<FlightRequest> req) {
+    vector<string>  target_agency = req[0].Return_agency();         //获取允许的代理人数目
+    vector<FlightAns> ans;
+    priority_queue<FlightAns,vector<FlightAns>,cmp> p;      //优先队列,大根堆，用于动态选取20个低价行程
+    for(int j = 0; j < 20 ; j++){
+        FlightAns tmp_ans;
+        tmp_ans.Virtual_FlightAns();            //设置票价为大值，状态为虚拟
+        p.push(tmp_ans);
+    }
+    //求出每个代理人的20个低价结果，再用堆排序进一步筛选20个低价结果
+    for(int i = 0; i < target_agency.size(); i++){
+        vector<FlightAns> tmp = request(req,target_agency[i]);
+        for(int j = 0 ; j < tmp.size(); j++){
+            FlightAns top = p.top();
+            if(top.Return_ticketPrice() > tmp[j].Return_ticketPrice()){
+                p.pop();
+                p.push(tmp[j]);
+            }
+        }
+    }
+
+    vector<FlightAns> reverse_order;        //先存一个反序的
+    while(!p.empty()){
+        FlightAns top = p.top();
+        if(top.Return_status())         //如果不是虚拟响应，输出到ans
+            reverse_order.push_back(top);
+        p.pop();
+    }
+    for(int j = reverse_order.size() - 1; j > 0; j--){  //再反序更新到ans
+        ans.push_back(reverse_order[j]);
+    }
+    return ans;
 }
