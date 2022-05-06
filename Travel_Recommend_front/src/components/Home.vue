@@ -1,47 +1,36 @@
 <template>
-    <div class="home">
-        <form @submit="formSubmit()" class="search-form">
+    <div class="home" @click="menuVisible = false">
+        <form class="search-form">
             <!-- 第一层选择栏 -->
             <div class="search-form-top">
                 <!-- 行程方式选择 -->
-                <div>
-                    <el-radio-group v-model="selectedType">
-                        <el-radio :label="item" v-for="(item, i) in tripType">{{
-                            item
-                        }}</el-radio>
-                    </el-radio-group>
+                <div class="passenger-box">
+                    <span>乘客人数</span>
+                    <el-input v-model="passenger" type="number" />
                 </div>
-                <!-- 座次选择 -->
-                <div class="seatclass">
-                    <div @click="menuVisible = !menuVisible" class="chooseSeat">
-                        {{ selectedSeat }}
-                        <img src="/arrayDown.svg" alt="" v-if="menuVisible" />
-                        <img src="/arrayLeft.svg" alt="" v-else />
-                    </div>
-                    <ul class="list" v-if="menuVisible">
-                        <li
-                            v-for="seat in seatClass"
-                            :key="seat"
-                            @click="selectedSeat = seat"
+                <!-- 代理人选择 -->
+                <div class="agent-box">
+                    <span>代理人</span>
+                    <el-checkbox-group v-model="agent">
+                        <el-checkbox-button
+                            v-for="item in agentOptions"
+                            :key="item"
+                            :label="item"
                         >
-                            <img
-                                src="/tick.svg"
-                                alt=""
-                                v-if="seat === selectedSeat"
-                            />
-                            <span v-else> &nbsp;&nbsp;&nbsp;&nbsp; </span>
-                            <span
-                                v-if="seat === selectedSeat"
-                                style="color: #0076f5"
-                                >{{ seat }}</span
-                            >
-                            <span v-else>{{ seat }}</span>
-                        </li>
-                    </ul>
+                            {{ item }}
+                        </el-checkbox-button>
+                    </el-checkbox-group>
                 </div>
             </div>
             <!-- 第二层选择 -->
-            <div class="form-line">
+            <div
+                class="form-line"
+                :id="'form-line' + i"
+                v-for="(seg, i) in segments"
+            >
+                <div class="segIndex">
+                    <span>第 {{ i + 1 }} 段</span>
+                </div>
                 <!-- 起始地选择 -->
                 <div class="flt-box">
                     <!-- 起点 -->
@@ -49,7 +38,7 @@
                         <span>出发地</span>
                         <div class="select-box">
                             <el-select
-                                v-model="depart"
+                                v-model="seg.depart"
                                 filterable
                                 placeholder="出发地"
                             >
@@ -71,7 +60,7 @@
                         <span>目的地</span>
                         <div class="select-box">
                             <el-select
-                                v-model="arrival"
+                                v-model="seg.arrival"
                                 filterable
                                 placeholder="出发地"
                             >
@@ -89,37 +78,86 @@
                     <span>出发日期</span>
                     <div class="date-picker">
                         <el-date-picker
-                            v-model="departTime"
+                            v-model="seg.departtime"
                             type="date"
-                            placeholder="Pick a day"
+                            placeholder="选择出发日期"
                         />
                     </div>
                 </div>
+                <div class="remove-segs">
+                    <el-button size="small" circle @click="removeSegs(i)" />
+                    <svg
+                        viewBox="0 0 1024 1024"
+                        xmlns="http://www.w3.org/2000/svg"
+                        data-v-ba633cb8=""
+                    >
+                        <path
+                            fill="currentColor"
+                            d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896zm0 393.664L407.936 353.6a38.4 38.4 0 1 0-54.336 54.336L457.664 512 353.6 616.064a38.4 38.4 0 1 0 54.336 54.336L512 566.336 616.064 670.4a38.4 38.4 0 1 0 54.336-54.336L566.336 512 670.4 407.936a38.4 38.4 0 1 0-54.336-54.336L512 457.664z"
+                        ></path>
+                    </svg>
+                </div>
+                <div class="remove-tips"></div>
+            </div>
+            <div class="add-segs">
+                <el-button size="small" circle @click="addSegs()" />
+                <svg
+                    viewBox="0 0 1024 1024"
+                    xmlns="http://www.w3.org/2000/svg"
+                    data-v-ba633cb8=""
+                >
+                    <path
+                        fill="currentColor"
+                        d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896zm-38.4 409.6H326.4a38.4 38.4 0 1 0 0 76.8h147.2v147.2a38.4 38.4 0 0 0 76.8 0V550.4h147.2a38.4 38.4 0 0 0 0-76.8H550.4V326.4a38.4 38.4 0 1 0-76.8 0v147.2z"
+                    ></path>
+                </svg>
+            </div>
+            <div class="search">
+            <el-button class="search-button" @click="formSubmit()"> 搜索</el-button>
+            <svg
+                viewBox="0 0 1024 1024"
+                xmlns="http://www.w3.org/2000/svg"
+                data-v-ba633cb8=""
+            >
+                <path
+                    fill="currentColor"
+                    d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 45.248L750.656 795.904a416 416 0 1 1 45.248-45.248zM480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704z"
+                ></path>
+            </svg>
             </div>
         </form>
     </div>
 </template>
 
 <script >
+import plus_icon from "../assets/icons/plus.svg";
 export default {
     data() {
         return {
-            // 行程方式
-            tripType: ["单程", "往返", "多程"],
-            // 选择的方式
-            selectedType: "",
+            // 乘客数
+            passenger: 1,
+            // 代理人选项
+            agentOptions: ["携程", "美团", "滴滴"],
+            // 代理人
+            agent: [""],
             // 座位类型
             seatClass: ["不限舱位", "经济舱", "公务/头等舱"],
             // 选择的座位类型
             selectedSeat: "不限舱位",
-            // 座位类型选择框是否显示
-            menuVisible: false,
-            // 出发地
-            depart: "",
-            // 目的地
-            arrival: "",
-            // 出发时间
-            departTime: "",
+            // 航段
+            segments: [
+                {
+                    // 出发地
+                    depart: "",
+                    // 目的地
+                    arrival: "",
+                    // 出发时间
+                    departTime: "",
+                    // 座位类型
+                    seatClass: "",
+                },
+            ],
+            // 机场选项
             options: [
                 {
                     value: "HRB",
@@ -309,6 +347,24 @@ export default {
             this.depart = this.arrival;
             this.arrival = temp;
         },
+        getLabel(value) {
+            for (let i in this.options) {
+                if (this.options[i].value === value) {
+                    return this.options[i].label;
+                }
+            }
+        },
+        addSegs() {
+            this.segments.push({
+                depart: "",
+                arrival: "",
+                departTime: "",
+                seatClass: "",
+            });
+        },
+        removeSegs(i) {
+            this.segments.splice(i, 1);
+        },
     },
 };
 </script>
@@ -348,7 +404,7 @@ export default {
     /* 背景颜色 */
     background: #fff;
     /* 边框 */
-    padding: 10px;
+    padding: 10px 5% 80px 5%;
     /* 圆角 */
     border-radius: 6px;
 }
@@ -370,79 +426,46 @@ export default {
     /* 下margin */
     margin-bottom: 10px;
 }
-.form-checkboxs {
-    /* 选择行程类型 */
-    display: inline-block;
+
+.passenger-box span,
+.el-input {
+    display: inline;
+}
+
+.passenger-box span {
     margin-right: 10px;
 }
 
-.chooseSeat {
+.agent-box span,
+.el-checkbox-group {
     display: inline-block;
-    /* 无边框 */
-    border-style: none;
-    background-color: #ffffff;
-    padding: 5px;
-    margin: 0px;
-    /* 不可选中 */
-    user-select: none;
-    border-radius: 6px;
 }
-.chooseSeat img {
-    width: 13px;
-    height: 13px;
-    margin-left: 5px;
-}
-
-.chooseSeat:hover {
-    cursor: pointer;
-    background-color: #f4f4f4;
-}
-
-.list {
-    width: 130px;
-    position: absolute;
-    top: 25px;
-    left: calc(50% + 265px);
-    list-style: none;
-    padding: 0px;
-    border: solid #ffffff 1px;
-    z-index: 1;
-}
-.list li {
-    padding-bottom: 10px;
-    padding: 5px;
-    user-select: none;
-    cursor: pointer;
-    background-color: #fff;
-}
-
-.list li:hover {
-    background-color: #f2f9ff;
-}
-
-.list img {
+.agent-box span {
     position: relative;
-    height: 18px;
-    top: 2px;
-    padding-right: 3px;
+    top: 5px;
+    margin-right: 10px;
 }
 
 .form-line {
     display: flex;
     /* 横向排布 */
     flex-direction: row;
-
     justify-content: space-between;
     /* 相对定位 */
     position: relative;
     background-color: #ffffff;
     height: 100%;
     width: 100%;
+    border: 1px solid #eee;
+    box-shadow: 0 0 12px 0 rgb(0 0 0 / 6%);
+    padding: 10px;
+    margin-bottom: 10px;
 }
 
 .flt-box {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     position: relative;
     border-radius: 6px;
     border: 1px solid #eee;
@@ -479,7 +502,6 @@ export default {
     border-radius: 50%;
     width: 30px;
     height: 30px;
-
     top: 15px;
     cursor: pointer;
     background-color: #fff;
@@ -500,6 +522,7 @@ export default {
 .flt-arrival {
     display: flex;
     flex-direction: column;
+    left: 30px;
 }
 
 .flt-arrival span {
@@ -543,6 +566,108 @@ export default {
 .select-box {
     margin: 0px 10px 10px 10px;
     width: 140px;
+}
+
+.segIndex {
+    position: absolute;
+    left: -63px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #3187f9;
+    padding: 5px;
+    border: 1px solid #000;
+    border-right: #fff;
+    border-radius: 6px;
+}
+
+.add-segs {
+    position: relative;
+    top: 10px;
+    height: 0px;
+    width: 90%;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
+}
+
+.add-segs .el-button {
+    position: absolute;
+    left: 50%;
+}
+
+.add-segs svg {
+    position: absolute;
+    height: 20px;
+    left: 50%;
+    transform: translateX(10%) translateY(10%);
+    z-index: 0;
+}
+
+.add-segs .el-button {
+    position: absolute;
+    z-index: 1;
+    background: none;
+}
+
+.add-segs:hover {
+    border-bottom: 1px dashed rgba(0, 0, 0, 1);
+}
+
+.remove-segs {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+}
+
+.remove-segs .el-button {
+    background: none;
+}
+.remove-segs svg {
+    color: red;
+    position: absolute;
+    height: 20px;
+    left: 0%;
+    transform: translateX(10%) translateY(15%);
+    z-index: -1;
+}
+.remove-tips {
+    visibility: hidden;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    filter: blur(10px);
+}
+
+.remove-segs:hover + .remove-tips {
+    visibility: visible;
+}
+
+.search {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+.search-button {
+    border-radius: 28px;
+    height: 50px;
+    width: 120px;
+    padding-left: 30px;
+    background-color: #f70;
+    background-image: linear-gradient(-90deg, #f70, #ffa50a);
+}
+
+.search svg {
+    position: absolute;
+    left: 20%;
+    top: 45%;
+    transform: translateY(-50%);
+    height: 20px;
+    width: 20px;
+    color: #fff;
 }
 </style>
 
