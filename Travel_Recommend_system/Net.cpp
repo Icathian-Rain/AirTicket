@@ -4,7 +4,7 @@
 
 #include "Net.h"
 
-extern vector<string> mysplit(string str, string separator) {
+extern vector<string> mysplit(string str, string separator) {//split string str by separator，like split “a+b+c” by "+" into "a""b""c"
     vector<string> result;
     int cutAt;
     while( (cutAt = str.find_first_of(separator)) != str.npos ){
@@ -20,11 +20,11 @@ extern vector<string> mysplit(string str, string separator) {
     return result;
 }
 
-vector<Flight> Net::request(FlightRequest req){
+vector<Flight> Net::request(FlightRequest req, string target_agency){
     vector<Flight> res;             //result
     string sCity = req.Return_sCity();
     string dCity = req.Return_dCity();
-    string target_agency = req.Return_agency()[0];  //该功能指定一个代理人
+    //string target_agency = req.Return_agency()[0];  //该功能指定一个代理人
     int s = FindIndex(sCity);
     int d = FindIndex(dCity);   //定位
     for(int i =0; i < matrix[s][d].size(); i++){
