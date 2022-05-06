@@ -36,3 +36,22 @@ yarn preview
 使用方法见官方文档
 https://element-plus.gitee.io/zh-CN/
 
+
+# api接口
+## 搜索请求
+
+- 请求路径: query
+- 请求方法: get
+- 请求参数
+  
+| 参数名    | 参数说明           | 备注      |
+| --------- | ------------------ | --------- |
+| n         | 航段总数           |           |
+| date_list | 每个航段信息       | 1或多个   |
+| date      | 每个航段的出发时间 |           |
+| depart    | 起飞城市           |           |
+| arrival   | 抵达城市           |           |
+| agents    | 允许的出票人       | 可为空    |
+| passenger    | 旅客数             | 1个或多个 |
+
+
