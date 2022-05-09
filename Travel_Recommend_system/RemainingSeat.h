@@ -19,13 +19,13 @@ private:
 
 public:
     //余座信息
-    string Return_carrier();
-    string Return_flightNo();
-    string Return_sCity();
-    string Return_dCity();
-    char Return_seatF();
-    char Return_seatC();
-    char Return_seatY();
+    inline string Return_carrier(){ return carrier;};
+    inline string Return_flightNo(){ return flightNo;};
+    inline string Return_sCity(){ return sCity;};
+    inline string Return_dCity(){ return dCity;};
+    inline char Return_seatF(){ return seatF;};
+    inline char Return_seatC(){ return seatC;};
+    inline char Return_seatY(){ return seatY;};
 };
 
 

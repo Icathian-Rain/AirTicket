@@ -92,12 +92,19 @@ public:
         return true;
     };
     static bool connect_ok(Time t1, Time t2){             //判断t1->t2是否满足大于120分钟的衔接要求
-        //t1,t2首先已经是同一天的了，是否还需要二次验证?
+        if(t1.year < t2.year) return true;
+        if(t1.year > t2.year) return false;
+        //同一年
+        int daydiff = t2.day2int() - t1.day2int();        //求两个时间相差的天数
+        if(daydiff < 0) return false;
+        if(daydiff >=2) return true;
+        t2.hour += 24*daydiff;
         if(t2.hour - t1.hour < 2) return false;
         else if(t2.hour - t1.hour == 2) {
-            if (t2.minute > t1.minute) return false;
-            else return true;
+            if (t2.minute > t1.minute) return true;
+            else return false;
         }
+        return true;
     };
     static bool compare_Time(Time t1, Time t2){             //判断t1>t2,  用于按照时间降序排序
         bool ok = false;
