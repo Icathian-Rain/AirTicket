@@ -31,8 +31,8 @@ public:
     static bool comparePrice(const Flight &f1, const Flight &f2){       //自定义比较函数、用于sort、set
         return f1.price < f2.price;
     }
-    void createFlight(string carr,string flightN,Time tTime,Time aTime,string sCi,string dCi,int pri){carrier=carr,flightNo=flightN,takeOffTime=tTime,arrivalTime=aTime,sCity=sCi,dCity=dCi,price=pri;};
-    void showFlight(){
+    inline void createFlight(string carr,string flightN,Time tTime,Time aTime,string sCi,string dCi,int pri){carrier=carr,flightNo=flightN,takeOffTime=tTime,arrivalTime=aTime,sCity=sCi,dCity=dCi,price=pri;};
+    inline void showFlight(){
         cout<<"航班号："<<flightNo<<endl;
         cout << "起飞时间：";
         takeOffTime.showTime();
