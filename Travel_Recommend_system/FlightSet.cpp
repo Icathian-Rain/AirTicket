@@ -76,12 +76,7 @@ void FlightSet::update() {
 
 }
 
-struct cmp{             //FlightAns 总票价越高，优先级越高
-    bool operator()(FlightAns &a1, FlightAns &a2){
-        return a1.Return_ticketPrice() < a2.Return_ticketPrice();
-    }
-};
-
+/*
 vector<FlightAns> FlightSet::request(vector<FlightRequest> req, string target_agency) {           //低价行程推荐
     int req_size = req.size();      //航班请求数量
     vector<Flight> tmp[req_size];       //暂存每一段航班的搜索结果
@@ -205,8 +200,98 @@ vector<FlightAns> FlightSet::request(vector<FlightRequest> req, string target_ag
     else{       //查询失败
         return ans;     //返回一个空向量，或者可以用一个FlightAns记录下查询失败的航段
     }
+}*/
+
+//堆模拟辅助结构
+struct asdf{
+    int val;        //当前航班总票价
+    int x,y;        //当前位置
+    int pos[10] = {0};    //初始每一组均取第一个元素，即为最小
+    bool p;         //判断是否满足扩展条件
+    asdf(){}
+    asdf(int vall,int xe,int yo,bool pp){val=vall;x=xe;y=yo;p=pp;}  //快捷构造
+    bool operator <(const asdf &b)const{return val>b.val;}          //小于号重载
+};
+//低价行程推荐算法优化：堆模拟搜索算法-->O(MNlogN)
+vector<FlightAns> FlightSet::request(vector<FlightRequest> req, string target_agency) {           //低价行程推荐
+    int req_size = req.size();      //航段请求数量
+    vector<Flight> tmp[req_size];       //暂存每一段航班的搜索结果
+    vector<FlightAns> ans;          //存放推荐结果
+    bool ok = true;                 //查询成功/失败，如果某一段查询不到航班，则查询失败
+
+    pair<int,int> head[10];
+    priority_queue<asdf>q;          //小根堆
+    int cnt = 0;                    //目前得到的满足条件的结果数
+    int tot = 0;
+    for(int i = 0; i < req_size; i++){
+        int d = getDir(req[i]);     //date_index日期索引
+        tmp[i] = flightSet[d].request(req[i], target_agency);  //调用当天的Net搜索满足条件的所有航班
+        if(tmp[i].empty()){
+            cout<<"第"<<i+1<<"航段查询不到，请重新选择!"<<endl;
+            ok = false;     //记录查询结果为失败
+            break;
+        }
+        sort(tmp[i].begin(),tmp[i].end(),Flight::comparePrice);     //按照价格从低到高排序-->O(MNlogN)
+        if(tmp[i].size() <= 1) head[i]= pair<int,int>(0,i);
+        else head[i]= pair<int,int>( tmp[i][1].Return_price() - tmp[i][0].Return_price(),i);
+        tot = tot + tmp[i][0].Return_price();         //记录最小值
+    }
+    if(ok){             //查询成功
+        sort(head, head+req_size);      //按照(次小-最小的值)给每一组排序
+        q.push(asdf(tot,0,0,false));
+        while(cnt <20 && !q.empty()){
+            asdf np=q.top();
+            q.pop();
+            //根据输出构造一个FligntAns
+            FlightAns tmp_ans;
+            for(int i = 0; i < req_size; i++){
+                tmp_ans.Add(tmp[i][np.pos[i]]);
+            }
+            //判断是否满足衔接条件
+            if(tmp_ans.Connect_ok()){   //满足则输出到ans，并且记录cnt++
+                ans.push_back(tmp_ans);
+                cnt++;
+            }
+            if(np.y+1<tmp[head[np.x].second].size()) {
+                asdf tmp_asdf = np;
+                tmp_asdf.val = np.val - tmp[head[np.x].second][np.y].Return_price() + tmp[head[np.x].second][np.y+1].Return_price();
+                tmp_asdf.x = np.x;
+                tmp_asdf.y = np.y +1;
+                tmp_asdf.p = false;
+                tmp_asdf.pos[head[np.x].second] = np.y+1;
+                q.push(tmp_asdf);
+            }
+            if(np.x+1<req_size){
+                asdf tmp_asdf = np;
+                tmp_asdf.val = np.val - tmp[head[np.x+1].second][0].Return_price() + tmp[head[np.x+1].second][1].Return_price();
+                tmp_asdf.x = np.x + 1;
+                tmp_asdf.y = 1;
+                tmp_asdf.p = true;
+                tmp_asdf.pos[head[np.x+1].second] = 1;
+                q.push(tmp_asdf);
+            }
+            if(np.x+1<req_size && np.p){
+                asdf tmp_asdf = np;
+                tmp_asdf.val = np.val - tmp[head[np.x].second][np.y].Return_price() + tmp[head[np.x].second][0].Return_price() - tmp[head[np.x+1].second][0].Return_price() + tmp[head[np.x+1].second][1].Return_price();
+                tmp_asdf.x = np.x + 1;
+                tmp_asdf.y = 1;
+                tmp_asdf.p = true;
+                tmp_asdf.pos[head[np.x].second] = 0;
+                tmp_asdf.pos[head[np.x+1].second] = 1;
+                q.push(tmp_asdf);
+            }
+        }
+        return ans;
+    }
+    else return ans;        //返回空响应
 }
 
+
+struct cmp{             //FlightAns 总票价越高，优先级越高
+    bool operator()(FlightAns &a1, FlightAns &a2){
+        return a1.Return_ticketPrice() < a2.Return_ticketPrice();
+    }
+};
 vector<FlightAns> FlightSet::multiAgencyRequest(vector<FlightRequest> req) {
     vector<string>  target_agency = req[0].Return_agency();         //获取允许的代理人数目
     vector<FlightAns> ans;

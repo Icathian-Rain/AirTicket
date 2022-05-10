@@ -9,6 +9,7 @@
 #include "Flight.h"
 #include "FlightRequest.h"
 #include "FlightAns.h"
+#include <map>
 #include <unordered_map>
 #include <set>
 #include <algorithm>
@@ -27,7 +28,7 @@ public:
     void initSet(vector<string> CityName, string t, int future_days);
     void createSet(FILE *fp);
     void showSet();
-    int getDir(FlightRequest req){return req.timeVal().day2int()-today.day2int();};//獲取待搜索的日期在日期數組中的位置
+    inline int getDir(FlightRequest req){return req.timeVal().day2int()-today.day2int();};//獲取待搜索的日期在日期數組中的位置
     void update();      //日期更新时对航班信息更新,pop_front,push_back
     vector <FlightAns> request(vector <FlightRequest> req, string target_agency); //輸入請求向量，獲取每一個請求的日期，分別調用當天航班的信息，最後返回結果向量
     vector <FlightAns> multiAgencyRequest(vector <FlightRequest> req);
