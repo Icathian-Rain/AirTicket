@@ -45,10 +45,10 @@ void FlightSet::initSet(vector<string> CityName, string t, int future_days) {//å
     }
 }
 
-void FlightSet::createSet(FILE *fp){
+void FlightSet::createSet(FILE *fp_flight,FILE *fp_price){
     char buffer[200];
     string flightNo,sCity,dCity,carrier,tT,aT;
-    while (fgets(buffer, 200, fp) != NULL) {
+    while (fgets(buffer, 200, fp_flight) != NULL) {
         vector<string> str = mysplit(buffer, ";");
         carrier = str[0];
         flightNo = str[1];
@@ -60,7 +60,8 @@ void FlightSet::createSet(FILE *fp){
         tTime.string2time(tT);
         aTime.string2time(aT);
         int index=today.timeInterval(tTime);
-        int num=20*(rand()%100+1)+1000;
+        fgets(buffer,200,fp_price);
+        int num=atoi(&buffer[18]);
         flightSet[index].addFlight(sCity,dCity,flightNo,carrier,tTime,aTime,num);
     }
 }
