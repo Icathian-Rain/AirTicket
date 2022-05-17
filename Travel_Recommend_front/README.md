@@ -54,4 +54,38 @@ https://element-plus.gitee.io/zh-CN/
 | agents    | 允许的出票人       | 可为空    |
 | passenger    | 旅客数             | 1个或多个 |
 
+响应数据
+```json
+```json
+{
+    "data": {
+        "ticketPrice": 100000,
+        "agency": [
+            "携程",
+            "滴滴",
+        ],
+        "flight": [
+            {
+                "carrier": "东方航空",
+                "flightNo": "N101",
+                "takeOffTime": "", // 起飞时间
+                "arrivalTime": "", // 抵达时间
+                "sCity": "ShangHai", // 起飞城市
+                "dCity": "Beijing", // 抵达城市
+                "price": 1000, // 票价
+            },
+            {
+                // 第二段
+            }
+        ]
+    },
+    "meta": {
+        "msg": "获取成功",
+        "status": 200
+    }
+}
+```
+
+```
+
 

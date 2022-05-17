@@ -113,25 +113,35 @@
                 </svg>
             </div>
             <div class="search">
-            <el-button class="search-button" @click="formSubmit()"> 搜索</el-button>
-            <svg
-                viewBox="0 0 1024 1024"
-                xmlns="http://www.w3.org/2000/svg"
-                data-v-ba633cb8=""
-            >
-                <path
-                    fill="currentColor"
-                    d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 45.248L750.656 795.904a416 416 0 1 1 45.248-45.248zM480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704z"
-                ></path>
-            </svg>
+                <el-button class="search-button" @click="formSubmit()">
+                    搜索</el-button
+                >
+                <svg
+                    viewBox="0 0 1024 1024"
+                    xmlns="http://www.w3.org/2000/svg"
+                    data-v-ba633cb8=""
+                >
+                    <path
+                        fill="currentColor"
+                        d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 45.248L750.656 795.904a416 416 0 1 1 45.248-45.248zM480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704z"
+                    ></path>
+                </svg>
             </div>
         </form>
     </div>
 </template>
 
 <script >
-import plus_icon from "../assets/icons/plus.svg";
+import { getCurrentInstance } from "vue";
+
 export default {
+    setup() {
+        const internalInstance = getCurrentInstance();
+        const http = internalInstance.appContext.config.globalProperties.$http; 
+        return {
+            http,
+        }
+    },
     data() {
         return {
             // 乘客数
@@ -340,7 +350,12 @@ export default {
     },
     methods: {
         formSubmit() {
-            console.log("form submit");
+            this.http.get("https://www.runoob.com/try/ajax/json_demo.json")
+                .then((response) => (console.log(response)))
+                .catch(function (error) {
+                    // 请求失败处理
+                    console.log(error);
+                });
         },
         exchange() {
             let temp = this.depart;
