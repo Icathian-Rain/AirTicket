@@ -16,6 +16,8 @@
 #include "Net.h"
 #include "SameDayFlight.h"
 #include <queue>
+#include <fstream>
+#include "RemainingSeat.h"
 //城市hash表，为每个城市分配一个索引
 extern vector<string> mysplit(string str, string separator);
 
@@ -27,6 +29,7 @@ private:
 public:
     void initSet(vector<string> CityName, string t, int future_days);
     void createSet(FILE *fp);
+    void all_Seats();       //读入并设置余座信息
     void showSet();
     inline int getDir(FlightRequest req){return req.timeVal().day2int()-today.day2int();};//獲取待搜索的日期在日期數組中的位置
     void update();      //日期更新时对航班信息更新,pop_front,push_back

@@ -20,6 +20,20 @@ extern vector<string> mysplit(string str, string separator) {//split string str 
     return result;
 }
 
+bool Net::Set_flightSeats(RemainingSeat st) {
+    int index_of_sCity = FindIndex(city[st.Return_sCity()]);
+    int index_of_dCity = FindIndex(city[st.Return_dCity()]);
+    for(int i = 0; i < matrix[index_of_sCity][index_of_dCity].size(); i++){
+        if(matrix[index_of_sCity][index_of_dCity][i].flightNoVal() == st.Return_flightNo()){
+            bool ok = matrix[index_of_sCity][index_of_dCity][i].setSeats(st.Return_seatF(),st.Return_seatC(),st.Return_seatY());
+            if(!ok) cout<<"error!"<<endl;
+            return true;
+        }
+    }
+    cout<<"flignt not found!"<<endl;
+    return false;
+}
+
 vector<Flight> Net::request(FlightRequest req, string target_agency){
     vector<Flight> res;             //result
     string sCity = req.Return_sCity();
@@ -28,7 +42,7 @@ vector<Flight> Net::request(FlightRequest req, string target_agency){
     int s = FindIndex(sCity);
     int d = FindIndex(dCity);   //定位
     for(int i =0; i < matrix[s][d].size(); i++){
-        //ReamainingSeat暂时略
+        //ReamainingSeat暂时
         //agency
         vector<string> agc = matrix[s][d][i].rule.Return_agency();
         bool ok = false;

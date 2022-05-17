@@ -17,6 +17,9 @@ private:
     string sCity;          //起飞城市
     string dCity;          //抵达城市
     int price;              //票价，目前还没有使用运价这一数据，暂用Price替代
+    char seatF;         //头等舱座位数量，0:无座，9:9坐，A：10座以上
+    char seatC;         //商务舱
+    char seatY;         //经济舱
 
 public:
     //获取航班信息,inline内联函数，提升效率，适用于代码量小(<10行)并且频繁使用的函数
@@ -40,6 +43,7 @@ public:
         arrivalTime.showTime();
         cout<<"起飞城市："<<sCity<<endl;
         cout<<"抵达城市："<<dCity<<endl;
+        cout<<"余座信息："<<seatF<<';'<<seatC<<';'<<seatY<<';'<<endl;
         cout<<"票价："<<price<<endl<<endl;
     };
     static bool compare_takeOffTime(const Flight &f1, const Flight &f2){       //按照起飞时间降序
@@ -47,6 +51,13 @@ public:
         Time t2 = f2.takeOffTime;
         return Time::compare_Time(t1,t2);          //降序排序
     }
+
+    inline bool setSeats(char F, char C, char Y){
+        seatF = F;
+        seatC = C;
+        seatY = Y;
+        return true;
+    };      //设置当前航班余座
 };
 
 #endif //TRAVEL_RECOMMEND_SYSTEM_FLIGHT_H
