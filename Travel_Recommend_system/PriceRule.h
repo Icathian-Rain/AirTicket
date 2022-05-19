@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 using namespace std;
+
 class PriceRule {
 private:
     int sequenceNo;         //序号，不可重復
@@ -17,6 +18,20 @@ private:
     vector <string> agency;   //允许出票的代理人队列
     char surcharge;     //额外费用百分比
 public:
+    void setRule(int seq,string car,string sC,string dC,string next,string agen,string surch){
+        sequenceNo=seq,carrier=car,sCity=sC,dCity=dC,nextCarrier=next;
+        if(agen!=" "){
+            int cutAt;
+            while( (cutAt = agen.find_first_of(",")) != agen.npos ){
+                if(cutAt > 0)
+                    agency.push_back(agen.substr(0, cutAt));
+                agen = agen.substr(cutAt + 1);
+            }
+            if(agen.length() > 0)
+                agency.push_back(agen);
+        }
+        surcharge=surch[0];
+    }
     //获取信息inline内联函数
     inline int Return_sequenceNo(){ return sequenceNo;};
     inline string Return_carrier(){ return carrier;};

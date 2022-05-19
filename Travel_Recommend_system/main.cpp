@@ -8,6 +8,8 @@ using namespace std;
 //#include "FlightRequest.h"
 //#include "RemainingSeat.h"
 #include "FlightSet.h"
+#include "PriceRule.h"
+#include "PriceRuleTable.h"
 //#include "Recommend_sys.h"
 #include <vector>
 #include <string>
@@ -22,12 +24,21 @@ int main() {
     FlightSet set;
     set.initSet(cityName, "20220503000000", 10);
     FILE *fp1=fopen("../flight2.txt","r");
-    FILE *fp2=fopen("../price2.txt","r");
+    FILE *fp2=fopen("../price.txt","r");
     if(fp1==NULL||fp2==NULL){
         cout<<"error filename!";
         return -1;
     }
     set.createSet(fp1,fp2);
     set.showSet();
+    PriceRuleTable prt;
+    FILE *fp3=fopen("../priceRule2.txt","r");
+    if(fp3==NULL){
+        cout<<"error!";
+        return -1;
+    }
+    cout<<"start gathering price rules....."<<endl;
+    prt.createTable(fp3);
+    cout<<"gather finishing!"<<endl;
     return 0;
 }
