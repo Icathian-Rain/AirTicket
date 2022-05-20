@@ -35,7 +35,6 @@ extern unordered_map<string, int> City_index
 
 void FlightSet::initSet(vector<string> CityName, string t, int future_days) {//初始化Set，输入城市节点信息，当天日期t和未来航班天数future_days
     today.string2time(t);
-    today.showTime();
     Time temp = today;
     for (int i = 0;i < future_days;i++) {//
         Net net;
