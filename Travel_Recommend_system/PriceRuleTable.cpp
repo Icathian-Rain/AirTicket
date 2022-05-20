@@ -18,6 +18,7 @@ void PriceRuleTable::createTable(FILE *fp){
                 temp.push_back(info.substr(0, cutAt));
             info = info.substr(cutAt + 1);
         }
+        //建立索引
         if(temp[1]!=carrier){
             if(i!=0)
                 cityIndex.push_back(city_index);
@@ -69,16 +70,22 @@ int PriceRuleTable::find(string carrier,string sCity,string dCity){
 }
 vector<string> PriceRuleTable::findAgency(string carrier,string sCity,string dCity){
     int index=find(carrier,sCity,dCity);
+    if(index==-1){
+        return {};
+    }
     vector<string> agencies=Table[index].Return_agency();
     for(int i=0;i<agencies.size();i++){
         cout<<agencies[i]<<' ';
     }
-    cout<<endl<<endl;
+    cout<<endl;
     return agencies;
 }
 
 int PriceRuleTable::findSurcharge(string carrier,string sCity,string dCity){
     int index=find(carrier,sCity,dCity);
-    cout<<Table[index].Return_surcharge()<<endl<<endl;
+    if(index==-1){
+        return 200;
+    }
+    cout<<Table[index].Return_surcharge()<<endl;
     return Table[index].Return_surcharge();
 }
