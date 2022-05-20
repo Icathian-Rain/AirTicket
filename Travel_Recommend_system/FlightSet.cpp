@@ -65,6 +65,23 @@ void FlightSet::createSet(FILE *fp_flight,FILE *fp_price){
     }
 }
 
+void FlightSet::all_Seats() {
+    ifstream in;
+    in.open("../seats2.txt",ios::in);
+    if(!in.is_open()){
+        cout<<"cannot open the file"<<endl;
+        exit(1);
+    }
+    string line;
+    while(getline(in,line)){
+        vector<string> tmp = mysplit(line,";");
+        RemainingSeat st(tmp);
+        int index = st.Return_depatureDate().day2int() - today.day2int();
+        flightSet[index].Set_flightSeats(st);//
+    }
+    in.close();
+}
+
 void FlightSet::showSet(){
     for(int i=0;i<flightSet.size();i++){
         flightSet[i].showNet();
