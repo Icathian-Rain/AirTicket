@@ -69,7 +69,7 @@ int * PriceTable::findPrice(string carrier,string sCity,string dCity){
         if(Table[i].Return_dCity()==sCity) {
             cout << carrier<<' '<<dCity<<"->"<<sCity<<" find!" << endl;
             int *price=Table[i].Return_price();
-            cout << "F:"<<price[0]<<"\tC:"<<price[1]<<"\tY:"<<price[2]<<endl<<endl;
+            cout << "F:"<<price[0]<<"\tC:"<<price[1]<<"\tY:"<<price[2]<<endl;
             return price;
         }
     }
