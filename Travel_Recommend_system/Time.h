@@ -75,6 +75,28 @@ public:
         }
         return ok;
     };
+    bool operator>(const Time &t)const{         //data compare
+        if(this->year>t.year){
+            return this->year>t.year;
+        }
+        if(this->month>t.month){
+            return this->month>t.month;
+        }
+        if(this->day>t.day){
+            return this->day>t.day;
+        }
+        return false;
+    };
+
+    bool operator<(const Time &t) const{
+        return t>*this;
+    }
+
+    bool operator==(const Time &t) const{
+        return this->year==t.year&&this->day==t.day&&this->month==t.month;
+    }
+
+
 };
 
 
