@@ -5,7 +5,6 @@
 #ifndef TRAVEL_RECOMMEND_SYSTEM_FLIGHTANS_H
 #define TRAVEL_RECOMMEND_SYSTEM_FLIGHTANS_H
 #include "Flight.h"
-#include "SameDayFlight.h"
 #include <vector>
 #include <string>
 using namespace std;

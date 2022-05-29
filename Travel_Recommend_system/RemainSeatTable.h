@@ -7,9 +7,8 @@
 #include "RemainingSeat.h"
 #include <map>
 #include<fstream>
-#include "FlightSet.h"
 using namespace std;
-
+extern vector<string> mysplit(string str, string separator);
 class RemainSeatTable {
 private:
     map<Time,map<string,RemainingSeat>> seatTable;
@@ -34,7 +33,7 @@ public:
     inline bool isEmpty(){
         return seatTable.size()==0;
     }
-    RemainSeatTable(string path);
+    void CreatRemainSeatTable(string path);
 };
 
 

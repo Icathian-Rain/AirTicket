@@ -16,10 +16,13 @@ private:
     Time arrivalTime;      //抵达时间
     string sCity;          //起飞城市
     string dCity;          //抵达城市
-    int price;              //票价，目前还没有使用运价这一数据，暂用Price替代
+    //根据req搜索后确定，赋值于NET.cpp request，通过拷贝实现，不会对FlightSet SET造成影响
     char seatF;         //头等舱座位数量，0:无座，9:9坐，A：10座以上
     char seatC;         //商务舱
     char seatY;         //经济舱
+    int price = 0;              //票价，在搜索时确定，同时用于排序
+    char passenger_seatList[8];          //记录乘客座位表，即为每个乘客所在的仓位，值分别为F,C,Y，以0填充
+    string agc;                 //代理人
 
 public:
     //获取航班信息,inline内联函数，提升效率，适用于代码量小(<10行)并且频繁使用的函数
@@ -30,6 +33,8 @@ public:
     inline Time takeOffTimeVal(){ return takeOffTime;};
     inline Time arrivalTimeVal(){ return  arrivalTime;};
     inline int Return_price(){ return price;};         //返回票价
+
+
     PriceRule rule;         //运价规则
     static bool comparePrice(const Flight &f1, const Flight &f2){       //自定义比较函数、用于sort、set
         return f1.price < f2.price;
@@ -52,12 +57,27 @@ public:
         return Time::compare_Time(t1,t2);          //降序排序
     }
 
-    inline bool setSeats(char F, char C, char Y){
+    //搜索设置
+    inline bool SetSeats(char F, char C, char Y){
         seatF = F;
         seatC = C;
         seatY = Y;
         return true;
     };      //设置当前航班余座
+    inline bool SetPrice(int ticketPrice){
+        if(ticketPrice > 0) {
+            price = ticketPrice;
+            return true;
+        }
+        else return false;
+    }//票价
+    inline void Set_passenger_seatList(char a[8]){
+        for(int i = 0; i < 8; i++) passenger_seatList[i] = a[i];
+        return;
+    };//设置乘客座位表
+    inline void Set_agc(string agency){
+            agc = agency;
+    };  //设置代理人
 };
 
 #endif //TRAVEL_RECOMMEND_SYSTEM_FLIGHT_H

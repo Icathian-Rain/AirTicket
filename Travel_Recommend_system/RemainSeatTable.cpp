@@ -3,7 +3,7 @@
 //
 
 #include "RemainSeatTable.h"
-RemainSeatTable::RemainSeatTable(string path) {
+void RemainSeatTable::CreatRemainSeatTable(string path) {
     ifstream in(path);
     string str;
     if(!in.is_open()){
@@ -16,8 +16,7 @@ RemainSeatTable::RemainSeatTable(string path) {
         tmp.string2time(data[4]);
         map<string,RemainingSeat> table;
         seatTable.insert(pair<Time,map<string,RemainingSeat>>(tmp,table));
-        RemainingSeat st;
-        st = RemainingSeat(data);
+        RemainingSeat st(data);
         seatTable.at(tmp).insert(pair<string,RemainingSeat>(data[1],st));
     }
     in.close();
