@@ -15,6 +15,8 @@ using namespace std;
 //#include "Recommend_sys.h"
 #include <vector>
 #include <string>
+#include <thread>
+#include <future>
 extern FlightSet *SET;
 extern PriceRuleTable *PRT;
 extern PriceTable *PT;
@@ -59,7 +61,7 @@ int main() {
 
     //RST init
     RST->CreatRemainSeatTable("../seats.txt");
-
+    async(launch::async,[RST](){RST->update();});
     PT->findPrice("FM","KHG","DNH");
     PT->findPrice("JZ","WDF","FEG");
     PT->findPrice("CA","WDF","FEG");

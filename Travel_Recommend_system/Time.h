@@ -85,6 +85,12 @@ public:
         if(this->day>t.day){
             return this->day>t.day;
         }
+        if(this->hour>t.hour){
+            return this->hour>t.hour;
+        }
+        if(this->minute>t.minute){
+            return this->minute>t.minute;
+        }
         return false;
     };
 
@@ -93,7 +99,7 @@ public:
     }
 
     bool operator==(const Time &t) const{
-        return this->year==t.year&&this->day==t.day&&this->month==t.month;
+        return this->year==t.year&&this->day==t.day&&this->month==t.month&&this->minute==t.minute&&this->hour==t.hour;
     }
 
 
