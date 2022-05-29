@@ -38,7 +38,21 @@ public:
     };
     inline Time Return_depatureDate(){ return depatureDate;};
     inline Time Return_arrivalDate(){ return arrivalDate;};
-
+    inline void updateSeats(){//update the number of the remaining seats
+        srand(time(0));
+        int num1 = rand()%20;
+        int num2 = rand()%20;
+        int num3 = rand()%20;
+        seatC = changeseats(num1);
+        seatF = changeseats(num2);
+        seatY = changeseats(num3);
+    }
+    inline char changeseats(int num){
+        if(num>=10){
+            return 'A';
+        }
+        return num+'0';
+    }
 };
 
 

@@ -6,15 +6,16 @@
 #define TRAVEL_RECOMMEND_SYSTEM_REMAINSEATTABLE_H
 #include "RemainingSeat.h"
 #include <map>
+#include <unistd.h>
 #include<fstream>
 using namespace std;
 extern vector<string> mysplit(string str, string separator);
 class RemainSeatTable {
 private:
-    map<Time,map<string,RemainingSeat>> seatTable;
+    map<string,map<string,RemainingSeat>> seatTable;
 public:
-    inline RemainingSeat getSeat(Time &t,string &n){//Time is the DepatureTime and the string is the flighNo
-        map<Time,map<string,RemainingSeat>>::iterator iter1;
+    inline RemainingSeat getSeat(string &t,string &n){//Time is the DepatureTime and the string is the flighNo
+        map<string,map<string,RemainingSeat>>::iterator iter1;
         iter1 = seatTable.find(t);
         if(iter1!=seatTable.end()){
             map<string ,RemainingSeat>::iterator iter2;
@@ -34,6 +35,7 @@ public:
         return seatTable.size()==0;
     }
     void CreatRemainSeatTable(string path);
+    void update();
 };
 
 
