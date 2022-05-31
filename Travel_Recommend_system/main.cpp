@@ -5,7 +5,7 @@ using namespace std;
 //#include "PriceRule.h"
 #include "Net.h"
 //#include "FlightAns.h"
-//#include "FlightRequest.h"
+#include "FlightRequest.h"
 //#include "RemainingSeat.h"
 #include "FlightSet.h"
 #include "PriceRule.h"
@@ -17,17 +17,19 @@ using namespace std;
 #include <string>
 #include <thread>
 #include <future>
-extern FlightSet *SET;
-extern PriceRuleTable *PRT;
-extern PriceTable *PT;
-extern RemainSeatTable *RST;
+FlightSet *SET;
+PriceRuleTable *PRT;
+PriceTable *PT;
+RemainSeatTable *RST;
 int main() {
 
-    FlightSet *SET =new FlightSet;
-    PriceRuleTable *PRT =new PriceRuleTable;
-    PriceTable *PT =new PriceTable;
-    RemainSeatTable *RST =new RemainSeatTable;
-    vector<string> cityName={"北京","上海","广州","深圳","香港","澳门","沈阳","青岛","济南","武汉","厦门","西安","长沙","南京","杭州","重庆","成都","昆明","贵阳","三亚","海口","乌鲁木齐","西宁","兰州","银川","拉萨"};
+    SET =new FlightSet;
+    PRT =new PriceRuleTable;
+    PT =new PriceTable;
+    RST =new RemainSeatTable;
+    vector<string> cityName={"AQG", "AOG", "AVA", "AEB", "BSD", "BAV", "BHY", "PEK", "BFU", "CGQ", "CGD", "CSX", "CZX", "CTU", "CIF", "CKG", "DLU", "DLC", "DNH", "ENH", "FUO", "FUG", "HMI", "HGH", "HZG", "HFE", "HEK", "HNY", "TXN", "HET", "HUZ", "JMU", "KNC", "JGN", "JIL", "TNA", "JDZ", "JNG", "JNZ", "JIU", "CHW", "JZH", "KHG", "KRY", "KRL", "KMG", "LHW", "LXA", "LYG", "LJG", "LYI", "LHN", "LZH",
+                             "LYA", "LUZ", "LZO", "LUM", "NZH", "MIG", "MDG", "KHN", "NAO", "NKG", "NNG", "NTG", "NNY", "NGB", "PZI", "TAO", "IQN", "SHP", "NDG", "JUZ", "SYX", "SHA", "PVG", "SWA", "SHS", "SHE", "SZX",
+    "SJW", "SZV", "TYN", "TSN", "TNH", "TGO", "TEN", "WEF", "WEH", "WNZ", "WUH", "WHU", "HLH", "URC", "WUX", "WUS", "WUZ", "XMN", "XIY", "SIA", "XIC", "XIL", "XNN", "XUZ", "ENY", "YNZ", "YNT", "YBP", "YIH", "YIN", "YIW", "LLF", "DYG", "ZHA", "ZAT", "CGO", "HJJ", "ZUH", "ZYI"};
     //SET init
     SET->initSet(cityName, "20220503000000", 10);
     FILE *fp1=fopen("../flight.txt","r");
@@ -61,13 +63,23 @@ int main() {
 
     //RST init
     RST->CreatRemainSeatTable("../seats.txt");
-    async(launch::async,[RST](){RST->update();});
-    PT->findPrice("FM","KHG","DNH");
-    PT->findPrice("JZ","WDF","FEG");
-    PT->findPrice("CA","WDF","FEG");
-    PRT->findAgency("FM","KHG","DNH");
-    PRT->findSurcharge("FM","KHG","DNH");
-    PRT->findAgency("JZ","WDF","FEG");
-    PRT->findAgency("CA","WDF","FEG");
+    Time t1;
+    t1.string2time("20220512134000");
+    vector<string> agc = {"CGQ001"};
+    //HO;5769;20220512134000;20220512165500;SZX;BJS;
+    FlightRequest a(t1,"NKG","SZX",agc,1,20);
+    vector<FlightRequest> req;
+    req.push_back(a);
+    vector<FlightAns> ans = SET->multiAgencyRequest(req);
+    for(int i = 0; i < ans.size(); i++) cout<<ans[i].Return_ticketPrice()<<endl;
+    //async(launch::async,[RST](){RST->update();});
+//    PT->findPrice("FM","KHG","DNH");
+//    PT->findPrice("JZ","WDF","FEG");
+//    PT->findPrice("CA","WDF","FEG");
+//    PRT->findAgency("FM","KHG","DNH");
+//    PRT->findSurcharge("FM","KHG","DNH");
+//    PRT->findAgency("JZ","WDF","FEG");
+//    PRT->findAgency("CA","WDF","FEG");
+
     return 0;
 }
