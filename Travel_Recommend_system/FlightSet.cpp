@@ -223,7 +223,7 @@ vector<FlightAns> FlightSet::request(vector<FlightRequest> req, string target_ag
 struct asdf{
     int val;        //当前航班总票价
     int x,y;        //当前位置
-    int pos[10] = {0};    //初始每一组均取第一个元素，即为最小
+    int pos[10] = {0,0,0,0,0,0,0,0,0,0};    //初始每一组均取第一个元素，即为最小
     bool p;         //判断是否满足扩展条件
     asdf(){}
     asdf(int vall,int xe,int yo,bool pp){val=vall;x=xe;y=yo;p=pp;}  //快捷构造
@@ -279,7 +279,7 @@ vector<FlightAns> FlightSet::request(vector<FlightRequest> req, string target_ag
                 tmp_asdf.pos[head[np.x].second] = np.y+1;
                 q.push(tmp_asdf);
             }
-            if(np.x+1<req_size){
+            if(np.x+1<req_size && tmp[head[np.x+1].second].size() > 1){
                 asdf tmp_asdf = np;
                 tmp_asdf.val = np.val - tmp[head[np.x+1].second][0].Return_price() + tmp[head[np.x+1].second][1].Return_price();
                 tmp_asdf.x = np.x + 1;
@@ -288,7 +288,7 @@ vector<FlightAns> FlightSet::request(vector<FlightRequest> req, string target_ag
                 tmp_asdf.pos[head[np.x+1].second] = 1;
                 q.push(tmp_asdf);
             }
-            if(np.x+1<req_size && np.p){
+            if(np.x+1<req_size && np.p && tmp[head[np.x+1].second].size() > 1){
                 asdf tmp_asdf = np;
                 tmp_asdf.val = np.val - tmp[head[np.x].second][np.y].Return_price() + tmp[head[np.x].second][0].Return_price() - tmp[head[np.x+1].second][0].Return_price() + tmp[head[np.x+1].second][1].Return_price();
                 tmp_asdf.x = np.x + 1;
