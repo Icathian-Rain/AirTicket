@@ -21,7 +21,7 @@ private:
     char seatC;         //商务舱
     char seatY;         //经济舱
     int price = 0;              //票价，在搜索时确定，同时用于排序
-    char passenger_seatList[8];          //记录乘客座位表，即为每个乘客所在的仓位，值分别为F,C,Y，以0填充
+    char passenger_seatList[8] = {0,0,0,0,0,0,0,0};          //记录乘客座位表，即为每个乘客所在的仓位，值分别为F,C,Y，以0填充
     string agc;                 //代理人
 
 public:
@@ -33,15 +33,13 @@ public:
     inline Time takeOffTimeVal(){ return takeOffTime;};
     inline Time arrivalTimeVal(){ return  arrivalTime;};
     inline int Return_price(){ return price;};         //返回票价
-
-
-    PriceRule rule;         //运价规则
     static bool comparePrice(const Flight &f1, const Flight &f2){       //自定义比较函数、用于sort、set
         return f1.price < f2.price;
     }
     inline void createFlight(string carr,string flightN,Time tTime,Time aTime,string sCi,string dCi,int pri){carrier=carr,flightNo=flightN,takeOffTime=tTime,arrivalTime=aTime,sCity=sCi,dCity=dCi,price=pri;};
     inline void showFlight(){
         cout<<"航班号："<<flightNo<<endl;
+        cout<<"agc:"<<agc<<endl;
         cout << "起飞时间：";
         takeOffTime.showTime();
         cout<<"抵达时间：";

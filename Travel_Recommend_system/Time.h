@@ -25,7 +25,7 @@ public:
         hour = atoi(temp.assign(str,8,2).c_str());
         minute = atoi(temp.assign(str,10,2).c_str());
     }
-    //日期转到字符串
+    //日期转到字符串,转来转去很麻烦，之后对余座数据表进行修改
     string time2string_forday(){
         string temp;
         temp += to_string(year);
@@ -35,6 +35,7 @@ public:
         temp += to_string(day);
         return temp;
     }
+    //tomorrow有问题
     void tomorrow() {//add one day
         day++;
         if(day>31){

@@ -31,7 +31,7 @@ int main() {
                              "LYA", "LUZ", "LZO", "LUM", "NZH", "MIG", "MDG", "KHN", "NAO", "NKG", "NNG", "NTG", "NNY", "NGB", "PZI", "TAO", "IQN", "SHP", "NDG", "JUZ", "SYX", "SHA", "PVG", "SWA", "SHS", "SHE", "SZX",
     "SJW", "SZV", "TYN", "TSN", "TNH", "TGO", "TEN", "WEF", "WEH", "WNZ", "WUH", "WHU", "HLH", "URC", "WUX", "WUS", "WUZ", "XMN", "XIY", "SIA", "XIC", "XIL", "XNN", "XUZ", "ENY", "YNZ", "YNT", "YBP", "YIH", "YIN", "YIW", "LLF", "DYG", "ZHA", "ZAT", "CGO", "HJJ", "ZUH", "ZYI"};
     //SET init
-    SET->initSet(cityName, "20220503000000", 10);
+    SET->initSet(cityName, "20220530000000", 370);
     FILE *fp1=fopen("../flight.txt","r");
     FILE *fp2=fopen("../price.txt","r");
     if(fp1==NULL||fp2==NULL){
@@ -62,16 +62,26 @@ int main() {
     cout<<"gather finishing!"<<endl<<endl;
 
     //RST init
-    RST->CreatRemainSeatTable("../seats.txt");
-    Time t1;
-    t1.string2time("20220512134000");
-    vector<string> agc = {"CGQ001"};
-    //HO;5769;20220512134000;20220512165500;SZX;BJS;
-    FlightRequest a(t1,"NKG","SZX",agc,1,20);
-    vector<FlightRequest> req;
-    req.push_back(a);
-    vector<FlightAns> ans = SET->multiAgencyRequest(req);
-    for(int i = 0; i < ans.size(); i++) cout<<ans[i].Return_ticketPrice()<<endl;
+    RST->CreatRemainSeatTable("../FlightSeats.txt");
+    Time t[4];
+    t[0].string2time("20220621000000");
+    t[1].string2time("20220622000000");
+    t[2].string2time("20220623000000");
+    t[3].string2time("20220624000000");
+    vector<string> agc = {"CIF001","BHY001","AOG001","CZX001","BFU001","DLU001","CKG001","CTU001","DNH001"};
+    string sCity[4],dCity[4];
+    cout<<"cin>>"<<endl;
+    while(cin>>sCity[0] && cin>>dCity[0]){
+        cin>>sCity[1]>>dCity[1]>>sCity[2]>>dCity[2]>>sCity[3]>>dCity[3];
+        vector<FlightRequest> req;
+        for(int i = 0; i < 4; i++) {
+            FlightRequest a(t[i],sCity[i],dCity[i],agc,1,20);
+            req.push_back(a);
+        }
+        vector<FlightAns> ans = SET->multiAgencyRequest(req);
+        cout<<"ANs number:"<<ans.size()<<endl;
+        for(int i = 0; i < ans.size(); i++) ans[i].ShowAns();
+    }
     //async(launch::async,[RST](){RST->update();});
 //    PT->findPrice("FM","KHG","DNH");
 //    PT->findPrice("JZ","WDF","FEG");
