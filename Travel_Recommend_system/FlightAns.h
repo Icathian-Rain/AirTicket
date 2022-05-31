@@ -12,7 +12,7 @@ class FlightAns {
 private:
     vector<Flight> flight;//航班信息,可能是多个航班联程
     //Flight flight;
-    int ticketPrice;//总票價
+    int ticketPrice = 0;//总票價
     //搜索结果不需要代理人信息，用户已经指定了，可以考虑做一次验证操作，保证结果正确性
     bool status = true;         //真实or虚拟响应
 public:

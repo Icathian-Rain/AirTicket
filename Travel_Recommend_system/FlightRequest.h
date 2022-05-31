@@ -18,6 +18,7 @@ private:
     char maxAnsNUm;         //最大請求結果數目
 public:
     //获取信息
+    FlightRequest(Time t, string s, string d, vector<string> agc, char passnum, char maxansnum);
     inline Time timeVal(){ return time;};
     inline string Return_sCity(){ return sCity;};
     inline string Return_dCity(){ return dCity;};
