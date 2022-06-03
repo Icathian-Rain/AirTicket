@@ -27,7 +27,6 @@ private:
 public:
     void initSet(vector<string> CityName, string t, int future_days);
     void createSet(FILE *fp_flight,FILE *fp_price);
-    void all_Seats();	   //read in seats
     void showSet();
     inline int getDir(FlightRequest req){return req.timeVal().day2int()-today.day2int();};//獲取待搜索的日期在日期數組中的位置
     void update();      //日期更新时对航班信息更新,pop_front,push_back

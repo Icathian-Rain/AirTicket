@@ -3,11 +3,6 @@
 //
 
 #include "FlightAns.h"
-void FlightAns::Virtual_FlightAns() {
-    ticketPrice = 1e9;      //票价设置为大值
-    status = false;         //状态设置为虚拟
-}
-
 //判断是否满足衔接条件
 bool FlightAns::Connect_ok() {
     if(flight.size() <= 1) return true;

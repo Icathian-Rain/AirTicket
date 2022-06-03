@@ -25,78 +25,31 @@ vector<string> mysplit(string str, string separator) {//split string str by sepa
     return result;
 }
 
-/*void Net::initSet_and_Table() {
-    SET = new FlightSet;
-    PT = new PriceTable;
-    PRT = new PriceRuleTable;
-    RST = new RemainSeatTable;
-    vector<string> cityName={"北京","上海","广州","深圳","香港","澳门","沈阳","青岛","济南","武汉","厦门","西安","长沙","南京","杭州","重庆","成都","昆明","贵阳","三亚","海口","乌鲁木齐","西宁","兰州","银川","拉萨"};
-    //SET init
-    SET->initSet(cityName, "20220503000000", 10);
-    FILE *fp1=fopen("../flight.txt","r");
-    FILE *fp2=fopen("../price.txt","r");
-    if(fp1==NULL||fp2==NULL){
-        cout<<"flight error!";
-       // return -1;
-    }
-    SET->createSet(fp1,fp2);
-
-    //PT init
-    FILE *fp3=fopen("../price.txt","r");
-    if(fp3==NULL){
-        cout<<"price error!";
-       // return -1;
-    }
-    cout<<"start gathering price....."<<endl;
-    PT->createTable(fp3);
-//    pt.showCityIndex();
-    cout<<"gather finishing!"<<endl<<endl;
-
-    //PRT init
-    FILE *fp4=fopen("../priceRule.txt","r");
-    if(fp4==NULL){
-        cout<<"priceRule error!";
-      //  return -1;
-    }
-    cout<<"start gathering price rules....."<<endl;
-    PRT->createTable(fp4);
-    cout<<"gather finishing!"<<endl<<endl;
-
-    //RST init
-    RST->CreatRemainSeatTable("../seats.txt");
-    PT->findPrice("FM","KHG","DNH");
-    PT->findPrice("JZ","WDF","FEG");
-    PT->findPrice("CA","WDF","FEG");
-    PRT->findAgency("FM","KHG","DNH");
-    PRT->findSurcharge("FM","KHG","DNH");
-    PRT->findAgency("JZ","WDF","FEG");
-    PRT->findAgency("CA","WDF","FEG");
-}
-*/
-bool Net::Set_flightSeats(RemainingSeat st) {
-    int index_of_sCity = FindIndex(city[st.Return_sCity()]);
-    int index_of_dCity = FindIndex(city[st.Return_dCity()]);
-    for(int i = 0; i < matrix[index_of_sCity][index_of_dCity].size(); i++){
-        if(matrix[index_of_sCity][index_of_dCity][i].flightNoVal() == st.Return_flightNo()){
-            bool ok = matrix[index_of_sCity][index_of_dCity][i].SetSeats(st.Return_seatF(),st.Return_seatC(),st.Return_seatY());
-            if(!ok) cout<<"error!"<<endl;
-            return true;
-        }
-    }
-    cout<<"flignt not found!"<<endl;
-    return false;
-}
 
 vector<Flight> Net::request(FlightRequest req, string target_agency){
     vector<Flight> res;             //result
     string sCity = req.Return_sCity();
     string dCity = req.Return_dCity();
     int N = req.Return_passengerNUm();      //旅客人数
+    if( N <= 0 || N > 8) {
+        cout<<"Passenger Number is error!"<<endl;
+        return res;
+    }
     //string target_agency = req.Return_agency()[0];  //该功能指定一个代理人
+    //定位
     int s = FindIndex(sCity);
-    int d = FindIndex(dCity);   //定位
+    int d = FindIndex(dCity);
+    if( s < 0 || s >= CITYNUM) {
+        cout<<"sCity not found!"<<endl;
+        return res;
+    }
+    if( s < 0 || s >= CITYNUM) {
+        cout<<"dCity not found!"<<endl;
+        return res;
+    }
+
     for(int i =0; i < matrix[s][d].size(); i++){
-        Flight tmp_flightA = matrix[s][d][i];
+        Flight tmp_flightA = matrix[s][d][i];       //对象复制，不会对原数据造成修改
         string A_carrier = tmp_flightA.carrierVal();
         //agency
         vector<string> agc = PRT->findAgency(A_carrier, sCity, dCity);      //从PTR中找到允许的代理人
