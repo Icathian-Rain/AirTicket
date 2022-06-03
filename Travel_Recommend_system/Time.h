@@ -61,7 +61,7 @@ public:
         int daydiff = t2.day2int() - t1.day2int();        //求两个时间相差的天数
         if(daydiff < 0) return false;
         if(daydiff >=2) return true;
-        t2.hour += 24*daydiff;
+        t2.hour += 24*daydiff;                          //调用了拷贝构造函数，不会对原时间造成影响
         if(t2.hour - t1.hour < 2) return false;
         else if(t2.hour - t1.hour == 2) {
             if (t2.minute > t1.minute) return true;
