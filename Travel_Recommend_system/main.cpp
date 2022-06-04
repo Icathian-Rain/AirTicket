@@ -35,15 +35,17 @@ int main() {
     FILE *fp1=fopen("../flight.txt","r");
     FILE *fp2=fopen("../price.txt","r");
     if(fp1==NULL||fp2==NULL){
-        cout<<"flight error!";
+        cout<<"flight.txt(price.txt) open error!";
         return -1;
     }
+    cout<<"start gathering flight....."<<endl;
     SET->createSet(fp1,fp2);
+    cout<<"gather finishing!"<<endl<<endl;
 
     //PT init
     FILE *fp3=fopen("../price.txt","r");
     if(fp3==NULL){
-        cout<<"price error!";
+        cout<<"price.txt open error!";
         return -1;
     }
     cout<<"start gathering price....."<<endl;
@@ -54,7 +56,7 @@ int main() {
     //PRT init
     FILE *fp4=fopen("../priceRule.txt","r");
     if(fp4==NULL){
-        cout<<"priceRule error!";
+        cout<<"priceRule.txt open error!";
         return -1;
     }
     cout<<"start gathering price rules....."<<endl;

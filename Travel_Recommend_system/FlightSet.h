@@ -22,6 +22,7 @@ extern vector<string> mysplit(string str, string separator);
 class FlightSet {//所有航班集合
 private:
     Time today;     //今天的日期
+    int future_day; //未來天數
     //vector <Flight> flightSet;  //未來所有天的航班按照日期排成數組
     vector<Net> flightSet;         //存储所有航班信息
 public:

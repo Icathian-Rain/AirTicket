@@ -36,8 +36,9 @@ private:
 public:
     void initNet(vector<string> cityName, Time t){
         vexnum=cityName.size();
+        if(vexnum>CITYNUM)
+            vexnum=CITYNUM;
         vertex=cityName;
-        for(int i = 0; i < vexnum; i++) cout<<vertex[i]<<' ';
         time=t;
         for (int i = 0;i < CITYNUM;i++) {
             for (int j = 0;j < CITYNUM;j++) {
@@ -46,12 +47,10 @@ public:
         }
     }
     void addFlight(string sCity,string dCity,string flightNo,string carriers,Time tT,Time aT,int price){//add one flight
-        cout<<sCity<<' '<<dCity<<endl;
         int sCityIndex = FindIndex(sCity);
         int dCityIndex = FindIndex(dCity);
-        cout<<sCityIndex<<' '<<dCityIndex<<endl;
-        if(sCityIndex==-1||dCityIndex==-1){
-            cout<<"error"<<endl;
+        if(sCityIndex==-1||dCityIndex==-1||sCityIndex>CITYNUM||dCityIndex>CITYNUM){
+            cout<<"FLight index out!"<<endl;
             return ;
         }
         Flight flight;
