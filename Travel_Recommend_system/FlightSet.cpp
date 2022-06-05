@@ -36,6 +36,7 @@ extern unordered_map<string, int> City_index
 void FlightSet::initSet(vector<string> CityName, string t, int future_days) {//初始化Set，输入城市节点信息，当天日期t和未来航班天数future_days
     today.string2time(t);
     Time temp = today;
+    future_day=future_days;
     for (int i = 0;i < future_days;i++) {//
         Net net;
         temp.tomorrow();
@@ -49,6 +50,10 @@ void FlightSet::createSet(FILE *fp_flight,FILE *fp_price){
     string flightNo,sCity,dCity,carrier,tT,aT;
     while (fgets(buffer, 200, fp_flight) != NULL) {
         vector<string> str = mysplit(buffer, ";");
+        if(str.size()!=7){
+            cout<<"flight.txt pattern error!"<<endl;
+            continue;
+        }
         carrier = str[0];
         flightNo = str[1];
         tT = str[2];
@@ -58,7 +63,15 @@ void FlightSet::createSet(FILE *fp_flight,FILE *fp_price){
         Time tTime,aTime;
         tTime.string2time(tT);
         aTime.string2time(aT);
+        if(Time::compare_Time(today,tTime)){
+            cout<<"flight date error!"<<endl;
+            continue;
+        }
         int index=today.timeInterval(tTime);
+        if(index>future_day){
+            cout<<"future day out!"<<endl;
+            continue;
+        }
         fgets(buffer,200,fp_price);
         int num=atoi(&buffer[18]);
         flightSet[index].addFlight(sCity,dCity,flightNo,carrier,tTime,aTime,num);

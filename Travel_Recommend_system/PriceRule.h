@@ -30,7 +30,7 @@ public:
             if(agen.length() > 0)
                 agency.push_back(agen);
         }
-        surcharge=surch[0];
+        surcharge=stoi(surch,0,10);
     }
     //获取信息inline内联函数
     inline int Return_sequenceNo(){ return sequenceNo;};
