@@ -32,8 +32,8 @@ public:
     inline char Return_seatF(){ return seatF;};
     inline char Return_seatC(){ return seatC;};
     inline char Return_seatY(){ return seatY;};
-    inline char* Return_seat(){
-        char allseat[3] = {seatF,seatC,seatY};
+    inline vector<char> Return_seat(){
+        vector<char> allseat = {seatF,seatC,seatY};
         return allseat;
     };
     inline Time Return_depatureDate(){ return depatureDate;};

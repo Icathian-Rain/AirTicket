@@ -36,6 +36,7 @@ extern unordered_map<string, int> City_index
 void FlightSet::initSet(vector<string> CityName, string t, int future_days) {//初始化Set，输入城市节点信息，当天日期t和未来航班天数future_days
     today.string2time(t);
     Time temp = today;
+    future_day=future_days;
     for (int i = 0;i < future_days;i++) {//
         Net net;
         temp.tomorrow();
@@ -49,6 +50,10 @@ void FlightSet::createSet(FILE *fp_flight,FILE *fp_price){
     string flightNo,sCity,dCity,carrier,tT,aT;
     while (fgets(buffer, 200, fp_flight) != NULL) {
         vector<string> str = mysplit(buffer, ";");
+        if(str.size()!=7){
+            cout<<"flight.txt pattern error!"<<endl;
+            continue;
+        }
         carrier = str[0];
         flightNo = str[1];
         tT = str[2];
@@ -58,29 +63,21 @@ void FlightSet::createSet(FILE *fp_flight,FILE *fp_price){
         Time tTime,aTime;
         tTime.string2time(tT);
         aTime.string2time(aT);
+        if(Time::compare_Time(today,tTime)){
+            cout<<"flight date error!"<<endl;
+            continue;
+        }
         int index=today.timeInterval(tTime);
+        if(index>future_day){
+            cout<<"future day out!"<<endl;
+            continue;
+        }
         fgets(buffer,200,fp_price);
         int num=atoi(&buffer[18]);
         flightSet[index].addFlight(sCity,dCity,flightNo,carrier,tTime,aTime,num);
     }
 }
 
-void FlightSet::all_Seats() {
-    ifstream in;
-    in.open("../seats2.txt",ios::in);
-    if(!in.is_open()){
-        cout<<"cannot open the file"<<endl;
-        exit(1);
-    }
-    string line;
-    while(getline(in,line)){
-        vector<string> tmp = mysplit(line,";");
-        RemainingSeat st(tmp);
-        int index = st.Return_depatureDate().day2int() - today.day2int();
-        flightSet[index].Set_flightSeats(st);//
-    }
-    in.close();
-}
 
 void FlightSet::showSet(){
     for(int i=0;i<flightSet.size();i++){
@@ -223,7 +220,7 @@ vector<FlightAns> FlightSet::request(vector<FlightRequest> req, string target_ag
 struct asdf{
     int val;        //当前航班总票价
     int x,y;        //当前位置
-    int pos[10] = {0};    //初始每一组均取第一个元素，即为最小
+    int pos[10] = {0,0,0,0,0,0,0,0,0,0};    //初始每一组均取第一个元素，即为最小
     bool p;         //判断是否满足扩展条件
     asdf(){}
     asdf(int vall,int xe,int yo,bool pp){val=vall;x=xe;y=yo;p=pp;}  //快捷构造
@@ -232,9 +229,13 @@ struct asdf{
 //低价行程推荐算法优化：堆模拟搜索算法-->O(MNlogN)
 //多旅客、单代理人
 vector<FlightAns> FlightSet::request(vector<FlightRequest> req, string target_agency) {           //低价行程推荐
-    int req_size = req.size();      //航段请求数量
-    vector<Flight> tmp[req_size];       //暂存每一段航班的搜索结果
     vector<FlightAns> ans;          //存放推荐结果
+    int req_size = req.size();      //航段请求数量
+    if(req_size <= 0 || req_size > 8) {
+        cout<<"Request size is error!"<<endl;
+        return ans;
+    }
+    vector<Flight> tmp[req_size];       //暂存每一段航班的搜索结果
     bool ok = true;                 //查询成功/失败，如果某一段查询不到航班，则查询失败
 
     pair<int,int> head[10];
@@ -243,9 +244,14 @@ vector<FlightAns> FlightSet::request(vector<FlightRequest> req, string target_ag
     int tot = 0;
     for(int i = 0; i < req_size; i++){
         int d = getDir(req[i]);     //date_index日期索引
+        if( d < 0 || d >= flightSet.size()){
+            cout<<"The date is error!"<<endl;
+            ok = false;
+            break;
+        }
         tmp[i] = flightSet[d].request(req[i], target_agency);  //调用当天的Net搜索满足条件的所有航班
         if(tmp[i].empty()){
-            cout<<"第"<<i+1<<"航段查询不到，请重新选择!"<<endl;
+            cout<<"第"<<i+1<<"航段查询不到!"<<endl;
             ok = false;     //记录查询结果为失败
             break;
         }
@@ -258,7 +264,7 @@ vector<FlightAns> FlightSet::request(vector<FlightRequest> req, string target_ag
         sort(head, head+req_size);      //按照(次小-最小的值)给每一组排序
         q.push(asdf(tot,0,0,false));
         while(cnt <20 && !q.empty()){
-            asdf np=q.top();
+            asdf np = q.top();
             q.pop();
             //根据输出构造一个FligntAns
             FlightAns tmp_ans;
@@ -279,7 +285,7 @@ vector<FlightAns> FlightSet::request(vector<FlightRequest> req, string target_ag
                 tmp_asdf.pos[head[np.x].second] = np.y+1;
                 q.push(tmp_asdf);
             }
-            if(np.x+1<req_size){
+            if(np.x+1<req_size && tmp[head[np.x+1].second].size() > 1){
                 asdf tmp_asdf = np;
                 tmp_asdf.val = np.val - tmp[head[np.x+1].second][0].Return_price() + tmp[head[np.x+1].second][1].Return_price();
                 tmp_asdf.x = np.x + 1;
@@ -288,7 +294,7 @@ vector<FlightAns> FlightSet::request(vector<FlightRequest> req, string target_ag
                 tmp_asdf.pos[head[np.x+1].second] = 1;
                 q.push(tmp_asdf);
             }
-            if(np.x+1<req_size && np.p){
+            if(np.x+1<req_size && np.p && tmp[head[np.x+1].second].size() > 1){
                 asdf tmp_asdf = np;
                 tmp_asdf.val = np.val - tmp[head[np.x].second][np.y].Return_price() + tmp[head[np.x].second][0].Return_price() - tmp[head[np.x+1].second][0].Return_price() + tmp[head[np.x+1].second][1].Return_price();
                 tmp_asdf.x = np.x + 1;
@@ -307,41 +313,31 @@ vector<FlightAns> FlightSet::request(vector<FlightRequest> req, string target_ag
 
 struct cmp{             //FlightAns 总票价越高，优先级越高
     bool operator()(FlightAns &a1, FlightAns &a2){
-        return a1.Return_ticketPrice() < a2.Return_ticketPrice();
+        return a1.Return_ticketPrice() > a2.Return_ticketPrice();
     }
 };
 
 //多旅客，多代理人
 vector<FlightAns> FlightSet::multiAgencyRequest(vector<FlightRequest> req) {
+    vector<FlightAns> ans;      //返回的结果
     vector<string>  target_agency = req[0].Return_agency();         //获取允许的代理人数目
-    vector<FlightAns> ans;
-    priority_queue<FlightAns,vector<FlightAns>,cmp> p;      //优先队列,大根堆，用于动态选取20个低价行程
-    for(int j = 0; j < 20 ; j++){
-        FlightAns tmp_ans;
-        tmp_ans.Virtual_FlightAns();            //设置票价为大值，状态为虚拟
-        p.push(tmp_ans);
+    int agc_size = target_agency.size();
+    if( agc_size <= 0 || agc_size > 20) {
+        cout<<"Error in number of agents allowed!"<<endl;
+        return ans;
     }
-    //求出每个代理人的20个低价结果，再用堆排序进一步筛选20个低价结果
-    for(int i = 0; i < target_agency.size(); i++){
+    priority_queue<FlightAns,vector<FlightAns>,cmp> p;      //优先队列,小根堆，用于获取20个低价行程
+    for(int i = 0; i < agc_size; i++){
         vector<FlightAns> tmp = request(req,target_agency[i]);
-        for(int j = 0 ; j < tmp.size(); j++){
-            FlightAns top = p.top();
-            if(top.Return_ticketPrice() > tmp[j].Return_ticketPrice()){
-                p.pop();
-                p.push(tmp[j]);
-            }
+        for(int j = 0 ; j < tmp.size(); j++) {
+            p.push(tmp[j]);
         }
     }
-
-    vector<FlightAns> reverse_order;        //先存一个反序的
-    while(!p.empty()){
-        FlightAns top = p.top();
-        if(top.Return_status())         //如果不是虚拟响应，输出到ans
-            reverse_order.push_back(top);
+    int cnt = 0;
+    while(cnt < 20 && !p.empty()) {
+        ans.push_back(p.top());
+        cnt++;
         p.pop();
-    }
-    for(int j = reverse_order.size() - 1; j > 0; j--){  //再反序更新到ans
-        ans.push_back(reverse_order[j]);
     }
     return ans;
 }
