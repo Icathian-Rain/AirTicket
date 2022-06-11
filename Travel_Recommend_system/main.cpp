@@ -17,7 +17,7 @@ using namespace std;
 #include <string>
 #include <thread>
 #include <future>
-Travel_Recommend_system/main.cppFlightSet *SET;
+FlightSet *SET;
 PriceRuleTable *PRT;
 PriceTable *PT;
 RemainSeatTable *RST;
