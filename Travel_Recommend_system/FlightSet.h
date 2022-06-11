@@ -27,13 +27,13 @@ private:
     vector<Net> flightSet;         //存储所有航班信息
 public:
     void initSet(vector<string> CityName, string t, int future_days);
-    void createSet(FILE *fp_flight,FILE *fp_price);
+    void createSet(FILE *fp);
     void showSet();
     inline int getDir(FlightRequest req){return req.timeVal().day2int()-today.day2int();};//獲取待搜索的日期在日期數組中的位置
     void update();      //日期更新时对航班信息更新,pop_front,push_back
-    vector <FlightAns> request(vector <FlightRequest> req, string target_agency); //輸入請求向量，獲取每一個請求的日期，分別調用當天航班的信息，最後返回結果向量
-    vector <FlightAns> multiAgencyRequest(vector <FlightRequest> req);
-    vector <FlightAns> multiPassengerRequest(vector <FlightRequest> req);
+    vector <FlightAns> request(vector <FlightRequest> req); //輸入請求向量，獲取每一個請求的日期，分別調用當天航班的信息，最後返回結果向量
+//    vector <FlightAns> multiAgencyRequest(vector <FlightRequest> req);
+//    vector <FlightAns> multiPassengerRequest(vector <FlightRequest> req);
 };
 
 

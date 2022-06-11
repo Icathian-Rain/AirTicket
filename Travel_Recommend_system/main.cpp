@@ -12,7 +12,6 @@ using namespace std;
 #include "PriceRuleTable.h"
 #include "PriceTable.h"
 #include "RemainSeatTable.h"
-//#include "Recommend_sys.h"
 #include <vector>
 #include <string>
 #include <thread>
@@ -39,7 +38,7 @@ int main() {
         return -1;
     }
     cout<<"start gathering flight....."<<endl;
-    SET->createSet(fp1,fp2);
+    SET->createSet(fp1);
     cout<<"gather finishing!"<<endl<<endl;
 
     //PT init
@@ -80,7 +79,7 @@ int main() {
             FlightRequest a(t[i],sCity[i],dCity[i],agc,1,20);
             req.push_back(a);
         }
-        vector<FlightAns> ans = SET->multiAgencyRequest(req);
+        vector<FlightAns> ans = SET->request(req);
         cout<<"ANs number:"<<ans.size()<<endl;
         for(int i = 0; i < ans.size(); i++) ans[i].ShowAns();
     }

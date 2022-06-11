@@ -4,19 +4,20 @@
 
 #ifndef TRAVEL_RECOMMEND_SYSTEM_FLIGHTANS_H
 #define TRAVEL_RECOMMEND_SYSTEM_FLIGHTANS_H
-#include "Flight.h"
 #include <vector>
 #include <string>
+#include "Flight.h"
+#include "AnsElement.h"
 using namespace std;
 class FlightAns {
 private:
-    vector<Flight> flight;//航班信息,可能是多个航班联程
+    vector<AnsElement> flight;//航班信息,可能是多个航班联程
     //Flight flight;
     int ticketPrice = 0;//总票價
-    //搜索结果不需要代理人信息，用户已经指定了，可以考虑做一次验证操作，保证结果正确性
+    vector<string> agc;
 public:
     //获取信息
-    inline vector<Flight> Return_flight(){ return flight;};
+    inline vector<AnsElement> Return_flight(){ return flight;};
     inline int Return_ticketPrice(){ return ticketPrice;};
     //string Return_agency();
 
@@ -24,7 +25,7 @@ public:
     static bool comparePrice(const FlightAns &a1, const FlightAns &a2){       //自定义比较函数、用于sort、set
         return a1.ticketPrice < a2.ticketPrice;
     }
-    inline void Add(Flight sdf){
+    inline void Add(AnsElement sdf){
         flight.push_back(sdf);
         ticketPrice += sdf.Return_price();
     };                //添加航段到Ans当中,因为代码量小并且频繁使用，故改为内联函数inline
@@ -32,10 +33,14 @@ public:
 
     inline void ShowAns(){
         cout<<"ANs :"<<endl;
+        cout<<"Agency :"<<endl;
+        for(int i = 0; i < agc.size(); i++) cout<<agc[i]<<" ";
+        cout<<endl;
         cout<<"Total price："<<ticketPrice<<endl;
         cout<<"segment flights:"<<endl;
-        for(int i = 0; i < flight.size(); i++) flight[i].showFlight();
+        for(int i = 0; i < flight.size(); i++) flight[i].showElement();
     }
+    bool GetCommon_agc();       //从flight中获取公共代理商，如果为空返回false
 };
 
 

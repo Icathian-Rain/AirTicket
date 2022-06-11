@@ -6,6 +6,7 @@
 #define TRAVEL_RECOMMEND_SYSTEM_NET_H
 #include "Time.h"
 #include "Flight.h"
+#include "AnsElement.h"
 #include "FlightRequest.h"
 #include <string>
 #include <vector>
@@ -46,15 +47,15 @@ public:
             }
         }
     }
-    void addFlight(string sCity,string dCity,string flightNo,string carriers,Time tT,Time aT,int price){//add one flight
+    void addFlight(string sCity,string dCity,string flightNo,string carriers,Time tT,Time aT){//add one flight
         int sCityIndex = FindIndex(sCity);
         int dCityIndex = FindIndex(dCity);
         if(sCityIndex==-1||dCityIndex==-1||sCityIndex>CITYNUM||dCityIndex>CITYNUM){
             cout<<"FLight index out!"<<endl;
             return ;
         }
-        Flight flight;
-        flight.createFlight(carriers, flightNo, tT, aT, sCity, dCity, price);
+        Flight flight(carriers, flightNo, tT, aT, sCity, dCity);
+//        flight.createFlight(carriers, flightNo, tT, aT, sCity, dCity);
         matrix[sCityIndex][dCityIndex].push_back(flight);
     }
 
@@ -69,7 +70,7 @@ public:
             }
         }
     }
-    vector<Flight> request(FlightRequest req, string target_agency);   //單乘客單代理人情況
+    vector<AnsElement> request(FlightRequest req);   //單请求情況
     void update();
 };
 
