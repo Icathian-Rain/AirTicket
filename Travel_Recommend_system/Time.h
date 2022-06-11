@@ -10,7 +10,7 @@ using namespace std;
 class Time{             //时间
 public:
     int year;
-    char month;             
+    char month;
     char day;
     char hour;
     char minute;
@@ -29,10 +29,15 @@ public:
     string time2string_forday(){
         string temp;
         temp += to_string(year);
-        if(month < 10) temp += '0';
+        if(month < 10) temp += "0";
         temp += to_string(month);
-        if(day < 10) temp += '0';
+        if(day < 10) temp += "0";
         temp += to_string(day);
+        if(hour < 10) temp += "0";
+        temp += to_string(hour);
+        if(minute < 10) temp += "0";
+        temp += to_string(minute);
+        temp += "00";
         return temp;
     }
     //tomorrow有问题
