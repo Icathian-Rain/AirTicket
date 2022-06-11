@@ -62,14 +62,14 @@ public:
 ////        price=pri;
 //    };
     inline void showFlight(){
-        cout<<"航班号："<<flightNo<<endl;
+        cout<<"航班号："<<flightNo<<" ";
 //        cout<<"agc:"<<agc<<endl;
-        cout << "起飞时间：";
-        takeOffTime.showTime();
-        cout<<"抵达时间：";
-        arrivalTime.showTime();
-        cout<<"起飞城市："<<sCity<<endl;
-        cout<<"抵达城市："<<dCity<<endl;
+//        cout << "起飞时间：";
+//        takeOffTime.showTime();
+//        cout<<"抵达时间：";
+//        arrivalTime.showTime();
+//        cout<<"起飞城市："<<sCity<<endl;
+//        cout<<"抵达城市："<<dCity<<endl;
 //        cout<<"余座信息："<<seatF<<';'<<seatC<<';'<<seatY<<';'<<endl;
 //        cout<<"票价："<<price<<endl<<endl;
     };

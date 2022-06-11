@@ -12,7 +12,7 @@ void RemainSeatTable::CreatRemainSeatTable(string path) {
     }
     while(getline(in,str)){
         vector<string> data = mysplit(str,";");
-        string tmp = data[4].substr(0,8);
+        string tmp = data[4];
         map<string,RemainingSeat> table;
         seatTable.insert(pair<string,map<string,RemainingSeat>>(tmp,table));
         RemainingSeat st(data);
