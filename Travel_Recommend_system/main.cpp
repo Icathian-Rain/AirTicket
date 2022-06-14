@@ -1,5 +1,5 @@
 #include <iostream>
-#include <jsoncpp/json/json.h>
+#include <json/json.h>
 #include "httplib.h"
 using namespace std;
 //#include "Flight.h"
@@ -22,51 +22,13 @@ FlightSet *SET;
 PriceRuleTable *PRT;
 PriceTable *PT;
 RemainSeatTable *RST;
+
+int initialize();
 int main() {
 
-    SET =new FlightSet;
-    PRT =new PriceRuleTable;
-    PT =new PriceTable;
-    RST =new RemainSeatTable;
-    vector<string> cityName={"AQG", "AOG", "AVA", "AEB", "BSD", "BAV", "BHY", "PEK", "BFU", "CGQ", "CGD", "CSX", "CZX", "CTU", "CIF", "CKG", "DLU", "DLC", "DNH", "ENH", "FUO", "FUG", "HMI", "HGH", "HZG", "HFE", "HEK", "HNY", "TXN", "HET", "HUZ", "JMU", "KNC", "JGN", "JIL", "TNA", "JDZ", "JNG", "JNZ", "JIU", "CHW", "JZH", "KHG", "KRY", "KRL", "KMG", "LHW", "LXA", "LYG", "LJG", "LYI", "LHN", "LZH",
-                             "LYA", "LUZ", "LZO", "LUM", "NZH", "MIG", "MDG", "KHN", "NAO", "NKG", "NNG", "NTG", "NNY", "NGB", "PZI", "TAO", "IQN", "SHP", "NDG", "JUZ", "SYX", "SHA", "PVG", "SWA", "SHS", "SHE", "SZX",
-    "SJW", "SZV", "TYN", "TSN", "TNH", "TGO", "TEN", "WEF", "WEH", "WNZ", "WUH", "WHU", "HLH", "URC", "WUX", "WUS", "WUZ", "XMN", "XIY", "SIA", "XIC", "XIL", "XNN", "XUZ", "ENY", "YNZ", "YNT", "YBP", "YIH", "YIN", "YIW", "LLF", "DYG", "ZHA", "ZAT", "CGO", "HJJ", "ZUH", "ZYI"};
-    //SET init
-    SET->initSet(cityName, "20220530000000", 370);
-    FILE *fp1=fopen("../flight.txt","r");
-    FILE *fp2=fopen("../price.txt","r");
-    if(fp1==NULL||fp2==NULL){
-        cout<<"flight.txt(price.txt) open error!";
+    if(initialize()==-1){
         return -1;
     }
-    cout<<"start gathering flight....."<<endl;
-    SET->createSet(fp1);
-    cout<<"gather finishing!"<<endl<<endl;
-
-    //PT init
-    FILE *fp3=fopen("../price.txt","r");
-    if(fp3==NULL){
-        cout<<"price.txt open error!";
-        return -1;
-    }
-    cout<<"start gathering price....."<<endl;
-    PT->createTable(fp3);
-//    pt.showCityIndex();
-    cout<<"gather finishing!"<<endl<<endl;
-
-    //PRT init
-    FILE *fp4=fopen("../priceRule.txt","r");
-    if(fp4==NULL){
-        cout<<"priceRule.txt open error!";
-        return -1;
-    }
-    cout<<"start gathering price rules....."<<endl;
-    PRT->createTable(fp4);
-    cout<<"gather finishing!"<<endl<<endl;
-
-    //RST init
-    RST->CreatRemainSeatTable("../FlightSeats.txt");
-    cout << "Down" << endl;
 //    Time t[4];
 //    t[0].string2time("20220621000000");
 //    t[1].string2time("20220622000000");
@@ -130,4 +92,53 @@ int main() {
 
 
     return 0;
+}
+
+int initialize(){
+    SET =new FlightSet;
+    PRT =new PriceRuleTable;
+    PT =new PriceTable;
+    RST =new RemainSeatTable;
+    vector<string> cityName={"AQG", "AOG", "AVA", "AEB", "BSD", "BAV", "BHY", "PEK", "BFU", "CGQ", "CGD", "CSX", "CZX", "CTU", "CIF", "CKG", "DLU", "DLC", "DNH", "ENH", "FUO", "FUG", "HMI", "HGH", "HZG", "HFE", "HEK", "HNY", "TXN", "HET", "HUZ", "JMU", "KNC", "JGN", "JIL", "TNA", "JDZ", "JNG", "JNZ", "JIU", "CHW", "JZH", "KHG", "KRY", "KRL", "KMG", "LHW", "LXA", "LYG", "LJG", "LYI", "LHN", "LZH",
+                             "LYA", "LUZ", "LZO", "LUM", "NZH", "MIG", "MDG", "KHN", "NAO", "NKG", "NNG", "NTG", "NNY", "NGB", "PZI", "TAO", "IQN", "SHP", "NDG", "JUZ", "SYX", "SHA", "PVG", "SWA", "SHS", "SHE", "SZX",
+                             "SJW", "SZV", "TYN", "TSN", "TNH", "TGO", "TEN", "WEF", "WEH", "WNZ", "WUH", "WHU", "HLH", "URC", "WUX", "WUS", "WUZ", "XMN", "XIY", "SIA", "XIC", "XIL", "XNN", "XUZ", "ENY", "YNZ", "YNT", "YBP", "YIH", "YIN", "YIW", "LLF", "DYG", "ZHA", "ZAT", "CGO", "HJJ", "ZUH", "ZYI"};
+    //SET init
+    SET->initSet(cityName, "20220530000000", 370);
+    FILE *fp1=fopen("../flight.txt","r");
+    FILE *fp2=fopen("../price.txt","r");
+    if(fp1==NULL||fp2==NULL){
+        cout<<"flight.txt(price.txt) open error!";
+        return -1;
+    }
+    cout<<"start gathering flight....."<<endl;
+    SET->createSet(fp1);
+    cout<<"gather finishing!"<<endl<<endl;
+
+    //PT init
+    FILE *fp3=fopen("../price.txt","r");
+    if(fp3==NULL){
+        cout<<"price.txt open error!";
+        return -1;
+    }
+    cout<<"start gathering price....."<<endl;
+    PT->createTable(fp3);
+//    pt.showCityIndex();
+    cout<<"gather finishing!"<<endl<<endl;
+
+    //PRT init
+    FILE *fp4=fopen("../priceRule.txt","r");
+    if(fp4==NULL){
+        cout<<"priceRule.txt open error!";
+        return -1;
+    }
+    cout<<"start gathering price rules....."<<endl;
+    PRT->createTable(fp4);
+    cout<<"gather finishing!"<<endl<<endl;
+
+    //RST init
+    cout<<"start gathering remaining seats....."<<endl;
+    RST->CreatRemainSeatTable("../FlightSeats.txt");
+    cout<<"gather finishing!"<<endl<<endl;
+
+    cout << "Down" << endl;
 }
