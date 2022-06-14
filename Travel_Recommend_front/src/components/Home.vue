@@ -132,15 +132,18 @@
 </template>
 
 <script >
-import { getCurrentInstance } from "vue";
+import axios from 'axios';
+
+const instance = axios.create({
+    baseURL: '127.0.0.1:8080',
+    timeout: 10000,
+    headers: {
+        'Content-Type': 'application/json'
+    }
+});
 
 export default {
     setup() {
-        const internalInstance = getCurrentInstance();
-        const http = internalInstance.appContext.config.globalProperties.$http; 
-        return {
-            http,
-        }
     },
     data() {
         return {
@@ -170,188 +173,489 @@ export default {
             // 机场选项
             options: [
                 {
-                    value: "HRB",
-                    label: "哈尔滨(HRB)",
+                    value: "AQG",
+                    label: "安庆(AQG)",
                 },
                 {
-                    value: "MDG",
-                    label: "牡丹江(MDG)",
+                    value: "AOG",
+                    label: "鞍山(AOG)",
                 },
                 {
-                    value: "NDG",
-                    label: "齐齐哈尔(NDG)",
+                    value: "AVA",
+                    label: "安顺(AVA)",
                 },
                 {
-                    value: "JMU",
-                    label: "佳木斯(JMU)",
+                    value: "AEB",
+                    label: "百色(AEB)",
+                },
+                {
+                    value: "BSD",
+                    label: "保山(BSD)",
+                },
+                {
+                    value: "BAV",
+                    label: "包头(BAV)",
+                },
+                {
+                    value: "BHY",
+                    label: "北海(BHY)",
+                },
+                {
+                    value: "PEK",
+                    label: "北京首都(PEK)",
+                },
+                {
+                    value: "BFU",
+                    label: "蚌埠(BFU)",
                 },
                 {
                     value: "CGQ",
                     label: "长春(CGQ)",
                 },
                 {
-                    value: "YNJ",
-                    label: "延吉(YNJ)",
+                    value: "CGD",
+                    label: "常德(CGD)",
+                },
+                {
+                    value: "CSX",
+                    label: "长沙(CSX)",
+                },
+                {
+                    value: "CZX",
+                    label: "常州(CZX)",
+                },
+                {
+                    value: "CTU",
+                    label: "成都(CTU)",
+                },
+                {
+                    value: "CIF",
+                    label: "赤峰(CIF)",
+                },
+                {
+                    value: "CKG",
+                    label: "重庆(CKG)",
+                },
+                {
+                    value: "DLU",
+                    label: "大理(DLU)",
+                },
+                {
+                    value: "DLC",
+                    label: "大连(DLC)",
+                },
+                {
+                    value: "DNH",
+                    label: "敦煌(DNH)",
+                },
+                {
+                    value: "ENH",
+                    label: "恩施(ENH)",
+                },
+                {
+                    value: "FUO",
+                    label: "佛山(FUO)",
+                },
+                {
+                    value: "FUG",
+                    label: "阜阳(FUG)",
+                },
+                {
+                    value: "HMI",
+                    label: "哈密(HMI)",
+                },
+                {
+                    value: "HGH",
+                    label: "杭州(HGH)",
+                },
+                {
+                    value: "HZG",
+                    label: "汉中(HZG)",
+                },
+                {
+                    value: "HFE",
+                    label: "合肥(HFE)",
+                },
+                {
+                    value: "HEK",
+                    label: "黑河(HEK)",
+                },
+                {
+                    value: "HNY",
+                    label: "衡阳(HNY)",
+                },
+                {
+                    value: "TXN",
+                    label: "黄山(TXN)",
+                },
+                {
+                    value: "HET",
+                    label: "呼和浩特(HET)",
+                },
+                {
+                    value: "HUZ",
+                    label: "徽州(HUZ)",
+                },
+                {
+                    value: "JMU",
+                    label: "佳木斯(JMU)",
+                },
+                {
+                    value: "KNC",
+                    label: "吉安(KNC)",
+                },
+                {
+                    value: "JGN",
+                    label: "嘉峪关(JGN)",
                 },
                 {
                     value: "JIL",
                     label: "吉林(JIL)",
                 },
                 {
-                    value: "NBS",
-                    label: "白山(NBS)",
+                    value: "TNA",
+                    label: "济南(TNA)",
                 },
                 {
-                    value: "SHE",
-                    label: "沈阳(SHE)",
+                    value: "JDZ",
+                    label: "景德镇(JDZ)",
                 },
                 {
-                    value: "DDG",
-                    label: "丹东(DDG)",
+                    value: "JNG",
+                    label: "济宁(JNG)",
                 },
                 {
                     value: "JNZ",
                     label: "锦州(JNZ)",
                 },
                 {
-                    value: "DLC",
-                    label: "",
+                    value: "JIU",
+                    label: "九江(JIU)",
                 },
                 {
-                    value: "CHG",
-                    label: "",
+                    value: "CHW",
+                    label: "酒泉(CHW)",
                 },
                 {
-                    value: "TNA",
-                    label: "",
+                    value: "JZH",
+                    label: "九寨沟(JZH)",
                 },
                 {
-                    value: "TNA",
-                    label: "",
+                    value: "KHG",
+                    label: "喀什(KHG)",
                 },
                 {
-                    value: "YNT",
-                    label: "",
+                    value: "KRY",
+                    label: "克拉玛依(KRY)",
                 },
                 {
-                    value: "WEF",
-                    label: "",
+                    value: "KRL",
+                    label: "库尔勒(KRL)",
                 },
                 {
-                    value: "TAO",
-                    label: "",
+                    value: "KMG",
+                    label: "昆明(KMG)",
                 },
                 {
-                    value: "WEH",
-                    label: "",
+                    value: "LHW",
+                    label: "兰州(LHW)",
+                },
+                {
+                    value: "LXA",
+                    label: "拉萨(LXA)",
+                },
+                {
+                    value: "LYG",
+                    label: "连云港(LYG)",
+                },
+                {
+                    value: "LJG",
+                    label: "丽江(LJG)",
                 },
                 {
                     value: "LYI",
-                    label: "",
+                    label: "临沂(LYI)",
                 },
                 {
-                    value: "TNA",
-                    label: "",
+                    value: "LHN",
+                    label: "梨山(LHN)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "LZH",
+                    label: "柳州(LZH)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "LYA",
+                    label: "洛阳(LYA)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "LUZ",
+                    label: "庐山(LUZ)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "LZO",
+                    label: "泸州(LZO)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "LUM",
+                    label: "芒市(LUM)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "NZH",
+                    label: "满州里(NZH)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "MIG",
+                    label: "绵阳(MIG)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "MDG",
+                    label: "牡丹江(MDG)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "KHN",
+                    label: "南昌(KHN)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "NAO",
+                    label: "南充(NAO)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "NKG",
+                    label: "南京(NKG)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "NNG",
+                    label: "南宁(NNG)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "NTG",
+                    label: "南通(NTG)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "NNY",
+                    label: "南阳(NNY)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "NGB",
+                    label: "宁波(NGB)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "PZI",
+                    label: "攀枝花(PZI)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "TAO",
+                    label: "青岛(TAO)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "IQN",
+                    label: "庆阳(IQN)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "SHP",
+                    label: "秦皇岛(SHP)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "NDG",
+                    label: "齐齐哈尔(NDG)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "JUZ",
+                    label: "衢州(JUZ)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "SYX",
+                    label: "三亚(SYX)",
                 },
                 {
-                    value: "",
-                    label: "",
+                    value: "SHA",
+                    label: "上海虹桥(SHA)",
+                },
+                {
+                    value: "PVG",
+                    label: "上海浦东(PVG)",
+                },
+                {
+                    value: "SWA",
+                    label: "汕头(SWA)",
+                },
+                {
+                    value: "SHS",
+                    label: "荆沙(SHS)",
+                },
+                {
+                    value: "SHE",
+                    label: "沈阳(SHE)",
+                },
+                {
+                    value: "SZX",
+                    label: "深圳(SZX)",
+                },
+                {
+                    value: "SJW",
+                    label: "石家庄(SJW)",
+                },
+                {
+                    value: "SZV",
+                    label: "苏州(SZV)",
+                },
+                {
+                    value: "TYN",
+                    label: "太原(TYN)",
+                },
+                {
+                    value: "TSN",
+                    label: "天津(TSN)",
+                },
+                {
+                    value: "TNH",
+                    label: "通化(TNH)",
+                },
+                {
+                    value: "TGO",
+                    label: "通辽(TGO)",
+                },
+                {
+                    value: "TEN",
+                    label: "铜仁(TEN)",
+                },
+                {
+                    value: "WEF",
+                    label: "潍坊(WEF)",
+                },
+                {
+                    value: "WEH",
+                    label: "威海(WEH)",
+                },
+                {
+                    value: "WNZ",
+                    label: "温州(WNZ)",
+                },
+                {
+                    value: "WUH",
+                    label: "武汉(WUH)",
+                },
+                {
+                    value: "WHU",
+                    label: "芜湖(WHU)",
+                },
+                {
+                    value: "HLH",
+                    label: "乌兰浩特(HLH)",
+                },
+                {
+                    value: "URC",
+                    label: "乌鲁木齐(URC)",
+                },
+                {
+                    value: "WUX",
+                    label: "无锡(WUX)",
+                },
+                {
+                    value: "WUS",
+                    label: "武夷山(WUS)",
+                },
+                {
+                    value: "WUZ",
+                    label: "梧州(WUZ)",
+                },
+                {
+                    value: "XMN",
+                    label: "厦门(XMN)",
+                },
+                {
+                    value: "XIY",
+                    label: "西安(XIY)",
+                },
+                {
+                    value: "SIA",
+                    label: "咸阳(SIA)",
+                },
+                {
+                    value: "XIC",
+                    label: "西昌(XIC)",
+                },
+                {
+                    value: "XIL",
+                    label: "锡林浩特(XIL)",
+                },
+                {
+                    value: "XNN",
+                    label: "西宁(XNN)",
+                },
+                {
+                    value: "XUZ",
+                    label: "徐州(XUZ)",
+                },
+                {
+                    value: "ENY",
+                    label: "延安(ENY)",
+                },
+                {
+                    value: "YNZ",
+                    label: "盐城(YNZ)",
+                },
+                {
+                    value: "YNT",
+                    label: "烟台(YNT)",
+                },
+                {
+                    value: "YBP",
+                    label: "宜宾(YBP)",
+                },
+                {
+                    value: "YIH",
+                    label: "宜昌(YIH)",
+                },
+                {
+                    value: "YIN",
+                    label: "伊宁(YIN)",
+                },
+                {
+                    value: "YIW",
+                    label: "义乌(YIW)",
+                },
+                {
+                    value: "LLF",
+                    label: "永州(LLF)",
+                },
+                {
+                    value: "DYG",
+                    label: "张家界(DYG)",
+                },
+                {
+                    value: "ZHA",
+                    label: "湛江(ZHA)",
+                },
+                {
+                    value: "ZAT",
+                    label: "昭通(ZAT)",
+                },
+                {
+                    value: "CGO",
+                    label: "郑州(CGO)",
+                },
+                {
+                    value: "HJJ",
+                    label: "芷江(HJJ)",
+                },
+                {
+                    value: "ZUH",
+                    label: "珠海(ZUH)",
+                },
+                {
+                    value: "ZYI",
+                    label: "遵义(ZYI)",
                 },
             ],
         };
     },
     methods: {
         formSubmit() {
-            this.http.get("https://www.runoob.com/try/ajax/json_demo.json")
-                .then((response) => (console.log(response)))
+            instance
+                .get("")
+                .then((response) => console.log(response))
                 .catch(function (error) {
                     // 请求失败处理
                     console.log(error);

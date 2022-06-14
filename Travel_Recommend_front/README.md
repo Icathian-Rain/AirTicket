@@ -13,7 +13,7 @@
     组件位于./src/components/内
     assets 位于./src/assets
     路由管理位于 ./src/router/index.js
-    
+
 
 开发环境下使用
 ```bash
@@ -41,21 +41,66 @@ https://element-plus.gitee.io/zh-CN/
 ## 搜索请求
 
 - 请求路径: query
-- 请求方法: get
+- 请求方法: post
 - 请求参数
   
 | 参数名    | 参数说明           | 备注      |
 | --------- | ------------------ | --------- |
-| n         | 航段总数           |           |
-| date_list | 每个航段信息       | 1或多个   |
-| date      | 每个航段的出发时间 |           |
-| depart    | 起飞城市           |           |
-| arrival   | 抵达城市           |           |
-| agents    | 允许的出票人       | 可为空    |
-| passenger    | 旅客数             | 1个或多个 |
+| N        | 旅客总数     | <=8 |
+| agency | 允许的代理人 | 1或多个 |
+| M     | 航段数 | 1或多个 |
+| date    | 起飞日期         |           |
+| sCity | 起飞城市         | 三字码 |
+| dCity | 抵达城市     | 可为    |
+|        |              |         |
+
+eg
+
+```json
+{
+    "N":"1",
+    "agency":[
+        "CIF001",
+        "BHY001",
+        "AOG001",
+        "CZX001",
+        "BFU001",
+        "DLU001",
+        "CKG001",
+        "CTU001",
+        "DNH001"
+    ],
+    "M":4,
+    "date":[
+        "20220621000000",
+        "20220622000000",
+        "20220623000000",
+        "20220624000000"
+    ],
+    "sCity":[
+        "SHA",
+        "PEK",
+        "PEK",
+        "SHA",
+    ],
+    "dCity":[
+        "PEK",
+        "SHA",
+        "SHA",
+        "P"
+    ]
+    
+    
+    
+}
+```
+
+
+
+
 
 响应数据
-```json
+
 ```json
 {
     "data": {
@@ -68,6 +113,7 @@ https://element-plus.gitee.io/zh-CN/
             {
                 "carrier": "东方航空",
                 "flightNo": "N101",
+                ""
                 "takeOffTime": "", // 起飞时间
                 "arrivalTime": "", // 抵达时间
                 "sCity": "ShangHai", // 起飞城市
@@ -85,7 +131,4 @@ https://element-plus.gitee.io/zh-CN/
     }
 }
 ```
-
-```
-
 
