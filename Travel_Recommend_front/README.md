@@ -104,25 +104,40 @@ eg
 ```json
 {
     "data": {
-        "ticketPrice": 100000,
-        "agency": [
-            "携程",
-            "滴滴",
-        ],
-        "flight": [
+        "ansNum":3,
+        "ans":[
             {
-                "carrier": "东方航空",
-                "flightNo": "N101",
-                ""
-                "takeOffTime": "", // 起飞时间
-                "arrivalTime": "", // 抵达时间
-                "sCity": "ShangHai", // 起飞城市
-                "dCity": "Beijing", // 抵达城市
-                "price": 1000, // 票价
-            },
+                "ticketPrice": 100,
+                "agc":[
+                    "",
+                    "",
+                    "",
+                ],
+                "flight":[
+                    {
+                        "flightNo": "",
+                        "agc":"",
+                        "takeoffTime": "",
+                        "arrivalTime": "",
+                        "sCity": "",
+                        "dCity": "",
+                        "seatF": "",
+                        "seatC": "",
+                        "seatY": "",
+                        "passengerSeatList": "",
+                        "price": "",
+                    },
+                    {
+                    	同上   
+                    }
+                ]
+                
+			}
             {
-                // 第二段
-            }
+
+            }            
+            
+            
         ]
     },
     "meta": {
