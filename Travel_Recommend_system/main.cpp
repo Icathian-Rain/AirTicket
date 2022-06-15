@@ -23,9 +23,18 @@ PriceRuleTable *PRT;
 PriceTable *PT;
 RemainSeatTable *RST;
 
+#if defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif defined(_MSC_VER)
+#pragma warning(disable : 4996)
+#endif
+
+
+
 int initialize();
 
-void srv_setup();
+void srv_setup(string, int);
 
 int main() {
 
@@ -114,6 +123,7 @@ int initialize(){
     cout<<"gather finishing!"<<endl<<endl;
 
     cout << "Down" << endl;
+    return 1;
 }
 
 /**
@@ -159,20 +169,19 @@ void srv_setup(string ip_addr, int port)
             }
             // 获取结果
             vector<FlightAns> ans = SET->request(flightReq);
+            cout << ans.size() << endl;
             Json::Value res_value;
             Json::Value res_data;
             Json::Value res_meta;
-            res_value["meta"] = res_meta;
-            res_value["data"] = res_data;
 
             // cout<<"ANs number:"<<ans.size()<<endl;
             // for(int i = 0; i < ans.size(); i++) ans[i].ShowAns();
             // 将结果封装
             if(ans.size() > 0)
             {
-                res_meta["msg"] = "获取成功"
+                res_meta["msg"] = "获取成功";
                 res_meta["status"] = 200;
-                res_data["ansNum"] = ans.size();
+                res_data["ansNum"] = (int)ans.size();
                 for(int i = 0; i<ans.size(); i++)
                 {
                     Json::Value res_ans;
@@ -187,9 +196,11 @@ void srv_setup(string ip_addr, int port)
                     {
                         Json::Value res_flight_ans;
                         res_flight_ans["flightNo"] = res_flight[j].Return_flightNo();
-                        res_flight_ans["agc"] = res_flight[j].Return_agc();
-                        res_flight_ans["takeOfffTime"] = res_flight[j].Return_takeOffTime().time2string();
-                        res_flight_ans["arriveTime"] = res_flight[j].Return_arriveTime().time2string();
+                        vector<string> rawAgc = res_flight[j].Return_agc();
+                        for(int k = 0; k<rawAgc.size(); k++)
+                            res_flight_ans["agc"][k] = rawAgc[k];
+                        res_flight_ans["takeOffTime"] = res_flight[j].Return_takeOffTime();
+                        res_flight_ans["arriveTime"] = res_flight[j].Return_arrivalTime();
                         res_flight_ans["sCity"] = res_flight[j].Return_sCity();
                         res_flight_ans["dCity"] = res_flight[j].Return_dCity();
                         res_flight_ans["seatF"] = res_flight[j].Return_seatF();
@@ -210,10 +221,14 @@ void srv_setup(string ip_addr, int port)
             }
             else
             {
-                res_meta["msg"] = "未获取到符合条件的航班"
+                res_meta["msg"] = "未获取到符合条件的航班";
                 res_meta["status"] = 400;
             }
-            res.set_content(req.body, "text/plain"); 
+            res_value["meta"] = res_meta;
+            res_value["data"] = res_data;
+            Json::StreamWriterBuilder builder;
+            const string res_body = Json::writeString(builder, res_value);
+            res.set_content(res_body, "text/plain");
         });
 
         svr.listen(ip_addr.c_str(), port);

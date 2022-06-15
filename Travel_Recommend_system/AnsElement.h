@@ -30,8 +30,6 @@ public:
     inline char Return_seatC(){ return seatC;};
     inline char Return_seatY(){ return seatY;};
     inline char* Return_passenger_seatList(){ return passenger_seatList;};
-    inline int Return_price(return price);
-
 
     static bool comparePrice(const AnsElement &f1, const AnsElement &f2){       //自定义比较函数、用于sort、set
         return f1.price < f2.price;
