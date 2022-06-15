@@ -19,6 +19,7 @@ public:
     //获取信息
     inline vector<AnsElement> Return_flight(){ return flight;};
     inline int Return_ticketPrice(){ return ticketPrice;};
+    inline vector<string> Return_agc(){ return agc;};
     //string Return_agency();
 
 
