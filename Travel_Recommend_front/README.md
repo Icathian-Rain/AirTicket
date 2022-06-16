@@ -58,7 +58,7 @@ eg
 
 ```json
 {
-    "N":"1",
+    "N": 1,
     "agency":[
         "CIF001",
         "BHY001",
@@ -78,20 +78,17 @@ eg
         "20220624000000"
     ],
     "sCity":[
-        "SHA",
-        "PEK",
-        "PEK",
-        "SHA",
+        "CIF",
+        "BSD",
+        "DLU",
+        "BHY"
     ],
     "dCity":[
-        "PEK",
-        "SHA",
-        "SHA",
-        "P"
+        "BSD",
+        "DNH",
+        "AVA",
+        "DLU"
     ]
-    
-    
-    
 }
 ```
 
@@ -103,47 +100,168 @@ eg
 
 ```json
 {
-    "data": {
-        "ansNum":3,
-        "ans":[
-            {
-                "ticketPrice": 100,
-                "agc":[
-                    "",
-                    "",
-                    "",
-                ],
-                "flight":[
-                    {
-                        "flightNo": "",
-                        "agc":"",
-                        "takeoffTime": "",
-                        "arrivalTime": "",
-                        "sCity": "",
-                        "dCity": "",
-                        "seatF": "",
-                        "seatC": "",
-                        "seatY": "",
-                        "passengerSeatList": "",
-                        "price": "",
-                    },
-                    {
-                    	同上   
-                    }
-                ]
-                
+	"data" : 
+	{
+		"ans" : 
+		[
+			{
+				"agc" : 
+				[
+					"DNH001"
+				],
+				"flight" : 
+				[
+					{
+						"agc" : 
+						[
+							"DNH001"
+						],
+						"arriveTime" : "20220621210000",
+						"dCity" : "BSD",
+						"flightNo" : "4482",
+						"passengetSeatList" : "Y",
+						"price" : 3400,
+						"sCity" : "CIF",
+						"seatC" : 65,
+						"seatF" : 52,
+						"seatY" : 65,
+						"takeOffTime" : "20220621171500"
+					},
+					{
+						"agc" : 
+						[
+							"DNH001"
+						],
+						"arriveTime" : "20220622101500",
+						"dCity" : "DNH",
+						"flightNo" : "3755",
+						"passengetSeatList" : "Y",
+						"price" : 1140,
+						"sCity" : "BSD",
+						"seatC" : 53,
+						"seatF" : 49,
+						"seatY" : 65,
+						"takeOffTime" : "20220622093000"
+					},
+					{
+						"agc" : 
+						[
+							"DLU001",
+							"DNH001"
+						],
+						"arriveTime" : "20220623173000",
+						"dCity" : "AVA",
+						"flightNo" : "5787",
+						"passengetSeatList" : "Y",
+						"price" : 1390,
+						"sCity" : "DLU",
+						"seatC" : 54,
+						"seatF" : 65,
+						"seatY" : 65,
+						"takeOffTime" : "20220623130000"
+					},
+					{
+						"agc" : 
+						[
+							"DNH001"
+						],
+						"arriveTime" : "20220624083000",
+						"dCity" : "DLU",
+						"flightNo" : "9246",
+						"passengetSeatList" : "Y",
+						"price" : 3360,
+						"sCity" : "BHY",
+						"seatC" : 65,
+						"seatF" : 48,
+						"seatY" : 65,
+						"takeOffTime" : "20220624071500"
+					}
+				],
+				"ticketPrice" : 9290
+			},
+			{
+				"agc" : 
+				[
+					"DNH001"
+				],
+				"flight" : 
+				[
+					{
+						"agc" : 
+						[
+							"DNH001"
+						],
+						"arriveTime" : "20220621210000",
+						"dCity" : "BSD",
+						"flightNo" : "4482",
+						"passengetSeatList" : "Y",
+						"price" : 3400,
+						"sCity" : "CIF",
+						"seatC" : 65,
+						"seatF" : 52,
+						"seatY" : 65,
+						"takeOffTime" : "20220621171500"
+					},
+					{
+						"agc" : 
+						[
+							"DNH001"
+						],
+						"arriveTime" : "20220622101500",
+						"dCity" : "DNH",
+						"flightNo" : "3755",
+						"passengetSeatList" : "Y",
+						"price" : 1140,
+						"sCity" : "BSD",
+						"seatC" : 53,
+						"seatF" : 49,
+						"seatY" : 65,
+						"takeOffTime" : "20220622093000"
+					},
+					{
+						"agc" : 
+						[
+							"DNH001",
+							"CIF001"
+						],
+						"arriveTime" : "20220623061500",
+						"dCity" : "AVA",
+						"flightNo" : "3098",
+						"passengetSeatList" : "Y",
+						"price" : 1500,
+						"sCity" : "DLU",
+						"seatC" : 56,
+						"seatF" : 48,
+						"seatY" : 65,
+						"takeOffTime" : "20220623033000"
+					},
+					{
+						"agc" : 
+						[
+							"DNH001"
+						],
+						"arriveTime" : "20220624083000",
+						"dCity" : "DLU",
+						"flightNo" : "9246",
+						"passengetSeatList" : "Y",
+						"price" : 3360,
+						"sCity" : "BHY",
+						"seatC" : 65,
+						"seatF" : 48,
+						"seatY" : 65,
+						"takeOffTime" : "20220624071500"
+					}
+				],
+				"ticketPrice" : 9400
 			}
-            {
-
-            }            
-            
-            
-        ]
-    },
-    "meta": {
-        "msg": "获取成功",
-        "status": 200
-    }
+		],
+		"ansNum" : 2
+	},
+	"meta" : 
+	{
+		"msg" : "获取成功",
+		"status" : 200
+	}
 }
 ```
 
