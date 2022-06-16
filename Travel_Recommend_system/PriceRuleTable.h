@@ -19,11 +19,13 @@ private:
 public:
     void createTable(FILE *fp);
     void showCityIndex();//打印各个航班承运人的城市索引
-    int find(string carrier,string sCity,string dCity);//输入承运人，起始终止城市，找到在Table中的下标
+    int find(const string& carrier,const string& sCity,const string& dCity);//输入承运人，起始终止城市，找到在Table中的下标
     //输入承运人，起始终止城市，输出代理人
-    vector<string> findAgency(string carrier,string sCity,string dCity);
+    vector<string> findAgency(const string& carrier,const string& sCity,const string& dCity);
+    void show(const string& carrier,const string& sCity,const string& dCity);
     //输入承运人，起始终止城市，输出Surcharge
-    int findSurcharge(string carrier,string sCity,string dCity);
+    int findSurcharge(const string& carrier,const string& sCity,const string& dCity);
+    void showSurcharge(const string& carrier,const string& sCity,const string& dCity);
 };
 
 

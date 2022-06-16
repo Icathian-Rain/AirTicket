@@ -17,8 +17,7 @@
 #include "RemainingSeat.h"
 #include "Net.h"
 //城市hash表，为每个城市分配一个索引
-extern vector<string> mysplit(string str, string separator);
-
+extern vector<string> mysplit(string str, const string& separator);
 class FlightSet {//所有航班集合
 private:
     Time today;     //今天的日期
@@ -26,7 +25,7 @@ private:
     //vector <Flight> flightSet;  //未來所有天的航班按照日期排成數組
     vector<Net> flightSet;         //存储所有航班信息
 public:
-    void initSet(vector<string> CityName, string t, int future_days);
+    void initSet(const vector<string>& CityName, string t, int future_days);
     void createSet(FILE *fp);
     void showSet();
     inline int getDir(FlightRequest req){return req.timeVal().day2int()-today.day2int();};//獲取待搜索的日期在日期數組中的位置

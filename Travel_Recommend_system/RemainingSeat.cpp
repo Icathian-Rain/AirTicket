@@ -6,7 +6,7 @@
 RemainingSeat::RemainingSeat(vector<string> record) {
     carrier = record[0];
     flightNo = record[1];
-    Time tmp;
+    Time tmp{};
     tmp.string2time(record[4]);
     depatureDate = tmp;
     tmp.string2time(record[5]);

@@ -5,6 +5,7 @@
 #ifndef TRAVEL_RECOMMEND_SYSTEM_PRICE_H
 #define TRAVEL_RECOMMEND_SYSTEM_PRICE_H
 #include <string>
+#include <utility>
 using namespace std;
 
 class Price {
@@ -15,7 +16,7 @@ private:
     int *price;//F,C,Y charge
 public:
     void setPrice(string car,string sC,string dC,int F,int C,int Y){
-        carrier=car,sCity=sC,dCity=dC;
+        carrier=std::move(car),sCity=std::move(sC),dCity=std::move(dC);
         price=(int *)malloc(sizeof(int)*3);
         price[0]=F,price[1]=C,price[2]=Y;
     }
