@@ -10,11 +10,11 @@ void PriceTable::createTable(FILE *fp){
     string carrier("START"),city("START");
     map <string, int> city_index;
     int i,cnt=0;
-    for (i=0;fgets(buffer, 200, fp) != NULL;i++){
+    for (i=0;fgets(buffer, 200, fp) != nullptr;i++){
         string info(buffer);
         int cutAt;
         temp.clear();
-        while( (cutAt = info.find_first_of(";")) != info.npos ){
+        while( (cutAt = info.find_first_of(';')) != std::string::npos ){
             if(cutAt > 0)
                 temp.push_back(info.substr(0, cutAt));
             info = info.substr(cutAt + 1);
@@ -38,39 +38,43 @@ void PriceTable::createTable(FILE *fp){
 }
 
 void PriceTable::showCityIndex(){
-    for(auto a:carrierIndex) {
+    for(const auto& a:carrierIndex) {
         cout<<"..............."<<a.first<<"................."<<endl;
-        for (auto c: cityIndex[a.second]) {
+        for (const auto& c: cityIndex[a.second]) {
             cout << c.first << ":" << c.second << endl;
         }
     }
 }
 
-int * PriceTable::findPrice(string carrier,string sCity,string dCity){
+int * PriceTable::findPrice(const string& carrier,const string& sCity,const string& dCity){
     if(carrierIndex.find(carrier)==carrierIndex.end()){
-        cout<<"Not find carrier!!"<<endl;
-        return NULL;
+        return nullptr;
     }
     int carrier_index=carrierIndex[carrier];
     if(cityIndex[carrier_index].find(sCity)==cityIndex[carrier_index].end()||cityIndex[carrier_index].find(dCity)==cityIndex[carrier_index].end()){
-        cout<<"Not find city!!"<<endl;
-        return NULL;
+        return nullptr;
     }
     int city_index=cityIndex[carrier_index][sCity];
     for(int i=city_index;i<Table.size()&&Table[i].Return_sCity()==sCity;i++){
         if(Table[i].Return_dCity()==dCity) {
-            cout << carrier<<' '<<sCity<<"->"<<dCity<<" find!" << endl;
             int *price=Table[i].Return_price();
-            cout << "F:"<<price[0]<<"\tC:"<<price[1]<<"\tY:"<<price[2]<<endl;
             return price;
         }
     }
     for(int i=cityIndex[carrier_index][dCity];i<Table.size()&&Table[i].Return_sCity()==dCity;i++){
         if(Table[i].Return_dCity()==sCity) {
-            cout << carrier<<' '<<dCity<<"->"<<sCity<<" find!" << endl;
             int *price=Table[i].Return_price();
-            cout << "F:"<<price[0]<<"\tC:"<<price[1]<<"\tY:"<<price[2]<<endl;
             return price;
         }
     }
+}
+
+void PriceTable::showPrice(const string& carrier,const string& sCity,const string& dCity){
+    int *price = findPrice(carrier,sCity,dCity);
+    if(price== nullptr){
+        cout<<"Not find city!!"<<endl;
+        return ;
+    }
+    cout << carrier<<' '<<dCity<<"->"<<sCity<<" find!" << endl;
+    cout << "F:"<<price[0]<<"\tC:"<<price[1]<<"\tY:"<<price[2]<<endl;
 }

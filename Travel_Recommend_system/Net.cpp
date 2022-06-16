@@ -9,10 +9,10 @@ extern PriceRuleTable *PRT;
 extern PriceTable *PT;
 extern RemainSeatTable *RST;
 
-vector<string> mysplit(string str, string separator) {//split string str by separator，like split “a+b+c” by "+" into "a""b""c"
+vector<string> mysplit(string str, const string& separator) {//split string str by separator，like split “a+b+c” by "+" into "a""b""c"
     vector<string> result;
     int cutAt;
-    while( (cutAt = str.find_first_of(separator)) != str.npos ){
+    while( (cutAt = str.find_first_of(separator)) != std::string::npos ){
         if(cutAt > 0)
         {
             result.push_back(str.substr(0, cutAt));
@@ -48,8 +48,8 @@ vector<AnsElement> Net::request(FlightRequest req){
         return res;
     }
 
-    for(int i =0; i < matrix[s][d].size(); i++){
-        Flight tmp_flightA = matrix[s][d][i];       //对象拷贝，不会对原数据造成修改
+    for(auto tmp_flightA : matrix[s][d]){
+        //对象拷贝，不会对原数据造成修改
         string A_carrier = tmp_flightA.carrierVal();
         Time A_time = tmp_flightA.takeOffTimeVal();
         Time A_time2 = tmp_flightA.arrivalTimeVal();
@@ -61,10 +61,10 @@ vector<AnsElement> Net::request(FlightRequest req){
         //agency
         vector<string> agc = PRT->findAgency(A_carrier, sCity, dCity);      //从PTR中找到允许的代理人
         vector<string> common_agc;
-        for(int j = 0; j < agc.size(); j++){
-            for(int k = 0; k < target_agency.size(); k++){
-                if(agc[j] == target_agency[k]) {
-                    common_agc.push_back(agc[j]);
+        for(auto & j : agc){
+            for(auto & k : target_agency){
+                if(j == k) {
+                    common_agc.push_back(j);
                     break;
                 }
             }

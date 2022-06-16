@@ -20,7 +20,8 @@ public:
     void createTable(FILE *fp);
     void showCityIndex();//打印各个航班承运人的城市索引
     //输入航班承运人，起始终止城市，输出F\C\Y的票价
-    int *findPrice(string carrier,string sCity,string dCity);
+    int *findPrice(const string& carrier,const string& sCity,const string& dCity);
+    void showPrice(const string& carrier,const string& sCity,const string& dCity);
 };
 
 

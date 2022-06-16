@@ -3,7 +3,7 @@
 //
 
 #include "RemainSeatTable.h"
-void RemainSeatTable::CreatRemainSeatTable(string path) {
+void RemainSeatTable::CreatRemainSeatTable(const string& path) {
     ifstream in(path);
     string str;
     if(!in.is_open()){
@@ -30,5 +30,4 @@ void RemainSeatTable::update() {
             (iter2->second).updateSeats();
         }
     }
-    return;
 }

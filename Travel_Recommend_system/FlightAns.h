@@ -18,28 +18,25 @@ private:
 public:
     //获取信息
     inline vector<AnsElement> Return_flight(){ return flight;};
-    inline int Return_ticketPrice(){ return ticketPrice;};
+    inline int Return_ticketPrice() const{ return ticketPrice;};
     inline vector<string> Return_agc(){ return agc;};
     //string Return_agency();
 
 
-    static bool comparePrice(const FlightAns &a1, const FlightAns &a2){       //自定义比较函数、用于sort、set
-        return a1.ticketPrice < a2.ticketPrice;
-    }
-    inline void Add(AnsElement sdf){
+    inline void Add(const AnsElement& sdf){
         flight.push_back(sdf);
         ticketPrice += sdf.Return_price();
     };                //添加航段到Ans当中,因为代码量小并且频繁使用，故改为内联函数inline
     bool Connect_ok();                      //判断是否满足衔接条件
 
     inline void ShowAns(){
-        cout<<"ANs :"<<endl;
+        cout<<"Ans :"<<endl;
         cout<<"Agency :"<<endl;
-        for(int i = 0; i < agc.size(); i++) cout<<agc[i]<<" ";
+        for(auto & i : agc) cout<<i<<" ";
         cout<<endl;
         cout<<"Total price："<<ticketPrice<<endl;
         cout<<"segment flights:"<<endl;
-        for(int i = 0; i < flight.size(); i++) flight[i].showElement();
+        for(auto & i : flight) i.showElement();
     }
     bool GetCommon_agc();       //从flight中获取公共代理商，如果为空返回false
 };
