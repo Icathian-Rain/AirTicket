@@ -21,6 +21,16 @@ public:
     AnsElement(string carr, string fN, Time tTime, Time aTime, string sC, string dC) : Flight(carr, fN, tTime, aTime, sC, dC){};
     inline int Return_price(){ return price;};         //返回票价
     inline vector<string> Return_agc(){ return agc;};
+    inline string Return_flightNo(){ return flightNo;};
+    inline string Return_takeOffTime() { return takeOffTime.time2string_forday();};
+    inline string Return_arrivalTime() { return arrivalTime.time2string_forday();};
+    inline string Return_sCity() { return sCity;};
+    inline string Return_dCity() { return dCity;};
+    inline char Return_seatF(){ return seatF;};
+    inline char Return_seatC(){ return seatC;};
+    inline char Return_seatY(){ return seatY;};
+    inline char* Return_passenger_seatList(){ return passenger_seatList;};
+
     static bool comparePrice(const AnsElement &f1, const AnsElement &f2){       //自定义比较函数、用于sort、set
         return f1.price < f2.price;
     }
