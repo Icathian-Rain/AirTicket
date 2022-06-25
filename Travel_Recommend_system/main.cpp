@@ -1,5 +1,5 @@
 #include <iostream>
-#include <json/json.h>
+#include <jsoncpp/json/json.h>
 #include "httplib.h"
 using namespace std;
 //#include "Flight.h"
@@ -178,7 +178,7 @@ void srv_setup(const string& ip_addr, int port)
             {
                 res_meta["msg"] = "获取成功";
                 res_meta["status"] = 200;
-                res_data["ansNum"] = ans.size();
+                res_data["ansNum"] = (int)ans.size();
                 for(int i = 0; i<ans.size(); i++)
                 {
                     Json::Value res_ans;
@@ -225,6 +225,25 @@ void srv_setup(const string& ip_addr, int port)
             res_value["data"] = res_data;
             Json::StreamWriterBuilder builder;
             const string res_body = Json::writeString(builder, res_value);
+            res.set_header("Access-Control-Allow-Origin", "*");
+            res.set_header("Access-Control-Allow-Credentials", "true");
+            // 允许的访问方法
+            res.set_header("Access-Control-Allow-Methods","POST, GET, PUT, OPTIONS, DELETE, PATCH");
+            // Access-Control-Max-Age 用于 CORS 相关配置的缓存
+            res.set_header("Access-Control-Max-Age", "3600");
+            res.set_header("Access-Control-Allow-Headers","Access-Control-Allow-Headers, content-type,x-requested-with,Authorization, x-ui-request,lang");
+            res.set_content(res_body, "text/plain");
+        });
+        svr.Get("/reset", [&](const httplib::Request &req, httplib::Response &res)
+        {
+            RST->update();
+            Json::Value value;
+            value["msg"] = "重置成功";
+            value["status"] = 200;
+            Json::StreamWriterBuilder builder;
+            const string res_body = Json::writeString(builder, value);
+            res.set_header("Access-Control-Allow-Origin", "*");
+            res.set_header("Access-Control-Allow-Credentials", "true");
             res.set_content(res_body, "text/plain");
         });
 
