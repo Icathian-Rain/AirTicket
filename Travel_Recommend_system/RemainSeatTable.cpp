@@ -22,7 +22,6 @@ void RemainSeatTable::CreatRemainSeatTable(const string& path) {
 }
 
 void RemainSeatTable::update() {
-    sleep(10);
     map<string,map<string ,RemainingSeat>>::iterator iter1;
     for(iter1 = seatTable.begin();iter1!=seatTable.end();iter1++){
         map<string ,RemainingSeat>::iterator iter2;
