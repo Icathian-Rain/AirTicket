@@ -150,6 +150,7 @@
                 </svg>
             </div>
         </form>
+        <loading v-show="isLoading" :title="loadingMsg"/>
         <result :res_data="res_data" :options="options" v-if="res_data !== null "/>
     </div>
 </template>
@@ -157,8 +158,10 @@
 <script >
 import axios from "axios";
 import result from "./result.vue";
+import loading from "./loading.vue";
 
 axios.defaults.baseURL = "/api";
+axios.defaults.timeout = 3000;
 
 export default {
     setup() {},
@@ -678,13 +681,18 @@ export default {
                 },
             ],
             res_data: null,
+            isLoading: false,
+            loadingMsg: "",
         };
     },
     methods: {
         reset() {
+            this.isLoading = true;
+            this.loadingMsg = "正在重置......";
             axios
                 .get("/reset")
                 .then((response) => {
+                    this.isLoading = false;
                     if(response.status === 200)
                     {
                         alert("重置成功");
@@ -693,10 +701,13 @@ export default {
                     }
                 })
                 .catch((err) => {
+                    this.isLoading = false;
                     console.log(err);
                 });
         },
         formSubmit() {
+            this.isLoading = true;
+            this.loadingMsg = "正在搜索......";
             let req_data = {
                 N: Number(this.passenger),
                 M: this.segments.length,
@@ -720,6 +731,7 @@ export default {
                     },
                 })
                 .then((response) => {
+                    this.isLoading = false;
                     if(response.data.meta.status == 200) {
                         this.res_data = response.data.data;
                     } else {
@@ -728,10 +740,13 @@ export default {
                     }
                 }
                 )
-                .catch(function (error) {
+                .catch((error) => {
+                    this.isLoading = false;  
+                    alert("输入数据有误");
                     // 请求失败处理
                     console.log(error);
                 });
+                
         },
         exchange() {
             let temp = this.depart;
@@ -758,7 +773,8 @@ export default {
         },
     },
     components: {
-        result,
+    result,
+    loading
     },
 };
 </script>

@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import { reactive } from "vue";
 
 
 const pros = defineProps(["res_data", "options"]);
@@ -86,6 +85,17 @@ function getCity(city) {
                                 {{ getCity(flight_a["dCity"]) }}
                             </span>
                         </div>
+                    </div>
+                    <div class="left-seat">
+                        <span style="">
+                            剩余座位信息:
+                            <br/>
+                            头等舱: {{ String.fromCharCode(flight_a['seatF']) }}
+                            <br/>
+                            商务舱: {{ String.fromCharCode(flight_a['seatC']) }}
+                            <br/>
+                            经济舱: {{ String.fromCharCode(flight_a['seatY']) }}
+                        </span>
                     </div>
                     <div class="price">
                         <span>
