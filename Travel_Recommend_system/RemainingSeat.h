@@ -40,8 +40,6 @@ public:
     inline Time Return_depatureDate(){ return depatureDate;};
     inline Time Return_arrivalDate(){ return arrivalDate;};
     inline void updateSeats(){//update the number of the remaining seats
-        time_t t;
-        srand((int)time(&t));
         int num1 = rand()%20;
         int num2 = rand()%20;
         int num3 = rand()%20;
