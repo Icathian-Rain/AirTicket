@@ -38,6 +38,7 @@ int main() {
     if(initialize()==-1){
         return -1;
     }
+    srand((int)time(0));
     // Test
 //    Time t[4];
 //    t[0].string2time("20220621000000");
