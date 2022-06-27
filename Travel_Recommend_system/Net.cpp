@@ -83,11 +83,11 @@ vector<AnsElement> Net::request(FlightRequest req){
         int ticketPrice = 0;
         char passenger_seatList[8] = {0,0,0,0,0,0,0,0};
         for(int i = 0; i < N; i++){
-            if(i+1 <= A_Seat[2]) {
+            if(i+1 <= A_Seat[2] - '0') {
                 passenger_seatList[i] = 'Y';
                 ticketPrice += A_Price[2];
             }
-            else if(i+1 <= A_Seat[1]+ A_Seat[2]) {
+            else if(i+1 <= A_Seat[1] - '0'+ A_Seat[2] - '0') {
                 passenger_seatList[i] = 'C';
                 ticketPrice += A_Price[1];
             }
