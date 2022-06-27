@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include "Time.h"
+#include <time.h>
 using namespace std;
 
 class RemainingSeat {       //航班余座信息
@@ -39,7 +40,8 @@ public:
     inline Time Return_depatureDate(){ return depatureDate;};
     inline Time Return_arrivalDate(){ return arrivalDate;};
     inline void updateSeats(){//update the number of the remaining seats
-        srand((int)time(nullptr));
+        time_t t;
+        srand((int)time(&t));
         int num1 = rand()%20;
         int num2 = rand()%20;
         int num3 = rand()%20;
