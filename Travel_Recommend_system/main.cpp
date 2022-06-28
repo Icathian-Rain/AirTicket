@@ -42,25 +42,25 @@ int main() {
         return -1;
     }
     // Test
-//    Time t[4];
-//    t[0].string2time("20220621000000");
-//    t[1].string2time("20220622000000");
-//    t[2].string2time("20220623000000");
-//    t[3].string2time("20220624000000");
-//    vector<string> agc = {"CIF001","BHY001","AOG001","CZX001","BFU001","DLU001","CKG001","CTU001","DNH001"};
-//    string sCity[4],dCity[4];
-//    cout<<"cin>>"<<endl;
-//    while(cin>>sCity[0] && cin>>dCity[0]){
-//        cin>>sCity[1]>>dCity[1]>>sCity[2]>>dCity[2]>>sCity[3]>>dCity[3];
-//        vector<FlightRequest> req;
-//        for(int i = 0; i < 4; i++) {
-//            FlightRequest a(t[i],sCity[i],dCity[i],agc,1,20);
-//            req.push_back(a);
-//        }
-//        vector<FlightAns> ans = SET->request(req);
-//        cout<<"ANs number:"<<ans.size()<<endl;
-//        for(int i = 0; i < ans.size(); i++) ans[i].ShowAns();
-//    }
+    Time t[4];
+    t[0].string2time("20220621000000");
+    t[1].string2time("20220622000000");
+    t[2].string2time("20220623000000");
+    t[3].string2time("20220624000000");
+    vector<string> agc = {"CIF001","BHY001","AOG001","CZX001","BFU001","DLU001","CKG001","CTU001","DNH001"};
+    string sCity[4],dCity[4];
+    cout<<"cin>>"<<endl;
+    while(cin>>sCity[0] && cin>>dCity[0]){
+        cin>>sCity[1]>>dCity[1]>>sCity[2]>>dCity[2]>>sCity[3]>>dCity[3];
+        vector<FlightRequest> req;
+        for(int i = 0; i < 4; i++) {
+            FlightRequest a(t[i],sCity[i],dCity[i],agc,1,20);
+            req.push_back(a);
+        }
+        vector<FlightAns> ans = SET->request(req);
+        cout<<"ANs number:"<<ans.size()<<endl;
+        for(int i = 0; i < ans.size(); i++) ans[i].ShowAns();
+    }
     //async(launch::async,[RST](){RST->update();});
 //    PT->findPrice("FM","KHG","DNH");
 //    PT->findPrice("JZ","WDF","FEG");
@@ -70,7 +70,7 @@ int main() {
 //    PRT->findAgency("JZ","WDF","FEG");
 //    PRT->findAgency("CA","WDF","FEG");
 
-    srv_setup("0.0.0.0", 8080);
+//    srv_setup("0.0.0.0", 8080);
 
 
     return 0;
