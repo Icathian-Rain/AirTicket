@@ -25,12 +25,12 @@ void RemainSeatTable::CreatRemainSeatTable(const string& path) {
 void RemainSeatTable::update() {
     map<string,map<string ,RemainingSeat>>::iterator iter1;
     for(iter1 = seatTable.begin();iter1!=seatTable.end();iter1++){
-        thread t = thread(&RemainSeatTable::travel,this,iter1->second);
-        /*map<string ,RemainingSeat>::iterator iter2;
+        // thread t = thread(&RemainSeatTable::travel,this,iter1->second);
+        map<string ,RemainingSeat>::iterator iter2;
         for(iter2 = (iter1->second).begin();iter2!=(iter1->second).end();iter2++){
             (iter2->second).updateSeats();
-        }*/
-        t.detach();
+        }
+        // t.detach();
     }
 }
 

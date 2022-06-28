@@ -1,5 +1,6 @@
 # 忽略编译后的文件
 Travel_Recommend_system/cmake-build-debug/*
+Travel_Recommend_system/cmake-*
 # 忽略clion配置文件
 Travel_Recommend_system/.idea/*
 # 前端ignore位于Travel_Recommend_front/.ignore
