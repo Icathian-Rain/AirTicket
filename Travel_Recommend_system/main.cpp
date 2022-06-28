@@ -1,5 +1,5 @@
 #include <iostream>
-#include <json/json.h>
+#include <jsoncpp/json/json.h>
 #include "httplib.h"
 using namespace std;
 //#include "Flight.h"
@@ -10,14 +10,11 @@ using namespace std;
 #include "FlightRequest.h"
 //#include "RemainingSeat.h"
 #include "FlightSet.h"
-#include "PriceRule.h"
 #include "PriceRuleTable.h"
 #include "PriceTable.h"
 #include "RemainSeatTable.h"
 #include <vector>
 #include <string>
-#include <thread>
-#include <future>
 FlightSet *SET;
 PriceRuleTable *PRT;
 PriceTable *PT;
@@ -34,13 +31,14 @@ RemainSeatTable *RST;
 
 int initialize();
 
-void srv_setup(string, int);
+void srv_setup(const string&, int);
 
 int main() {
 
     if(initialize()==-1){
         return -1;
     }
+    srand((int)time(0));
     // Test
     Time t[4];
     t[0].string2time("20220621000000");
@@ -88,7 +86,7 @@ int initialize(){
     SET->initSet(cityName, "20220530000000", 370);
     FILE *fp1=fopen("../flight.txt","r");
     FILE *fp2=fopen("../price.txt","r");
-    if(fp1==NULL||fp2==NULL){
+    if(fp1==nullptr||fp2==nullptr){
         cout<<"flight.txt(price.txt) open error!";
         return -1;
     }
@@ -98,7 +96,7 @@ int initialize(){
 
     //PT init
     FILE *fp3=fopen("../price.txt","r");
-    if(fp3==NULL){
+    if(fp3==nullptr){
         cout<<"price.txt open error!";
         return -1;
     }
@@ -109,7 +107,7 @@ int initialize(){
 
     //PRT init
     FILE *fp4=fopen("../priceRule.txt","r");
-    if(fp4==NULL){
+    if(fp4==nullptr){
         cout<<"priceRule.txt open error!";
         return -1;
     }
@@ -133,13 +131,13 @@ int initialize(){
  * @param port 端口
  */
 
-void srv_setup(string ip_addr, int port)
+void srv_setup(const string& ip_addr, int port)
 {
         // 初始化svr
         httplib::Server svr;
         // read:读取json
         Json::Reader read;
-        svr.Post("/query", [&](const httplib::Request &req, httplib::Response &res)
+        svr.Post("/api/query", [&](const httplib::Request &req, httplib::Response &res)
         {
             // 获取request的数据
             string req_data = req.body;
@@ -150,9 +148,9 @@ void srv_setup(string ip_addr, int port)
             // 获取agc列表
             Json::Value rawAgc = value.get("agency", 0);
             vector<string> agc;
-            for(int i = 0; i<rawAgc.size(); i++)
+            for(const auto & i : rawAgc)
             {
-                agc.push_back(rawAgc[i].asString());
+                agc.push_back(i.asString());
             }
             // 分段接收每一段的数据
             int flightNum = value.get("M", 0).asInt();
@@ -162,7 +160,7 @@ void srv_setup(string ip_addr, int port)
             vector<FlightRequest> flightReq;
             for(int i = 0; i<flightNum; i++)
             {
-                Time t;
+                Time t{};
                 t.string2time(rawDate[i].asString());
                 FlightRequest a(t, rawsCity[i].asString(), rawdCity[i].asString(), agc, passNum, 20);
                 flightReq.push_back(a);
@@ -177,7 +175,7 @@ void srv_setup(string ip_addr, int port)
             // cout<<"ANs number:"<<ans.size()<<endl;
             // for(int i = 0; i < ans.size(); i++) ans[i].ShowAns();
             // 将结果封装
-            if(ans.size() > 0)
+            if(!ans.empty())
             {
                 res_meta["msg"] = "获取成功";
                 res_meta["status"] = 200;
@@ -188,7 +186,7 @@ void srv_setup(string ip_addr, int port)
                     res_ans["ticketPrice"] = ans[i].Return_ticketPrice();
                     vector<string> res_agc = ans[i].Return_agc();
                     vector<AnsElement> res_flight = ans[i].Return_flight();
-                    for(int j = 0; i<res_agc.size(); j++)
+                    for(int j = 0; j<res_agc.size(); j++)
                     {
                         res_ans["agc"][j] = res_agc[j];
                     }
@@ -229,6 +227,15 @@ void srv_setup(string ip_addr, int port)
             Json::StreamWriterBuilder builder;
             const string res_body = Json::writeString(builder, res_value);
             res.set_content(res_body, "text/plain");
+        });
+        svr.Get("/api/reset", [&](const httplib::Request &req, httplib::Response &res)
+        {
+            RST->update();
+            Json::Value value;
+            value["msg"] = "重置成功";
+            value["status"] = 200;
+            Json::StreamWriterBuilder builder;
+            const string res_body = Json::writeString(builder, value);
         });
 
         svr.listen(ip_addr.c_str(), port);

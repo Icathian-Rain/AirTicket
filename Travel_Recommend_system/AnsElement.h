@@ -5,6 +5,7 @@
 #ifndef TRAVEL_RECOMMEND_SYSTEM_ANSELEMENT_H
 #define TRAVEL_RECOMMEND_SYSTEM_ANSELEMENT_H
 #include "Flight.h"
+#include <utility>
 #include <vector>
 using namespace std;
 class AnsElement:public Flight{            //Flight->FlightAns的中间层
@@ -18,17 +19,17 @@ private:
 
 public:
     AnsElement();
-    AnsElement(string carr, string fN, Time tTime, Time aTime, string sC, string dC) : Flight(carr, fN, tTime, aTime, sC, dC){};
-    inline int Return_price(){ return price;};         //返回票价
+    AnsElement(const string& carr, const string& fN, Time tTime, Time aTime, const string& sC, const string& dC) : Flight(carr, fN, tTime, aTime, sC, dC){};
+    inline int Return_price() const{ return price;};         //返回票价
     inline vector<string> Return_agc(){ return agc;};
     inline string Return_flightNo(){ return flightNo;};
     inline string Return_takeOffTime() { return takeOffTime.time2string_forday();};
     inline string Return_arrivalTime() { return arrivalTime.time2string_forday();};
     inline string Return_sCity() { return sCity;};
     inline string Return_dCity() { return dCity;};
-    inline char Return_seatF(){ return seatF;};
-    inline char Return_seatC(){ return seatC;};
-    inline char Return_seatY(){ return seatY;};
+    inline char Return_seatF() const{ return seatF;};
+    inline char Return_seatC() const{ return seatC;};
+    inline char Return_seatY() const{ return seatY;};
     inline char* Return_passenger_seatList(){ return passenger_seatList;};
 
     static bool comparePrice(const AnsElement &f1, const AnsElement &f2){       //自定义比较函数、用于sort、set
@@ -62,12 +63,11 @@ public:
         }
         else return false;
     }//票价
-    inline void Set_passenger_seatList(char a[8]){
+    inline void Set_passenger_seatList(const char a[8]){
         for(int i = 0; i < 8; i++) passenger_seatList[i] = a[i];
-        return;
-    };//设置乘客座位表
+   };//设置乘客座位表
     inline void Set_agc(vector<string> agency){
-        agc = agency;
+        agc = std::move(agency);
     };  //设置代理人
 };
 

@@ -3,17 +3,19 @@
 //
 
 #include "PriceRuleTable.h"
+
+#include <utility>
 void PriceRuleTable::createTable(FILE *fp){
     char buffer[200];
     vector <string> temp;
     map <string, int> city_index;
     int i=0,cnt=0;
     string carrier("START"),city("START");
-    for (;fgets(buffer, 200, fp) != NULL;i++) {
+    for (;fgets(buffer, 200, fp) != nullptr;i++) {
         string info(buffer);
         int cutAt;
         temp.clear();
-        while( (cutAt = info.find_first_of(";")) != info.npos ){
+        while( (cutAt = info.find_first_of(";")) != std::string::npos ){
             if(cutAt > 0)
                 temp.push_back(info.substr(0, cutAt));
             info = info.substr(cutAt + 1);
@@ -38,22 +40,20 @@ void PriceRuleTable::createTable(FILE *fp){
 }
 
 void PriceRuleTable::showCityIndex(){
-    for(auto a:carrierIndex) {
+    for(const auto& a:carrierIndex) {
         cout<<"..............."<<a.first<<"................."<<endl;
-        for (auto c: cityIndex[a.second]) {
+        for (const auto& c: cityIndex[a.second]) {
             cout << c.first << ":" << c.second << endl;
         }
     }
 }
 
-int PriceRuleTable::find(string carrier,string sCity,string dCity){
+int PriceRuleTable::find(const string& carrier,const string& sCity,const string& dCity){
     if(carrierIndex.find(carrier)==carrierIndex.end()){
-        cout<<"Not find carrier!!"<<endl;
         return -1;
     }
     int carrier_index=carrierIndex[carrier];
     if(cityIndex[carrier_index].find(sCity)==cityIndex[carrier_index].end()||cityIndex[carrier_index].find(dCity)==cityIndex[carrier_index].end()){
-        cout<<"Not find city!!"<<endl;
         return -1;
     }
     int city_index=cityIndex[carrier_index][sCity];
@@ -68,24 +68,38 @@ int PriceRuleTable::find(string carrier,string sCity,string dCity){
         }
     }
 }
-vector<string> PriceRuleTable::findAgency(string carrier,string sCity,string dCity){
+vector<string> PriceRuleTable::findAgency(const string& carrier,const string& sCity,const string& dCity){
     int index=find(carrier,sCity,dCity);
     if(index==-1){
         return {};
     }
     vector<string> agencies=Table[index].Return_agency();
-    for(int i=0;i<agencies.size();i++){
-        cout<<agencies[i]<<' ';
-    }
-    cout<<endl;
     return agencies;
 }
 
-int PriceRuleTable::findSurcharge(string carrier,string sCity,string dCity){
+void PriceRuleTable::show(const string& carrier,const string& sCity,const string& dCity){
+    vector<string> agencies=findAgency(carrier,sCity,dCity);
+    if(agencies.empty()){
+        cout<<"Not find carrier!!"<<endl;
+    }
+    for(auto & agencies : agencies){
+        cout<<agencies<<' ';
+    }
+    cout<<endl;
+}
+
+int PriceRuleTable::findSurcharge(const string& carrier,const string& sCity,const string& dCity){
     int index=find(carrier,sCity,dCity);
     if(index==-1){
-        return 200;
+        return -2;
     }
-    cout<<Table[index].Return_surcharge()<<endl;
     return Table[index].Return_surcharge();
+}
+
+void PriceRuleTable::showSurcharge(const string& carrier,const string& sCity,const string& dCity){
+    int price=findSurcharge(carrier,sCity,dCity);
+    if(price==-2){
+        cout<<"not find price!"<<endl;
+    }
+    cout<<"price:"<<price<<endl;
 }

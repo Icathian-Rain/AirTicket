@@ -4,11 +4,11 @@
 
 #include "Time.h"
 
-void Time::showTime() {
+void Time::showTime() const {
     cout<<year<<"-"<<int(month)<<"-"<<int(day)<<" "<<int(hour)<<":"<<int(minute)<<endl;
 }
 
-int Time::day2int() {
+int Time::day2int() const {
     //輸入日期，返回在這一年中的第幾天
     int days[]={31,28,31,30,31,30,31,31,30,31,30,31};
     if(year%4==0){          //闰年
@@ -26,7 +26,7 @@ int Time::day2int() {
     return sum;
 }
 
-int Time::timeInterval(Time t) {
+int Time::timeInterval(Time t) const {
     int C=0;
     int m[13]={0,31,28,31,30,31,30,31,31,30,31,30,31};
     if(t.year-year==0){

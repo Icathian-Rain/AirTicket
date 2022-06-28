@@ -9,11 +9,12 @@
 #include <unistd.h>
 #include<fstream>
 using namespace std;
-extern vector<string> mysplit(string str, string separator);
+extern vector<string> mysplit(string str, const string& separator);
 class RemainSeatTable {
 private:
     map<string,map<string,RemainingSeat>> seatTable;
 public:
+    int cnt;
     inline RemainingSeat getSeat(string &t,string &n){//Time is the DepatureTime and the string is the flighNo
         map<string,map<string,RemainingSeat>>::iterator iter1;
         iter1 = seatTable.find(t);
@@ -32,10 +33,11 @@ public:
         }
     }
     inline bool isEmpty(){
-        return seatTable.size()==0;
+        return seatTable.empty();
     }
-    void CreatRemainSeatTable(string path);
+    void CreatRemainSeatTable(const string& path);
     void update();
+    void travel(map<string,RemainingSeat>);
 };
 
 

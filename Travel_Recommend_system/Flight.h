@@ -11,8 +11,8 @@ class Flight{//一個航班信息
 protected:
     string carrier;        //承运人
     string flightNo;       //航班号
-    Time takeOffTime;      //起飞时间
-    Time arrivalTime;      //抵达时间
+    Time takeOffTime{};      //起飞时间
+    Time arrivalTime{};      //抵达时间
     string sCity;          //起飞城市
     string dCity;          //抵达城市
 //    //根据req搜索后确定，赋值于NET.cpp request，通过拷贝实现，不会对FlightSet SET造成影响
@@ -25,7 +25,7 @@ protected:
 
 public:
     Flight();
-    Flight(string carr, string fN, Time tTime, Time aTime, string sC, string dC) {
+    Flight(const string& carr, const string& fN, Time tTime, Time aTime, const string& sC, const string& dC) {
         if(carr.size()!=2 || fN.size()!= 4 || sC.size()!= 3 || dC.size() != 3){
             cout<<"wrong flight pattern!";
         }
@@ -73,11 +73,6 @@ public:
 //        cout<<"余座信息："<<seatF<<';'<<seatC<<';'<<seatY<<';'<<endl;
 //        cout<<"票价："<<price<<endl<<endl;
     };
-    static bool compare_takeOffTime(const Flight &f1, const Flight &f2){       //按照起飞时间降序
-        Time t1 = f1.takeOffTime;
-        Time t2 = f2.takeOffTime;
-        return Time::compare_Time(t1,t2);          //降序排序
-    }
 
     //搜索设置
 //    inline bool SetSeats(char F, char C, char Y){
