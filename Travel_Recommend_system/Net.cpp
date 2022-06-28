@@ -74,7 +74,7 @@ vector<AnsElement> Net::request(FlightRequest req){
         string date = A_time.time2string_forday();
         //暂时用这个方法，之后改成袁的做法
         vector<char> A_Seat = RST->getSeat(date,A_number).Return_seat();     //获取余座信息
-        if( A_Seat[0] + A_Seat[1] + A_Seat[2] < N) continue;        //check Seats is enough or not
+        if( A_Seat[0] - '0' + A_Seat[1] - '0' + A_Seat[2] - '0' < N) continue;        //check Seats is enough or not
 
         //Price
         int *A_Price = PT->findPrice(A_carrier,sCity,dCity);
