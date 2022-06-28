@@ -68,7 +68,7 @@ int main() {
 //    PRT->findAgency("JZ","WDF","FEG");
 //    PRT->findAgency("CA","WDF","FEG");
 
-//    srv_setup("0.0.0.0", 8080);
+    srv_setup("0.0.0.0", 8080);
 
 
     return 0;
