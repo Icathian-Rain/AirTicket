@@ -5,19 +5,19 @@
 #ifndef TRAVEL_RECOMMEND_SYSTEM_TIME_H
 #define TRAVEL_RECOMMEND_SYSTEM_TIME_H
 #include <iostream>
-#include "string.h"
+#include <cstring>
 using namespace std;
 class Time{             //时间
 public:
     int year;
-    char month;             
+    char month;
     char day;
     char hour;
     char minute;
     inline Time T(int y, int m, int d, int h, int min) { year = y, month = m, day = d, hour = h, minute = min; };
-    int day2int();
-    int timeInterval(Time t);
-    inline void string2time(string str) {//input like 20220503000000
+    int day2int() const;
+    int timeInterval(Time t) const;
+    inline void string2time(const string& str) {//input like 20220503000000
         string temp;
         year = atoi(temp.assign(str,0,4).c_str());
         month = atoi(temp.assign(str,4,2).c_str());
@@ -25,6 +25,22 @@ public:
         hour = atoi(temp.assign(str,8,2).c_str());
         minute = atoi(temp.assign(str,10,2).c_str());
     }
+    //日期转到字符串,转来转去很麻烦，之后对余座数据表进行修改
+    string time2string_forday() const{
+        string temp;
+        temp += to_string(year);
+        if(month < 10) temp += "0";
+        temp += to_string(month);
+        if(day < 10) temp += "0";
+        temp += to_string(day);
+        if(hour < 10) temp += "0";
+        temp += to_string(hour);
+        if(minute < 10) temp += "0";
+        temp += to_string(minute);
+        temp += "00";
+        return temp;
+    }
+    //tomorrow有问题
     void tomorrow() {//add one day
         day++;
         if(day>31){
@@ -36,7 +52,7 @@ public:
             }
         }
     }
-    void showTime();
+    void showTime() const;
     static bool Date_equal(Time t1, Time t2){              //判断日期是否相同
         if(t1.year != t2.year) return false;
         if(t1.month!= t2.month) return false;
@@ -50,7 +66,7 @@ public:
         int daydiff = t2.day2int() - t1.day2int();        //求两个时间相差的天数
         if(daydiff < 0) return false;
         if(daydiff >=2) return true;
-        t2.hour += 24*daydiff;
+        t2.hour += 24*daydiff;                          //调用了拷贝构造函数，不会对原时间造成影响
         if(t2.hour - t1.hour < 2) return false;
         else if(t2.hour - t1.hour == 2) {
             if (t2.minute > t1.minute) return true;
@@ -75,6 +91,34 @@ public:
         }
         return ok;
     };
+    bool operator>(const Time &t)const{         //data compare
+        if(this->year>t.year){
+            return this->year>t.year;
+        }
+        if(this->month>t.month){
+            return this->month>t.month;
+        }
+        if(this->day>t.day){
+            return this->day>t.day;
+        }
+        if(this->hour>t.hour){
+            return this->hour>t.hour;
+        }
+        if(this->minute>t.minute){
+            return this->minute>t.minute;
+        }
+        return false;
+    };
+
+    bool operator<(const Time &t) const{
+        return t>*this;
+    }
+
+    bool operator==(const Time &t) const{
+        return this->year==t.year&&this->day==t.day&&this->month==t.month&&this->minute==t.minute&&this->hour==t.hour;
+    }
+
+
 };
 
 

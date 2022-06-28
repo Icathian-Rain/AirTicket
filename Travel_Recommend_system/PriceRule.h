@@ -5,6 +5,7 @@
 #ifndef TRAVEL_RECOMMEND_SYSTEM_PRICERULE_H
 #define TRAVEL_RECOMMEND_SYSTEM_PRICERULE_H
 #include <string>
+#include <utility>
 #include <vector>
 using namespace std;
 
@@ -18,11 +19,11 @@ private:
     vector <string> agency;   //允许出票的代理人队列
     char surcharge;     //额外费用百分比
 public:
-    void setRule(int seq,string car,string sC,string dC,string next,string agen,string surch){
-        sequenceNo=seq,carrier=car,sCity=sC,dCity=dC,nextCarrier=next;
+    void setRule(int seq,string car,string sC,string dC,string next,string agen,const string& surch){
+        sequenceNo=seq,carrier=std::move(car),sCity=std::move(sC),dCity=std::move(dC),nextCarrier=std::move(next);
         if(agen!=" "){
             int cutAt;
-            while( (cutAt = agen.find_first_of(",")) != agen.npos ){
+            while( (cutAt = agen.find_first_of(',')) != std::string::npos ){
                 if(cutAt > 0)
                     agency.push_back(agen.substr(0, cutAt));
                 agen = agen.substr(cutAt + 1);
@@ -30,16 +31,16 @@ public:
             if(agen.length() > 0)
                 agency.push_back(agen);
         }
-        surcharge=surch[0];
+        surcharge=stoi(surch,nullptr,10);
     }
     //获取信息inline内联函数
-    inline int Return_sequenceNo(){ return sequenceNo;};
+    __attribute__((unused)) inline int Return_sequenceNo() const{ return sequenceNo;};
     inline string Return_carrier(){ return carrier;};
     inline string Return_sCity(){ return sCity;};
     inline string Return_dCity(){ return dCity;};
     inline string Return_nextCarrier(){ return nextCarrier;};
     inline vector <string> Return_agency(){ return agency;};
-    inline char Return_surcharge(){ return surcharge;};
+    inline char Return_surcharge() const{ return surcharge;};
 };
 
 
