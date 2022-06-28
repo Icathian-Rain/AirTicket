@@ -160,7 +160,7 @@ import axios from "axios";
 import result from "./result.vue";
 import loading from "./loading.vue";
 
-axios.defaults.baseURL = "/api";
+axios.defaults.baseURL = "http://api.hustairline.xyz/api/";
 axios.defaults.timeout = 3000;
 
 export default {
@@ -696,6 +696,7 @@ export default {
                     if(response.status === 200)
                     {
                         alert("重置成功");
+                        this.res_data = null;
                     } else {
                         alert("重置失败");
                     }
@@ -724,6 +725,26 @@ export default {
                 req_data.sCity.push(this.segments[i].depart);
                 req_data.dCity.push(this.segments[i].arrival);
             }
+            if(req_data["N"] === 0)
+            {
+                alert("乘客数量不能为0");
+                this.isLoading = false;
+                return;
+            }
+            else if(req_data["M"] === 0)
+            {
+                alert("航程数量不能为0");
+                this.isLoading = false;
+                return;
+            }
+            else if(req_data["agency"].length === 0)
+            {
+                alert("代理商不能为空");
+                this.isLoading = false;
+                return;
+            }
+
+
             axios
                 .post("/query", req_data, {
                     headers: {
