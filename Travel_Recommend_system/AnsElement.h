@@ -51,6 +51,9 @@ public:
 //        cout<<endl<<"票价："<<price<<endl<<endl;
     };
     inline bool SetSeats(char F, char C, char Y){
+        if(F < 48||(F > 57 && F!= 'A')) return false;
+        if(C < 48||(C > 57 && C!= 'A')) return false;
+        if(Y < 48||(Y > 57 && Y!= 'A')) return false;
         seatF = F;
         seatC = C;
         seatY = Y;
