@@ -17,42 +17,12 @@ public:
     inline Time T(int y, int m, int d, int h, int min) { year = y, month = m, day = d, hour = h, minute = min; };
     int day2int() const;
     int timeInterval(Time t) const;
-    inline void string2time(const string& str) {//input like 20220503000000
-        string temp;
-        year = atoi(temp.assign(str,0,4).c_str());
-        month = atoi(temp.assign(str,4,2).c_str());
-        day = atoi(temp.assign(str,6,2).c_str());
-        hour = atoi(temp.assign(str,8,2).c_str());
-        minute = atoi(temp.assign(str,10,2).c_str());
-    }
+    inline bool isLeapYear(){return (year % 4 == 0 && year % 100 !=0 )||year % 400 == 0;}
+    void string2time(const string& str);//input like 20220503000000
     //日期转到字符串,转来转去很麻烦，之后对余座数据表进行修改
-    string time2string_forday() const{
-        string temp;
-        temp += to_string(year);
-        if(month < 10) temp += "0";
-        temp += to_string(month);
-        if(day < 10) temp += "0";
-        temp += to_string(day);
-        if(hour < 10) temp += "0";
-        temp += to_string(hour);
-        if(minute < 10) temp += "0";
-        temp += to_string(minute);
-        temp += "00";
-        return temp;
-    }
-    //tomorrow有问题
-    void tomorrow() {//add one day
-        day++;
-        if(day>31){
-            day = 1;
-            month++;
-            if(month>12){
-                month = 1;
-                year++;
-            }
-        }
-    }
     void showTime() const;
+    string time2string_forday() const;
+    void tomorrow(); //add one day
     static bool Date_equal(Time t1, Time t2){              //判断日期是否相同
         if(t1.year != t2.year) return false;
         if(t1.month!= t2.month) return false;

@@ -4,8 +4,47 @@
 
 #include "Time.h"
 
+void Time::string2time(const string& str) {//input like 20220503000000
+    string temp;
+    year = atoi(temp.assign(str,0,4).c_str());
+    month = atoi(temp.assign(str,4,2).c_str());
+    day = atoi(temp.assign(str,6,2).c_str());
+    hour = atoi(temp.assign(str,8,2).c_str());
+    minute = atoi(temp.assign(str,10,2).c_str());
+}
+
+void Time::tomorrow() {//add one day
+    day++;
+    int month_day[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
+    if(isLeapYear())
+        month_day[1] = 29;
+    if(day>month_day[month]){
+        day = 1;
+        month++;
+        if(month>12){
+            month = 1;
+            year++;
+        }
+    }
+}
+
 void Time::showTime() const {
     cout<<year<<"-"<<int(month)<<"-"<<int(day)<<" "<<int(hour)<<":"<<int(minute)<<endl;
+}
+
+string Time::time2string_forday() const{
+    string temp;
+    temp += to_string(year);
+    if(month < 10) temp += "0";
+    temp += to_string(month);
+    if(day < 10) temp += "0";
+    temp += to_string(day);
+    if(hour < 10) temp += "0";
+    temp += to_string(hour);
+    if(minute < 10) temp += "0";
+    temp += to_string(minute);
+    temp += "00";
+    return temp;
 }
 
 int Time::day2int() const {

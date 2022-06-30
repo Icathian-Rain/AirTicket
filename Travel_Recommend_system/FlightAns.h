@@ -12,7 +12,6 @@ using namespace std;
 class FlightAns {
 private:
     vector<AnsElement> flight;//航班信息,可能是多个航班联程
-    //Flight flight;
     int ticketPrice = 0;//总票價
     vector<string> agc;
 public:
@@ -20,7 +19,6 @@ public:
     inline vector<AnsElement> Return_flight(){ return flight;};
     inline int Return_ticketPrice() const{ return ticketPrice;};
     inline vector<string> Return_agc(){ return agc;};
-    //string Return_agency();
 
 
     inline void Add(const AnsElement& sdf){

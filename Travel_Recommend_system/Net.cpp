@@ -25,6 +25,41 @@ vector<string> mysplit(string str, const string& separator) {//split string str 
     return result;
 }
 
+void Net::initNet(const vector<string>& cityName, Time t){
+    vexnum=cityName.size();
+    if(vexnum>CITYNUM)
+        vexnum=CITYNUM;
+    vertex=cityName;
+    time=t;
+    for (auto & i : matrix) {
+        for (auto & j : i) {
+            j = vector<Flight>();
+        }
+    }
+}
+
+void Net::addFlight(const string& sCity,const string& dCity,const string& flightNo,const string& carriers,Time tT,Time aT){//add one flight
+    int sCityIndex = FindIndex(sCity);
+    int dCityIndex = FindIndex(dCity);
+    if(sCityIndex==-1||dCityIndex==-1||sCityIndex>CITYNUM||dCityIndex>CITYNUM){
+        cout<<"FLight index out!"<<endl;
+        return ;
+    }
+    Flight flight(carriers, flightNo, tT, aT, sCity, dCity);
+    matrix[sCityIndex][dCityIndex].push_back(flight);
+}
+
+void Net::showNet() {
+    for (int i = 0;i < vexnum;i++) {
+        for (int j = 0;j < vexnum;j++) {
+            if(!matrix[i][j].empty()){
+                for (auto & k : matrix[i][j]) {
+                    k.showFlight();
+                }
+            }
+        }
+    }
+}
 
 vector<AnsElement> Net::request(FlightRequest req){
     vector<AnsElement> res;             //result
@@ -102,9 +137,4 @@ vector<AnsElement> Net::request(FlightRequest req){
         res.push_back(ele);
     }
     return res;
-}
-
-
-void Net::update(){
-
 }
