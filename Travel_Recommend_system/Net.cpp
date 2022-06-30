@@ -25,6 +25,41 @@ vector<string> mysplit(string str, const string& separator) {//split string str 
     return result;
 }
 
+void Net::initNet(const vector<string>& cityName, Time t){
+    vexnum=cityName.size();
+    if(vexnum>CITYNUM)
+        vexnum=CITYNUM;
+    vertex=cityName;
+    time=t;
+    for (auto & i : matrix) {
+        for (auto & j : i) {
+            j = vector<Flight>();
+        }
+    }
+}
+
+void Net::addFlight(const string& sCity,const string& dCity,const string& flightNo,const string& carriers,Time tT,Time aT){//add one flight
+    int sCityIndex = FindIndex(sCity);
+    int dCityIndex = FindIndex(dCity);
+    if(sCityIndex==-1||dCityIndex==-1||sCityIndex>CITYNUM||dCityIndex>CITYNUM){
+        cout<<"FLight index out!"<<endl;
+        return ;
+    }
+    Flight flight(carriers, flightNo, tT, aT, sCity, dCity);
+    matrix[sCityIndex][dCityIndex].push_back(flight);
+}
+
+void Net::showNet() {
+    for (int i = 0;i < vexnum;i++) {
+        for (int j = 0;j < vexnum;j++) {
+            if(!matrix[i][j].empty()){
+                for (auto & k : matrix[i][j]) {
+                    k.showFlight();
+                }
+            }
+        }
+    }
+}
 
 vector<AnsElement> Net::request(FlightRequest req){
     vector<AnsElement> res;             //result
@@ -71,23 +106,22 @@ vector<AnsElement> Net::request(FlightRequest req){
         }
         if(common_agc.empty()) continue;
         //RemainingSeat
-        string date = A_time.time2string_forday();
-        //暂时用这个方法，之后改成袁的做法
-        vector<char> A_Seat = RST->getSeat(date,A_number).Return_seat();     //获取余座信息
-        if( A_Seat[0] + A_Seat[1] + A_Seat[2] < N) continue;        //check Seats is enough or not
+        string str_A_time = A_time.time2string_forday();                                  //起飞时间转为字符串
+        vector<char> A_Seat = RST->getSeat(str_A_time,A_number).Return_seat();     //获取余座信息
+        if( A_Seat[0] - '0' + A_Seat[1] - '0' + A_Seat[2] - '0' < N) continue;        //check Seats is enough or not
 
         //Price
         int *A_Price = PT->findPrice(A_carrier,sCity,dCity);
-        ele.SetSeats(A_Seat[0],A_Seat[1],A_Seat[2]);    //设置余座，可供查看
+        if(!ele.SetSeats(A_Seat[0],A_Seat[1],A_Seat[2])) continue;    //设置余座，可供查看
         //为每个旅客分配尽可能价格低的仓位
         int ticketPrice = 0;
         char passenger_seatList[8] = {0,0,0,0,0,0,0,0};
         for(int i = 0; i < N; i++){
-            if(i+1 <= A_Seat[2]) {
+            if(i+1 <= A_Seat[2] - '0') {
                 passenger_seatList[i] = 'Y';
                 ticketPrice += A_Price[2];
             }
-            else if(i+1 <= A_Seat[1]+ A_Seat[2]) {
+            else if(i+1 <= A_Seat[1] - '0'+ A_Seat[2] - '0') {
                 passenger_seatList[i] = 'C';
                 ticketPrice += A_Price[1];
             }
@@ -96,17 +130,11 @@ vector<AnsElement> Net::request(FlightRequest req){
                 ticketPrice += A_Price[0];
             }
         }
-        ele.SetPrice(ticketPrice);
+        if(!ele.SetPrice(ticketPrice)) continue;
         ele.Set_passenger_seatList(passenger_seatList);
         ele.Set_agc(common_agc);
         //满足,存入res
         res.push_back(ele);
     }
-
     return res;
-}
-
-
-void Net::update(){
-
 }

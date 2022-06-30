@@ -35,9 +35,10 @@ void srv_setup(const string&, int);
 
 int main() {
     //gathering data info
-    if(initialize()==-1)
+    if(initialize()==-1){
         return -1;
-    //start server
+    }
+    srand((int)time(0));
     srv_setup("0.0.0.0", 8080);
     return 0;
 }
@@ -105,7 +106,7 @@ void srv_setup(const string& ip_addr, int port)
         httplib::Server svr;
         // read:读取json
         Json::Reader read;
-        svr.Post("/query", [&](const httplib::Request &req, httplib::Response &res)
+        svr.Post("/api/query", [&](const httplib::Request &req, httplib::Response &res)
         {
             // 获取request的数据
             string req_data = req.body;
@@ -144,7 +145,7 @@ void srv_setup(const string& ip_addr, int port)
             {
                 res_meta["msg"] = "获取成功";
                 res_meta["status"] = 200;
-                res_data["ansNum"] = ans.size();
+                res_data["ansNum"] = (int)ans.size();
                 for(int i = 0; i<ans.size(); i++)
                 {
                     Json::Value res_ans;
@@ -192,6 +193,15 @@ void srv_setup(const string& ip_addr, int port)
             Json::StreamWriterBuilder builder;
             const string res_body = Json::writeString(builder, res_value);
             res.set_content(res_body, "text/plain");
+        });
+        svr.Get("/api/reset", [&](const httplib::Request &req, httplib::Response &res)
+        {
+            RST->update();
+            Json::Value value;
+            value["msg"] = "重置成功";
+            value["status"] = 200;
+            Json::StreamWriterBuilder builder;
+            const string res_body = Json::writeString(builder, value);
         });
 
         svr.listen(ip_addr.c_str(), port);

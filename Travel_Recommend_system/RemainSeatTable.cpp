@@ -3,6 +3,7 @@
 //
 
 #include "RemainSeatTable.h"
+#include <thread>
 void RemainSeatTable::CreatRemainSeatTable(const string& path) {
     ifstream in(path);
     string str;
@@ -22,12 +23,18 @@ void RemainSeatTable::CreatRemainSeatTable(const string& path) {
 }
 
 void RemainSeatTable::update() {
-    sleep(10);
     map<string,map<string ,RemainingSeat>>::iterator iter1;
     for(iter1 = seatTable.begin();iter1!=seatTable.end();iter1++){
         map<string ,RemainingSeat>::iterator iter2;
         for(iter2 = (iter1->second).begin();iter2!=(iter1->second).end();iter2++){
             (iter2->second).updateSeats();
         }
+    }
+}
+
+void RemainSeatTable::travel(map<string,RemainingSeat> data){
+    map<string ,RemainingSeat>::iterator iter;
+    for(iter = data.begin();iter!=data.end();iter++){
+        (iter->second).updateSeats();
     }
 }

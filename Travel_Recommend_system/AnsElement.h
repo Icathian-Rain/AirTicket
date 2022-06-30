@@ -38,19 +38,11 @@ public:
 
     inline void showElement(){
         cout<<"航班号："<<flightNo<<" ";
-////        cout<<"agc:"<<agc<<endl;
-//        cout << "起飞时间：";
-//        takeOffTime.showTime();
-//        cout<<"抵达时间：";
-//        arrivalTime.showTime();
-//        cout<<"起飞城市："<<sCity<<endl;
-//        cout<<"抵达城市："<<dCity<<endl;
-//        cout<<"余座信息："<<seatF<<';'<<seatC<<';'<<seatY<<';'<<endl;
-//        cout<<"旅客座位表："<<endl;
-//        for(int i = 0; i < 8 && passenger_seatList[i]!= 0; i++) cout<<passenger_seatList[i]<<" ";
-//        cout<<endl<<"票价："<<price<<endl<<endl;
     };
     inline bool SetSeats(char F, char C, char Y){
+        if(F < 48||(F > 57 && F!= 'A')) return false;
+        if(C < 48||(C > 57 && C!= 'A')) return false;
+        if(Y < 48||(Y > 57 && Y!= 'A')) return false;
         seatF = F;
         seatC = C;
         seatY = Y;
