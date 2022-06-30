@@ -25,10 +25,6 @@ public:
     RemainingSeat();
     RemainingSeat(vector<string> record);
     //余座信息
-    inline string Return_carrier(){ return carrier;};
-    inline string Return_flightNo(){ return flightNo;};
-    inline string Return_sCity(){ return sCity;};
-    inline string Return_dCity(){ return dCity;};
     inline char Return_seatF() const{ return seatF;};
     inline char Return_seatC() const{ return seatC;};
     inline char Return_seatY() const{ return seatY;};
@@ -36,8 +32,6 @@ public:
         vector<char> allseat = {seatF,seatC,seatY};
         return allseat;
     };
-    inline Time Return_depatureDate(){ return depatureDate;};
-    inline Time Return_arrivalDate(){ return arrivalDate;};
     inline void updateSeats(){//update the number of the remaining seats
         srand(time(nullptr));
         int num1 = rand()%20;

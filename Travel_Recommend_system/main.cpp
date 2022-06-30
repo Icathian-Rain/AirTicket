@@ -34,42 +34,11 @@ int initialize();
 void srv_setup(const string&, int);
 
 int main() {
-
-    if(initialize()==-1){
+    //gathering data info
+    if(initialize()==-1)
         return -1;
-    }
-    // Test
-//    Time t[4];
-//    t[0].string2time("20220621000000");
-//    t[1].string2time("20220622000000");
-//    t[2].string2time("20220623000000");
-//    t[3].string2time("20220624000000");
-//    vector<string> agc = {"CIF001","BHY001","AOG001","CZX001","BFU001","DLU001","CKG001","CTU001","DNH001"};
-//    string sCity[4],dCity[4];
-//    cout<<"cin>>"<<endl;
-//    while(cin>>sCity[0] && cin>>dCity[0]){
-//        cin>>sCity[1]>>dCity[1]>>sCity[2]>>dCity[2]>>sCity[3]>>dCity[3];
-//        vector<FlightRequest> req;
-//        for(int i = 0; i < 4; i++) {
-//            FlightRequest a(t[i],sCity[i],dCity[i],agc,1,20);
-//            req.push_back(a);
-//        }
-//        vector<FlightAns> ans = SET->request(req);
-//        cout<<"ANs number:"<<ans.size()<<endl;
-//        for(int i = 0; i < ans.size(); i++) ans[i].ShowAns();
-//    }
-    //async(launch::async,[RST](){RST->update();});
-//    PT->findPrice("FM","KHG","DNH");
-//    PT->findPrice("JZ","WDF","FEG");
-//    PT->findPrice("CA","WDF","FEG");
-//    PRT->findAgency("FM","KHG","DNH");
-//    PRT->findSurcharge("FM","KHG","DNH");
-//    PRT->findAgency("JZ","WDF","FEG");
-//    PRT->findAgency("CA","WDF","FEG");
-
+    //start server
     srv_setup("0.0.0.0", 8080);
-
-
     return 0;
 }
 
@@ -171,9 +140,6 @@ void srv_setup(const string& ip_addr, int port)
             Json::Value res_data;
             Json::Value res_meta;
 
-            // cout<<"ANs number:"<<ans.size()<<endl;
-            // for(int i = 0; i < ans.size(); i++) ans[i].ShowAns();
-            // 将结果封装
             if(!ans.empty())
             {
                 res_meta["msg"] = "获取成功";

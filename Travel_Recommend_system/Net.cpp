@@ -102,7 +102,7 @@ vector<AnsElement> Net::request(FlightRequest req){
         //满足,存入res
         res.push_back(ele);
     }
-    //sort(res.begin(),res.end(),Flight::comparePrice);       //按照票价升序排序
+
     return res;
 }
 
