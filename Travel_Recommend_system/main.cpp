@@ -202,6 +202,7 @@ void srv_setup(const string& ip_addr, int port)
             value["status"] = 200;
             Json::StreamWriterBuilder builder;
             const string res_body = Json::writeString(builder, value);
+            res.set_content(res_body, "text/plain");
         });
 
         svr.listen(ip_addr.c_str(), port);
