@@ -76,7 +76,6 @@ vector<string> PriceRuleTable::findAgency(const string& carrier,const string& sC
     vector<string> agencies=Table[index].Return_agency();
     return agencies;
 }
-
 void PriceRuleTable::show(const string& carrier,const string& sCity,const string& dCity){
     vector<string> agencies=findAgency(carrier,sCity,dCity);
     if(agencies.empty()){

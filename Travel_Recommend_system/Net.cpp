@@ -110,8 +110,18 @@ vector<AnsElement> Net::request(FlightRequest req){
         vector<char> A_Seat = RST->getSeat(str_A_time,A_number).Return_seat();     //获取余座信息
         if( A_Seat[0] - '0' + A_Seat[1] - '0' + A_Seat[2] - '0' < N) continue;        //check Seats is enough or not
 
+        //surcharge
+        int surcharge = PRT->findSurcharge(A_carrier, sCity, dCity);
+        if(surcharge < 0) continue;
+
         //Price
         int *A_Price = PT->findPrice(A_carrier,sCity,dCity);
+        A_Price[0] = (A_Price[0]*(100+surcharge))/100;
+        A_Price[0] -= A_Price[0]%10;
+        A_Price[1] = (A_Price[1]*(100+surcharge))/100;
+        A_Price[1] -= A_Price[1]%10;
+        A_Price[2] = (A_Price[2]*(100+surcharge))/100;
+        A_Price[2] -= A_Price[2]%10;
         if(!ele.SetSeats(A_Seat[0],A_Seat[1],A_Seat[2])) continue;    //设置余座，可供查看
         //为每个旅客分配尽可能价格低的仓位
         int ticketPrice = 0;
