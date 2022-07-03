@@ -29,7 +29,9 @@ void Net::initNet(const vector<string>& cityName, Time t){
     vexnum=cityName.size();
     if(vexnum>CITYNUM)
         vexnum=CITYNUM;
-    vertex=cityName;
+    for(int i=0;i<vexnum;i++){
+        vertex[cityName[i]]=i;
+    }
     time=t;
     for (auto & i : matrix) {
         for (auto & j : i) {
@@ -116,12 +118,13 @@ vector<AnsElement> Net::request(FlightRequest req){
 
         //Price
         int *A_Price = PT->findPrice(A_carrier,sCity,dCity);
-        A_Price[0] = (A_Price[0]*(100+surcharge))/100;
-        A_Price[0] -= A_Price[0]%10;
-        A_Price[1] = (A_Price[1]*(100+surcharge))/100;
-        A_Price[1] -= A_Price[1]%10;
-        A_Price[2] = (A_Price[2]*(100+surcharge))/100;
-        A_Price[2] -= A_Price[2]%10;
+        int Price[3];
+        Price[0] = (A_Price[0]*(100+surcharge))/100;
+        Price[0] -= Price[0]%10;
+        Price[1] = (A_Price[1]*(100+surcharge))/100;
+        Price[1] -= Price[1]%10;
+        Price[2] = (A_Price[2]*(100+surcharge))/100;
+        Price[2] -= Price[2]%10;
         if(!ele.SetSeats(A_Seat[0],A_Seat[1],A_Seat[2])) continue;    //设置余座，可供查看
         //为每个旅客分配尽可能价格低的仓位
         int ticketPrice = 0;
@@ -129,15 +132,15 @@ vector<AnsElement> Net::request(FlightRequest req){
         for(int i = 0; i < N; i++){
             if(i+1 <= A_Seat[2] - '0') {
                 passenger_seatList[i] = 'Y';
-                ticketPrice += A_Price[2];
+                ticketPrice += Price[2];
             }
             else if(i+1 <= A_Seat[1] - '0'+ A_Seat[2] - '0') {
                 passenger_seatList[i] = 'C';
-                ticketPrice += A_Price[1];
+                ticketPrice += Price[1];
             }
             else {
                 passenger_seatList[i] = 'F';
-                ticketPrice += A_Price[0];
+                ticketPrice += Price[0];
             }
         }
         if(!ele.SetPrice(ticketPrice)) continue;

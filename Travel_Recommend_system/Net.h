@@ -24,14 +24,11 @@ private:
     int vexnum = 0;     //城市數目
     Time time;      //日期
     vector<Flight> matrix[CITYNUM][CITYNUM];
-    vector <string> vertex;         //城市數組
+    map<string,int> vertex;         //城市字典
     int FindIndex(const string& city) {//找到城市在數組中的下標位置
-        for (int i = 0;i < vexnum;i++) {
-            if (vertex[i] == city) {
-                return i;
-            }
-        }
-        return -1;
+        if(vertex.find(city)==vertex.end())
+            return -1;
+        return vertex[city];
     }
 public:
     void initNet(const vector<string>& cityName, Time t);
