@@ -42,6 +42,7 @@ void FlightSet::createSet(FILE *fp){
             cout<<"flight date error!"<<endl;
             continue;
         }
+
         int index=today.timeInterval(tTime);
         if(index>future_day){
             cout<<"future day out!"<<endl;

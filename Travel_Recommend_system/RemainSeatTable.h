@@ -36,7 +36,8 @@ public:
         return seatTable.empty();
     }
     void CreatRemainSeatTable(const string& path);
-    void update();
+    //void update();
+    void update(const string& path);
     void travel(map<string,RemainingSeat>);
 };
 

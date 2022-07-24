@@ -12,8 +12,9 @@ RemainingSeat::RemainingSeat(vector<string> record) {
     tmp.string2time(record[5]);
     arrivalDate = tmp;
     seatF = record[6][0];
-    seatY = record[7][0];
-    seatC = record[8][0];
+    //调整了seatC、seatY的读取顺序
+    seatC = record[7][0];
+    seatY = record[8][0];
     sCity = record[2];
     dCity = record[3];
 }

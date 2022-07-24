@@ -17,20 +17,48 @@ void RemainSeatTable::CreatRemainSeatTable(const string& path) {
         map<string,RemainingSeat> table;
         seatTable.insert(pair<string,map<string,RemainingSeat>>(tmp,table));
         RemainingSeat st(data);
-        seatTable.at(tmp).insert(pair<string,RemainingSeat>(data[1],st));
+        seatTable.at(tmp).insert(pair<string,RemainingSeat>(data[1],st));       //修改为data[0]+data[1]
     }
     in.close();
 }
 
-void RemainSeatTable::update() {
-    map<string,map<string ,RemainingSeat>>::iterator iter1;
-    for(iter1 = seatTable.begin();iter1!=seatTable.end();iter1++){
-        map<string ,RemainingSeat>::iterator iter2;
-        for(iter2 = (iter1->second).begin();iter2!=(iter1->second).end();iter2++){
-            (iter2->second).updateSeats();
-        }
+//void RemainSeatTable::update() {
+//    map<string,map<string ,RemainingSeat>>::iterator iter1;
+//    for(iter1 = seatTable.begin();iter1!=seatTable.end();iter1++){
+//        map<string ,RemainingSeat>::iterator iter2;
+//        for(iter2 = (iter1->second).begin();iter2!=(iter1->second).end();iter2++){
+//            (iter2->second).updateSeats();
+//        }
+//    }
+//}
+
+void RemainSeatTable::update(const string& path) {      //读取数据文件实现更新
+    ifstream in(path);
+    string str;
+    if(!in.is_open()){
+        cout<<"cannot open the file"<<endl;
+        return;
     }
+    map<string,map<string,RemainingSeat>>::iterator iter1;
+    map<string ,RemainingSeat>::iterator iter2;
+    while(getline(in,str)){
+        vector<string> data = mysplit(str,";");
+        string tmp = data[4];
+        string flightNo = data[1];
+        iter1 = seatTable.find(tmp);
+        if(iter1!=seatTable.end()){
+            iter2 = (iter1->second).find(flightNo);
+            if(iter2!=(iter1->second).end()){
+                (iter2->second).setSeats(data[6][0],data[7][0],data[8][0]);     //更新余座
+            }
+            else cout<<flightNo<<" not found!"<<endl;
+        }
+        else cout<<tmp<<" not found!"<<endl;
+    }
+    in.close();
 }
+
+
 
 void RemainSeatTable::travel(map<string,RemainingSeat> data){
     map<string ,RemainingSeat>::iterator iter;

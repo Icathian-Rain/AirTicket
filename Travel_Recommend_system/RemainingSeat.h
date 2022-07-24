@@ -33,6 +33,12 @@ public:
         vector<char> allseat = {seatF,seatC,seatY};
         return allseat;
     };
+    inline void setSeats(char F, char C, char Y) {
+        seatF = F;
+        seatC = C;
+        seatY = Y;
+        return;
+    };
     inline void updateSeats(){//update the number of the remaining seats
         int num1 = rand()%20;
         int num2 = rand()%20;
@@ -40,13 +46,13 @@ public:
         seatC = changeseats(num1);
         seatF = changeseats(num2);
         seatY = changeseats(num3);
-    }
+    };
     static inline char changeseats(int num){
         if(num>=10){
             return 'A';
         }
         return (char)(num+'0');
-    }
+    };
 };
 
 

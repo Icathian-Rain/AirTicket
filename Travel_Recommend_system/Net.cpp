@@ -97,7 +97,7 @@ vector<AnsElement> Net::request(FlightRequest req){
 
         //agency
         vector<string> agc = PRT->findAgency(A_carrier, sCity, dCity);      //从PTR中找到允许的代理人
-        vector<string> common_agc;
+        vector<string> common_agc;                                      //求代理人交集
         for(auto & j : agc){
             for(auto & k : target_agency){
                 if(j == k) {
@@ -145,9 +145,58 @@ vector<AnsElement> Net::request(FlightRequest req){
         }
         if(!ele.SetPrice(ticketPrice)) continue;
         ele.Set_passenger_seatList(passenger_seatList);
-        ele.Set_agc(common_agc);
+
+        //考虑不同代理人的票价波动
+        vector<string> final_agc[3];        //最多分成3组
+        for(auto & j:common_agc) {
+            int p = index_fluctuation(j);
+            if(p < 3 && p >= 0) final_agc[p].push_back(j);
+        }
+        for(int j = 0; j < 3; j++) {
+          if(!final_agc[j].empty()) {
+              AnsElement final_ele = ele;       //copy一份ele，已经记录了余座、和乘客座位表
+              int Extra_price = find_fluctuation_price(j);
+              if(Extra_price != 404) {
+                  int final_price = ticketPrice + N * Extra_price;           //计算最终总票价
+                  final_ele.SetPrice(final_price);      //设置最终总票价
+                  final_ele.Set_agc(final_agc[j]);
+                  res.push_back(final_ele);
+              }
+          }
+        }
+        //ele.Set_agc(common_agc);
         //满足,存入res
-        res.push_back(ele);
+        //res.push_back(ele);
     }
     return res;
+}
+
+void Net::init_fluctuation(vector<string> agency) {
+    cout<<"init fluctuation："<<endl;
+    //设置波动票价
+    fluctuation_price[0] = 30;
+    fluctuation_price[1] = 0;
+    fluctuation_price[2] = -10;
+
+    for(auto &agc : agency) {
+        int n = rand()%3;
+        fluctuation.insert({agc, n});     //使用随机数分组0,1,2
+        cout<<agc<<":"<<fluctuation_price[n]<<endl;
+    }
+    return;
+}
+
+int Net::index_fluctuation(string agc) {
+    map<string,int>::iterator iter = fluctuation.find(agc);
+    if(iter != fluctuation.end()){
+        return iter->second;
+    }
+    return 3;
+}
+
+int Net::find_fluctuation_price(int index) {
+    if(index < 3 && index >= 0) {
+        return fluctuation_price[index];
+    }
+    return 404;
 }
