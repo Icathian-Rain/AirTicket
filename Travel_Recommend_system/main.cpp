@@ -34,11 +34,11 @@ int initialize();
 void srv_setup(const string&, int);
 
 int main() {
+    srand((int)time(0));
     //gathering data info
     if(initialize()==-1){
         return -1;
     }
-    srand((int)time(0));
     srv_setup("0.0.0.0", 8080);
     return 0;
 }
@@ -51,6 +51,11 @@ int initialize(){
     vector<string> cityName={"AQG", "AOG", "AVA", "AEB", "BSD", "BAV", "BHY", "PEK", "BFU", "CGQ", "CGD", "CSX", "CZX", "CTU", "CIF", "CKG", "DLU", "DLC", "DNH", "ENH", "FUO", "FUG", "HMI", "HGH", "HZG", "HFE", "HEK", "HNY", "TXN", "HET", "HUZ", "JMU", "KNC", "JGN", "JIL", "TNA", "JDZ", "JNG", "JNZ", "JIU", "CHW", "JZH", "KHG", "KRY", "KRL", "KMG", "LHW", "LXA", "LYG", "LJG", "LYI", "LHN", "LZH",
                              "LYA", "LUZ", "LZO", "LUM", "NZH", "MIG", "MDG", "KHN", "NAO", "NKG", "NNG", "NTG", "NNY", "NGB", "PZI", "TAO", "IQN", "SHP", "NDG", "JUZ", "SYX", "SHA", "PVG", "SWA", "SHS", "SHE", "SZX",
                              "SJW", "SZV", "TYN", "TSN", "TNH", "TGO", "TEN", "WEF", "WEH", "WNZ", "WUH", "WHU", "HLH", "URC", "WUX", "WUS", "WUZ", "XMN", "XIY", "SIA", "XIC", "XIL", "XNN", "XUZ", "ENY", "YNZ", "YNT", "YBP", "YIH", "YIN", "YIW", "LLF", "DYG", "ZHA", "ZAT", "CGO", "HJJ", "ZUH", "ZYI"};
+    //'JGN', 'DNH', 'MDG', 'WEF', 'NZH', 'JIL', 'LLF', 'WNZ', 'HFE', 'HGH', 'CTU', 'HLH', 'SHS', 'BHY', 'BSD', 'NNG', 'TEN', 'SHP', 'KRY', 'AVA'
+    vector<string> All_Agency = {"JGN","DNH","MDG","WEF","NZH","JIL","LLF","WNZ","HFE","HGH","CTU","HLH","SHS","BHY","BSD","NNG","TEN","SHP","KRY","AVA"};
+    //fluctuation init
+    Net::init_fluctuation(All_Agency);
+
     //SET init
     SET->initSet(cityName, "20220530000000", 370);
     FILE *fp1=fopen("../flight.txt","r");
@@ -88,6 +93,11 @@ int initialize(){
     cout<<"start gathering remaining seats....."<<endl;
     RST->CreatRemainSeatTable("../FlightSeats.txt");
     cout<<"gather finishing!"<<endl<<endl;
+    //close 并释放文件指针和有关缓冲区
+    fclose(fp1);
+    fclose(fp2);
+    fclose(fp3);
+    fclose(fp4);
 
     cout << "Down" << endl;
     return 1;
