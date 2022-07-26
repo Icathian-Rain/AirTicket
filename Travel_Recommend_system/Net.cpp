@@ -109,7 +109,8 @@ vector<AnsElement> Net::request(FlightRequest req){
         if(common_agc.empty()) continue;
         //RemainingSeat
         string str_A_time = A_time.time2string_forday();                                  //起飞时间转为字符串
-        vector<char> A_Seat = RST->getSeat(str_A_time,A_number).Return_seat();     //获取余座信息
+        string Number = A_carrier+A_number;         //carrier + flightNumber
+        vector<char> A_Seat = RST->getSeat(str_A_time,Number).Return_seat();     //获取余座信息
         if( A_Seat[0] - '0' + A_Seat[1] - '0' + A_Seat[2] - '0' < N) continue;        //check Seats is enough or not
 
         //surcharge
@@ -180,7 +181,7 @@ void Net::init_fluctuation(vector<string> agency) {
 
     for(auto &agc : agency) {
         int n = rand()%3;
-        fluctuation.insert({agc, n});     //使用随机数分组0,1,2
+        fluctuation.insert({agc+"001", n});     //使用随机数分组0,1,2
         cout<<agc<<":"<<fluctuation_price[n]<<endl;
     }
     return;
