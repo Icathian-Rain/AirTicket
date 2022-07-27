@@ -104,7 +104,7 @@ vector<FlightAns> FlightSet::request(vector<FlightRequest> req) {           //�
     if(ok){             //查询成功
         sort(head, head+req_size);      //按照(次小-最小的值)给每一组排序
         q.push(asdf(tot,0,0,false));
-        while(cnt <20 && !q.empty()){
+        while(cnt <20 && !q.empty()){               //we can modify cnt upper limit
             asdf np = q.top();
             q.pop();
             //根据输出构造一个FligntAns
