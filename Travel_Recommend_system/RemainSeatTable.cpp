@@ -3,7 +3,7 @@
 //
 
 #include "RemainSeatTable.h"
-#include <thread>
+//#include <thread>
 void RemainSeatTable::CreatRemainSeatTable(const string& path) {
     ifstream in(path);
     string str;

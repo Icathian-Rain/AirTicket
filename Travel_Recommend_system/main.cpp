@@ -57,7 +57,7 @@ int initialize(){
     Net::init_fluctuation(All_Agency);
 
     //SET init
-    SET->initSet(cityName, "20220530000000", 370);
+    SET->initSet(cityName, "20220901000000", 370);
     FILE *fp1=fopen("../flight.txt","r");
     FILE *fp2=fopen("../price.txt","r");
     if(fp1==nullptr||fp2==nullptr){
