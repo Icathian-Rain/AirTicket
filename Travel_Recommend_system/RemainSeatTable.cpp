@@ -33,7 +33,8 @@ void RemainSeatTable::CreatRemainSeatTable(const string& path) {
 //}
 
 bool RemainSeatTable::update(const string& path) {      //读取数据文件实现更新
-    ifstream in(path);
+    string fullPath = "../" + path;
+    ifstream in(fullPath);
     string str;
     if(!in.is_open()){
         cout<<"cannot open the file"<<endl;
