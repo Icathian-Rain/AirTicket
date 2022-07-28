@@ -155,7 +155,7 @@ void srv_setup(const string& ip_addr, int port)
 
             if(!ans.empty())
             {
-                res_meta["msg"] = "获取成功";
+                res_meta["msg"] = "query succeed";
                 res_meta["status"] = 200;
                 res_data["ansNum"] = (int)ans.size();
                 for(int i = 0; i<ans.size(); i++)
@@ -197,8 +197,8 @@ void srv_setup(const string& ip_addr, int port)
             }
             else
             {
-                res_meta["msg"] = "未获取到符合条件的航班";
-                res_meta["status"] = 400;
+                res_meta["msg"] = "Not Found";
+                res_meta["status"] = 404;
             }
             res_value["meta"] = res_meta;
             res_value["data"] = res_data;
@@ -206,12 +206,18 @@ void srv_setup(const string& ip_addr, int port)
             const string res_body = Json::writeString(builder, res_value);
             res.set_content(res_body, "text/plain");
         });
-        svr.Get("/api/reset", [&](const httplib::Request &req, httplib::Response &res)
+        svr.Get("/api/update", [&](const httplib::Request &req, httplib::Response &res)
         {
-            RST->update();
+            string updateFile=req.get_param_value("fileName");
             Json::Value value;
-            value["msg"] = "重置成功";
-            value["status"] = 200;
+            if(RST->update(updateFile) == true) {
+                value["msg"] = "update succeed";
+                value["status"] = 200;
+            }
+            else {
+                value["msg"] = "update failed";
+                value["status"] = 404;
+            }
             Json::StreamWriterBuilder builder;
             const string res_body = Json::writeString(builder, value);
             res.set_content(res_body, "text/plain");

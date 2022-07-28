@@ -36,7 +36,7 @@ public:
     }
     void CreatRemainSeatTable(const string& path);
     //void update();
-    void update(const string& path);
+    bool update(const string& path);
 //    void travel(map<string,RemainingSeat>);
 };
 
