@@ -1,0 +1,479 @@
+{
+    "Options":[ 
+    {
+        "value": "AQG",
+        "label": "安庆(AQG)"
+    },
+    {
+        "value": "AOG",
+        "label": "鞍山(AOG)"
+    },
+    {
+        "value": "AVA",
+        "label": "安顺(AVA)"
+    },
+    {
+        "value": "AEB",
+        "label": "百色(AEB)"
+    },
+    {
+        "value": "BSD",
+        "label": "保山(BSD)"
+    },
+    {
+        "value": "BAV",
+        "label": "包头(BAV)"
+    },
+    {
+        "value": "BHY",
+        "label": "北海(BHY)"
+    },
+    {
+        "value": "PEK",
+        "label": "北京首都(PEK)"
+    },
+    {
+        "value": "BFU",
+        "label": "蚌埠(BFU)"
+    },
+    {
+        "value": "CGQ",
+        "label": "长春(CGQ)"
+    },
+    {
+        "value": "CGD",
+        "label": "常德(CGD)"
+    },
+    {
+        "value": "CSX",
+        "label": "长沙(CSX)"
+    },
+    {
+        "value": "CZX",
+        "label": "常州(CZX)"
+    },
+    {
+        "value": "CTU",
+        "label": "成都(CTU)"
+    },
+    {
+        "value": "CIF",
+        "label": "赤峰(CIF)"
+    },
+    {
+        "value": "CKG",
+        "label": "重庆(CKG)"
+    },
+    {
+        "value": "DLU",
+        "label": "大理(DLU)"
+    },
+    {
+        "value": "DLC",
+        "label": "大连(DLC)"
+    },
+    {
+        "value": "DNH",
+        "label": "敦煌(DNH)"
+    },
+    {
+        "value": "ENH",
+        "label": "恩施(ENH)"
+    },
+    {
+        "value": "FUO",
+        "label": "佛山(FUO)"
+    },
+    {
+        "value": "FUG",
+        "label": "阜阳(FUG)"
+    },
+    {
+        "value": "HMI",
+        "label": "哈密(HMI)"
+    },
+    {
+        "value": "HGH",
+        "label": "杭州(HGH)"
+    },
+    {
+        "value": "HZG",
+        "label": "汉中(HZG)"
+    },
+    {
+        "value": "HFE",
+        "label": "合肥(HFE)"
+    },
+    {
+        "value": "HEK",
+        "label": "黑河(HEK)"
+    },
+    {
+        "value": "HNY",
+        "label": "衡阳(HNY)"
+    },
+    {
+        "value": "TXN",
+        "label": "黄山(TXN)"
+    },
+    {
+        "value": "HET",
+        "label": "呼和浩特(HET)"
+    },
+    {
+        "value": "HUZ",
+        "label": "徽州(HUZ)"
+    },
+    {
+        "value": "JMU",
+        "label": "佳木斯(JMU)"
+    },
+    {
+        "value": "KNC",
+        "label": "吉安(KNC)"
+    },
+    {
+        "value": "JGN",
+        "label": "嘉峪关(JGN)"
+    },
+    {
+        "value": "JIL",
+        "label": "吉林(JIL)"
+    },
+    {
+        "value": "TNA",
+        "label": "济南(TNA)"
+    },
+    {
+        "value": "JDZ",
+        "label": "景德镇(JDZ)"
+    },
+    {
+        "value": "JNG",
+        "label": "济宁(JNG)"
+    },
+    {
+        "value": "JNZ",
+        "label": "锦州(JNZ)"
+    },
+    {
+        "value": "JIU",
+        "label": "九江(JIU)"
+    },
+    {
+        "value": "CHW",
+        "label": "酒泉(CHW)"
+    },
+    {
+        "value": "JZH",
+        "label": "九寨沟(JZH)"
+    },
+    {
+        "value": "KHG",
+        "label": "喀什(KHG)"
+    },
+    {
+        "value": "KRY",
+        "label": "克拉玛依(KRY)"
+    },
+    {
+        "value": "KRL",
+        "label": "库尔勒(KRL)"
+    },
+    {
+        "value": "KMG",
+        "label": "昆明(KMG)"
+    },
+    {
+        "value": "LHW",
+        "label": "兰州(LHW)"
+    },
+    {
+        "value": "LXA",
+        "label": "拉萨(LXA)"
+    },
+    {
+        "value": "LYG",
+        "label": "连云港(LYG)"
+    },
+    {
+        "value": "LJG",
+        "label": "丽江(LJG)"
+    },
+    {
+        "value": "LYI",
+        "label": "临沂(LYI)"
+    },
+    {
+        "value": "LHN",
+        "label": "梨山(LHN)"
+    },
+    {
+        "value": "LZH",
+        "label": "柳州(LZH)"
+    },
+    {
+        "value": "LYA",
+        "label": "洛阳(LYA)"
+    },
+    {
+        "value": "LUZ",
+        "label": "庐山(LUZ)"
+    },
+    {
+        "value": "LZO",
+        "label": "泸州(LZO)"
+    },
+    {
+        "value": "LUM",
+        "label": "芒市(LUM)"
+    },
+    {
+        "value": "NZH",
+        "label": "满州里(NZH)"
+    },
+    {
+        "value": "MIG",
+        "label": "绵阳(MIG)"
+    },
+    {
+        "value": "MDG",
+        "label": "牡丹江(MDG)"
+    },
+    {
+        "value": "KHN",
+        "label": "南昌(KHN)"
+    },
+    {
+        "value": "NAO",
+        "label": "南充(NAO)"
+    },
+    {
+        "value": "NKG",
+        "label": "南京(NKG)"
+    },
+    {
+        "value": "NNG",
+        "label": "南宁(NNG)"
+    },
+    {
+        "value": "NTG",
+        "label": "南通(NTG)"
+    },
+    {
+        "value": "NNY",
+        "label": "南阳(NNY)"
+    },
+    {
+        "value": "NGB",
+        "label": "宁波(NGB)"
+    },
+    {
+        "value": "PZI",
+        "label": "攀枝花(PZI)"
+    },
+    {
+        "value": "TAO",
+        "label": "青岛(TAO)"
+    },
+    {
+        "value": "IQN",
+        "label": "庆阳(IQN)"
+    },
+    {
+        "value": "SHP",
+        "label": "秦皇岛(SHP)"
+    },
+    {
+        "value": "NDG",
+        "label": "齐齐哈尔(NDG)"
+    },
+    {
+        "value": "JUZ",
+        "label": "衢州(JUZ)"
+    },
+    {
+        "value": "SYX",
+        "label": "三亚(SYX)"
+    },
+    {
+        "value": "SHA",
+        "label": "上海虹桥(SHA)"
+    },
+    {
+        "value": "PVG",
+        "label": "上海浦东(PVG)"
+    },
+    {
+        "value": "SWA",
+        "label": "汕头(SWA)"
+    },
+    {
+        "value": "SHS",
+        "label": "荆沙(SHS)"
+    },
+    {
+        "value": "SHE",
+        "label": "沈阳(SHE)"
+    },
+    {
+        "value": "SZX",
+        "label": "深圳(SZX)"
+    },
+    {
+        "value": "SJW",
+        "label": "石家庄(SJW)"
+    },
+    {
+        "value": "SZV",
+        "label": "苏州(SZV)"
+    },
+    {
+        "value": "TYN",
+        "label": "太原(TYN)"
+    },
+    {
+        "value": "TSN",
+        "label": "天津(TSN)"
+    },
+    {
+        "value": "TNH",
+        "label": "通化(TNH)"
+    },
+    {
+        "value": "TGO",
+        "label": "通辽(TGO)"
+    },
+    {
+        "value": "TEN",
+        "label": "铜仁(TEN)"
+    },
+    {
+        "value": "WEF",
+        "label": "潍坊(WEF)"
+    },
+    {
+        "value": "WEH",
+        "label": "威海(WEH)"
+    },
+    {
+        "value": "WNZ",
+        "label": "温州(WNZ)"
+    },
+    {
+        "value": "WUH",
+        "label": "武汉(WUH)"
+    },
+    {
+        "value": "WHU",
+        "label": "芜湖(WHU)"
+    },
+    {
+        "value": "HLH",
+        "label": "乌兰浩特(HLH)"
+    },
+    {
+        "value": "URC",
+        "label": "乌鲁木齐(URC)"
+    },
+    {
+        "value": "WUX",
+        "label": "无锡(WUX)"
+    },
+    {
+        "value": "WUS",
+        "label": "武夷山(WUS)"
+    },
+    {
+        "value": "WUZ",
+        "label": "梧州(WUZ)"
+    },
+    {
+        "value": "XMN",
+        "label": "厦门(XMN)"
+    },
+    {
+        "value": "XIY",
+        "label": "西安(XIY)"
+    },
+    {
+        "value": "SIA",
+        "label": "咸阳(SIA)"
+    },
+    {
+        "value": "XIC",
+        "label": "西昌(XIC)"
+    },
+    {
+        "value": "XIL",
+        "label": "锡林浩特(XIL)"
+    },
+    {
+        "value": "XNN",
+        "label": "西宁(XNN)"
+    },
+    {
+        "value": "XUZ",
+        "label": "徐州(XUZ)"
+    },
+    {
+        "value": "ENY",
+        "label": "延安(ENY)"
+    },
+    {
+        "value": "YNZ",
+        "label": "盐城(YNZ)"
+    },
+    {
+        "value": "YNT",
+        "label": "烟台(YNT)"
+    },
+    {
+        "value": "YBP",
+        "label": "宜宾(YBP)"
+    },
+    {
+        "value": "YIH",
+        "label": "宜昌(YIH)"
+    },
+    {
+        "value": "YIN",
+        "label": "伊宁(YIN)"
+    },
+    {
+        "value": "YIW",
+        "label": "义乌(YIW)"
+    },
+    {
+        "value": "LLF",
+        "label": "永州(LLF)"
+    },
+    {
+        "value": "DYG",
+        "label": "张家界(DYG)"
+    },
+    {
+        "value": "ZHA",
+        "label": "湛江(ZHA)"
+    },
+    {
+        "value": "ZAT",
+        "label": "昭通(ZAT)"
+    },
+    {
+        "value": "CGO",
+        "label": "郑州(CGO)"
+    },
+    {
+        "value": "HJJ",
+        "label": "芷江(HJJ)"
+    },
+    {
+        "value": "ZUH",
+        "label": "珠海(ZUH)"
+    },
+    {
+        "value": "ZYI",
+        "label": "遵义(ZYI)"
+    }
+]}

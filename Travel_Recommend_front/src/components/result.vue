@@ -1,13 +1,12 @@
 <script setup>
 import { ref } from "vue";
 
-
-const pros = defineProps(["res_data", "options"]);
+const pros = defineProps(["resData", "cityOptions"]);
 
 const seatType = ref({
-    "F": "头等舱",
-    "C": "商务舱",
-    "Y": "经济舱"
+    F: "头等舱",
+    C: "商务舱",
+    Y: "经济舱",
 });
 
 function getSeatType(type) {
@@ -24,21 +23,22 @@ function getDate(date) {
 }
 
 function getCity(city) {
-    for(let i in pros.options)
-    {
-        if(pros.options[i].value === city)
-        {
-            return pros.options[i].label;
+    for (let i in pros.cityOptions) {
+        if (pros.cityOptions[i].value === city) {
+            return pros.cityOptions[i].label;
         }
     }
 }
-
 </script>
 
 <template>
-    <span class="tips"> 搜索到 {{ pros.res_data["ansNum"] }} 条结果 </span>
     <div class="home">
-        <div class="ans" :id="'ans' + i" v-for="(ans_a, i) in pros.res_data['ans']">
+        <span class="tips"> 搜索到 {{ pros.resData["ansNum"] }} 条结果 </span>
+        <div
+            class="ans"
+            :id="'ans' + i"
+            v-for="(ans_a, i) in pros.resData['ans']"
+        >
             <div class="ans_tips">
                 <span> 结果: {{ i + 1 }} </span>
                 <span>
@@ -47,9 +47,7 @@ function getCity(city) {
                         {{ agc_a }}
                     </span>
                 </span>
-                <span>
-                    总价格: {{ ans_a['ticketPrice'] }}
-                </span>
+                <span> 总价格: {{ ans_a["ticketPrice"] }} </span>
             </div>
             <div
                 class="flights"
@@ -58,11 +56,11 @@ function getCity(city) {
             >
                 <div class="flight-box">
                     <div class="flight-tip">
-                        <span>
-                        航班号: {{ flight_a['flightNo'] }}
-                        </span>
-                        <span v-for="(seat, k) in flight_a['passengetSeatList']">
-                        座位{{ k + 1}}: {{ getSeatType(seat) }}
+                        <span> 航班号: {{ flight_a["flightNo"] }} </span>
+                        <span
+                            v-for="(seat, k) in flight_a['passengetSeatList']"
+                        >
+                            座位{{ k + 1 }}: {{ getSeatType(seat) }}
                         </span>
                     </div>
                     <div class="flight-info-box">
@@ -75,7 +73,11 @@ function getCity(city) {
                             </span>
                         </div>
                         <div class="arrow">
-                        <img src="../assets/icons/arrow-right.svg" alt="" class="arrow-right">
+                            <img
+                                src="../assets/icons/arrow-right.svg"
+                                alt=""
+                                class="arrow-right"
+                            />
                         </div>
                         <div class="depart-box">
                             <span class="departTime">
@@ -89,18 +91,16 @@ function getCity(city) {
                     <div class="left-seat">
                         <span style="">
                             剩余座位信息:
-                            <br/>
-                            头等舱: {{ String.fromCharCode(flight_a['seatF']) }}
-                            <br/>
-                            商务舱: {{ String.fromCharCode(flight_a['seatC']) }}
-                            <br/>
-                            经济舱: {{ String.fromCharCode(flight_a['seatY']) }}
+                            <br />
+                            头等舱: {{ String.fromCharCode(flight_a["seatF"]) }}
+                            <br />
+                            商务舱: {{ String.fromCharCode(flight_a["seatC"]) }}
+                            <br />
+                            经济舱: {{ String.fromCharCode(flight_a["seatY"]) }}
                         </span>
                     </div>
                     <div class="price">
-                        <span>
-                            价格: {{ flight_a['price'] }}
-                        </span>
+                        <span> 价格: {{ flight_a["price"] }} </span>
                     </div>
                 </div>
             </div>
@@ -121,15 +121,14 @@ function getCity(city) {
     align-items: center;
     position: relative;
     /* 宽度固定 */
-    width: 800px;
-    /* 高度100% */
-    height: 100%;
+    width: 100%;
     /* 背景颜色 */
     background: #fff;
     /* 边框 */
     padding: 10px 5% 30px 5%;
     /* 圆角 */
     border-radius: 6px;
+    top:100px;
 }
 
 .tips {
@@ -140,7 +139,6 @@ function getCity(city) {
     /* 字体粗细 */
     font-weight: bold;
     width: 870px;
-    padding-top: 30px;
     padding-bottom: 20px;
 }
 
@@ -160,12 +158,11 @@ function getCity(city) {
     margin-bottom: 10px;
 }
 
-.ans_tips{
+.ans_tips {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
-
 }
 .flight-box {
     display: flex;
@@ -191,17 +188,16 @@ function getCity(city) {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    
 }
 
-.flight-info-box{
+.flight-info-box {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
 }
 
-.depart-box{
+.depart-box {
     display: flex;
     flex-direction: column;
     justify-content: center;
