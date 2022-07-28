@@ -13,13 +13,14 @@ using namespace std;
 #include "PriceRuleTable.h"
 #include "PriceTable.h"
 #include "RemainSeatTable.h"
+#include "FluctuationTable.h"
 #include <vector>
 #include <string>
 FlightSet *SET;
 PriceRuleTable *PRT;
 PriceTable *PT;
 RemainSeatTable *RST;
-
+FluctuationTable *FT;
 #if defined(__GNUC__)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
@@ -48,13 +49,14 @@ int initialize(){
     PRT =new PriceRuleTable;
     PT =new PriceTable;
     RST =new RemainSeatTable;
+    FT = new FluctuationTable;
     vector<string> cityName={"AQG", "AOG", "AVA", "AEB", "BSD", "BAV", "BHY", "PEK", "BFU", "CGQ", "CGD", "CSX", "CZX", "CTU", "CIF", "CKG", "DLU", "DLC", "DNH", "ENH", "FUO", "FUG", "HMI", "HGH", "HZG", "HFE", "HEK", "HNY", "TXN", "HET", "HUZ", "JMU", "KNC", "JGN", "JIL", "TNA", "JDZ", "JNG", "JNZ", "JIU", "CHW", "JZH", "KHG", "KRY", "KRL", "KMG", "LHW", "LXA", "LYG", "LJG", "LYI", "LHN", "LZH",
                              "LYA", "LUZ", "LZO", "LUM", "NZH", "MIG", "MDG", "KHN", "NAO", "NKG", "NNG", "NTG", "NNY", "NGB", "PZI", "TAO", "IQN", "SHP", "NDG", "JUZ", "SYX", "SHA", "PVG", "SWA", "SHS", "SHE", "SZX",
                              "SJW", "SZV", "TYN", "TSN", "TNH", "TGO", "TEN", "WEF", "WEH", "WNZ", "WUH", "WHU", "HLH", "URC", "WUX", "WUS", "WUZ", "XMN", "XIY", "SIA", "XIC", "XIL", "XNN", "XUZ", "ENY", "YNZ", "YNT", "YBP", "YIH", "YIN", "YIW", "LLF", "DYG", "ZHA", "ZAT", "CGO", "HJJ", "ZUH", "ZYI"};
     //'JGN', 'DNH', 'MDG', 'WEF', 'NZH', 'JIL', 'LLF', 'WNZ', 'HFE', 'HGH', 'CTU', 'HLH', 'SHS', 'BHY', 'BSD', 'NNG', 'TEN', 'SHP', 'KRY', 'AVA'
     vector<string> All_Agency = {"JGN","DNH","MDG","WEF","NZH","JIL","LLF","WNZ","HFE","HGH","CTU","HLH","SHS","BHY","BSD","NNG","TEN","SHP","KRY","AVA"};
     //fluctuation init
-    Net::init_fluctuation(All_Agency);
+    FT->init_fluctuation(All_Agency);
 
     //SET init
     SET->initSet(cityName, "20220901000000", 370);
