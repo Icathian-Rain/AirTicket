@@ -6,3 +6,11 @@ Travel_Recommend_system/.idea/*
 # 前端ignore位于Travel_Recommend_front/.ignore
 # 忽略.vscode
 .vscode/*
+
+*/Update*.txt
+*/flight.txt
+*/price.txt
+*/seats.txt
+*/FlightSeats.txt
+*/priceRule.txt
+

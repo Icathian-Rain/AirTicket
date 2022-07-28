@@ -32,12 +32,12 @@ void RemainSeatTable::CreatRemainSeatTable(const string& path) {
 //    }
 //}
 
-void RemainSeatTable::update(const string& path) {      //读取数据文件实现更新
+bool RemainSeatTable::update(const string& path) {      //读取数据文件实现更新
     ifstream in(path);
     string str;
     if(!in.is_open()){
         cout<<"cannot open the file"<<endl;
-        return;
+        return false;
     }
     map<string,map<string,RemainingSeat>>::iterator iter1;
     map<string ,RemainingSeat>::iterator iter2;
@@ -56,6 +56,7 @@ void RemainSeatTable::update(const string& path) {      //读取数据文件实�
         else cout<<tmp<<" not found!"<<endl;
     }
     in.close();
+    return true;
 }
 
 
