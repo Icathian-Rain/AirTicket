@@ -171,7 +171,7 @@ void srv_setup(const string& ip_addr, int port)
                     for(int j = 0; j<res_flight.size(); j++)
                     {
                         Json::Value res_flight_ans;
-                        res_flight_ans["flightNo"] = res_flight[j].Return_flightNo();
+                        res_flight_ans["flightNo"] = res_flight[j].carrierVal() + res_flight[j].Return_flightNo();
                         vector<string> rawAgc = res_flight[j].Return_agc();
                         for(int k = 0; k<rawAgc.size(); k++)
                             res_flight_ans["agc"][k] = rawAgc[k];
