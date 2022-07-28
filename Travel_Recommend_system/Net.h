@@ -16,7 +16,7 @@
 #include "PriceRuleTable.h"
 #include "PriceTable.h"
 #include "RemainSeatTable.h"
-
+#include "FluctuationTable.h"
 
 #define CITYNUM 119
 class Net {
@@ -30,17 +30,11 @@ private:
             return -1;
         return vertex[city];
     }
-    //'JGN', 'DNH', 'MDG', 'WEF', 'NZH', 'JIL', 'LLF', 'WNZ', 'HFE', 'HGH', 'CTU', 'HLH', 'SHS', 'BHY', 'BSD', 'NNG', 'TEN', 'SHP', 'KRY', 'AVA'
-    static map<string,int> fluctuation;         //代理人不同造成的票价波动
-    static int fluctuation_price[3];            //票价波动值
 public:
     void initNet(const vector<string>& cityName, Time t);
     void addFlight(const string& sCity,const string& dCity,const string& flightNo,const string& carriers,Time tT,Time aT);
     void showNet();
     vector<AnsElement> request(FlightRequest req);   //單请求情況
-    static void init_fluctuation(vector<string> agency);    //初始化票价波动
-    static int index_fluctuation(string agc);       //找到代理人对应索引
-    static int find_fluctuation_price(int index);   //找到票价波动值
 };
 
 #endif //TRAVEL_RECOMMEND_SYSTEM_NET_H

@@ -8,7 +8,7 @@
 extern PriceRuleTable *PRT;
 extern PriceTable *PT;
 extern RemainSeatTable *RST;
-
+extern FluctuationTable *FT;
 vector<string> mysplit(string str, const string& separator) {//split string str by separator，like split “a+b+c” by "+" into "a""b""c"
     vector<string> result;
     int cutAt;
@@ -150,13 +150,13 @@ vector<AnsElement> Net::request(FlightRequest req){
         //考虑不同代理人的票价波动
         vector<string> final_agc[3];        //最多分成3组
         for(auto & j:common_agc) {
-            int p = index_fluctuation(j);
+            int p = FT->index_fluctuation(j);
             if(p < 3 && p >= 0) final_agc[p].push_back(j);
         }
         for(int j = 0; j < 3; j++) {
           if(!final_agc[j].empty()) {
               AnsElement final_ele = ele;       //copy一份ele，已经记录了余座、和乘客座位表
-              int Extra_price = find_fluctuation_price(j);
+              int Extra_price = FT->find_fluctuation_price(j);
               if(Extra_price != 404) {
                   int final_price = ticketPrice + N * Extra_price;           //计算最终总票价
                   final_ele.SetPrice(final_price);      //设置最终总票价
@@ -172,32 +172,3 @@ vector<AnsElement> Net::request(FlightRequest req){
     return res;
 }
 
-void Net::init_fluctuation(vector<string> agency) {
-    cout<<"init fluctuation："<<endl;
-    //设置波动票价
-    fluctuation_price[0] = 30;
-    fluctuation_price[1] = 0;
-    fluctuation_price[2] = -10;
-
-    for(auto &agc : agency) {
-        int n = rand()%3;
-        fluctuation.insert({agc+"001", n});     //使用随机数分组0,1,2
-        cout<<agc<<":"<<fluctuation_price[n]<<endl;
-    }
-    return;
-}
-
-int Net::index_fluctuation(string agc) {
-    map<string,int>::iterator iter = fluctuation.find(agc);
-    if(iter != fluctuation.end()){
-        return iter->second;
-    }
-    return 3;
-}
-
-int Net::find_fluctuation_price(int index) {
-    if(index < 3 && index >= 0) {
-        return fluctuation_price[index];
-    }
-    return 404;
-}
