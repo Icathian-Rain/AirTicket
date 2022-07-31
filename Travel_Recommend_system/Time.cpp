@@ -47,23 +47,23 @@ string Time::time2string_forday() const{
     return temp;
 }
 
-int Time::day2int() const {
-    //輸入日期，返回在這一年中的第幾天
-    int days[]={31,28,31,30,31,30,31,31,30,31,30,31};
-    if(year%4==0){          //闰年
-        if(year%100==0 && year%400!=0);
-        else days[1] = 29;
-    }
-    if(month>12||day>days[month-1]){
-        cout<<"date error!"<<endl;
-        return 0;
-    }
-    int sum = 0;
-    for(int i=0;i<month-1;i++)
-        sum+=days[i];
-    sum+=day;
-    return sum;
-}
+//int Time::day2int() const {
+//    //輸入日期，返回在這一年中的第幾天
+//    int days[]={31,28,31,30,31,30,31,31,30,31,30,31};
+//    if(year%4==0){          //闰年
+//        if(year%100==0 && year%400!=0);
+//        else days[1] = 29;
+//    }
+//    if(month>12||day>days[month-1]){
+//        cout<<"date error!"<<endl;
+//        return 0;
+//    }
+//    int sum = 0;
+//    for(int i=0;i<month-1;i++)
+//        sum+=days[i];
+//    sum+=day;
+//    return sum;
+//}
 
 int Time::timeInterval(Time t) const {
     int C=0;
@@ -95,5 +95,4 @@ int Time::timeInterval(Time t) const {
         C+=t.day;
         return C>0?C:-C;
     }
-    return 0;
 }
