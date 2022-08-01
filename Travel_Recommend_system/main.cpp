@@ -16,6 +16,7 @@ using namespace std;
 #include "FluctuationTable.h"
 #include <vector>
 #include <string>
+#include <unistd.h>
 FlightSet *SET;
 PriceRuleTable *PRT;
 PriceTable *PT;
@@ -118,6 +119,7 @@ void srv_setup(const string& ip_addr, int port)
         httplib::Server svr;
         // read:读取json
         Json::Reader read;
+        svr.new_task_queue = [] { return new httplib::ThreadPool(2); };
         svr.Post("/api/query", [&](const httplib::Request &req, httplib::Response &res)
         {
             // 获取request的数据
