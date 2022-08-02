@@ -2,7 +2,7 @@
     <div class="search-form">
         <SearchNumber title="乘客人数" v-model="number" />
         <SearchAgent title="代理人" v-model="agents" />
-        <span style="font-size: 20px;">航段</span>
+        <span style="font-size: 20px">航段</span>
         <div class="serach-segments">
             <div v-for="(segs, i) in segments">
                 <SearchSeg
@@ -20,11 +20,15 @@
         <addSeg
             @addSeg="
                 () => {
-                    segments.push({
-                        depart: '',
-                        arrival: '',
-                        departTime: '',
-                    });
+                    if (segments.length < 8) {
+                        segments.push({
+                            depart: '',
+                            arrival: '',
+                            departTime: '',
+                        });
+                    } else {
+                        showMsg('航段数目最多为8个', 'warning');
+                    }
                 }
             "
         />
@@ -60,6 +64,15 @@ const segments = ref([
     },
 ]);
 
+const showMsg = (msg, type) => {
+    ElMessage({
+        showClose: true,
+        duration: 2000,
+        message: msg,
+        type: type,
+    });
+};
+
 axios.defaults.baseURL = "http://api.hustairline.xyz/api/";
 axios.defaults.timeout = 3000;
 
@@ -80,32 +93,25 @@ const formSubmit = () => {
         req_data.date.push(segments.value[i].departTime);
         req_data.sCity.push(segments.value[i].depart);
         req_data.dCity.push(segments.value[i].arrival);
+        if (
+            i > 0 &&
+            segments.value[i].departTime <= segments.value[i - 1].departTime
+        ) {
+            showMsg("航段时间有误", "error");
+            emit("unsetLoading");
+            return;
+        }
     }
     if (req_data["N"] <= 0) {
-        ElMessage({
-            showClose: true,
-            duration: 2000,
-            message: "乘客数量不能为0",
-            type: "error",
-        });
+        showMsg("乘客数量不能为0", "error");
         emit("unsetLoading");
         return;
     } else if (req_data["M"] === 0) {
-        ElMessage({
-            showClose: true,
-            duration: 2000,
-            message: "航程数量不能为0",
-            type: "error",
-        });
+        showMsg("航程数量不能为0", "error");
         emit("unsetLoading");
         return;
     } else if (req_data["agency"].length === 0) {
-        ElMessage({
-            showClose: true,
-            duration: 2000,
-            message: "代理商不能为空",
-            type: "error",
-        });
+        showMsg("代理商不能为空", "error");
         emit("unsetLoading");
         return;
     }
@@ -118,29 +124,14 @@ const formSubmit = () => {
         .then((response) => {
             if (response.data.meta.status == 200) {
                 emit("update:resData", response.data.data);
-                ElMessage({
-                    showClose: true,
-                    duration: 2000,
-                    message: "搜索成功",
-                    type: "success",
-                });
+                showMsg("搜索成功", "success");
             } else {
                 emit("update:resData", null);
-                ElMessage({
-                    showClose: true,
-                    duration: 2000,
-                    message: "搜索失败",
-                    type: "error",
-                });
+                showMsg("搜索失败", "error");
             }
         })
         .catch((error) => {
-            ElMessage({
-                showClose: true,
-                duration: 2000,
-                message: "输入数据有误",
-                type: "error",
-            });
+            showMsg("搜索失败", "error");
             // 请求失败处理
             console.log(error);
         })
