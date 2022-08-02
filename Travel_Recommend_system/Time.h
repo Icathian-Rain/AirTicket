@@ -15,7 +15,7 @@ public:
     char hour;
     char minute;
     inline Time T(int y, int m, int d, int h, int min) { year = y, month = m, day = d, hour = h, minute = min; };
-    int day2int() const;
+//    int day2int() const;          没有考虑年份
     int timeInterval(Time t) const;
     inline bool isLeapYear(){return (year % 4 == 0 && year % 100 !=0 )||year % 400 == 0;}
     void string2time(const string& str);//input like 20220503000000
@@ -33,7 +33,7 @@ public:
         if(t1.year < t2.year) return true;
         if(t1.year > t2.year) return false;
         //同一年
-        int daydiff = t2.day2int() - t1.day2int();        //求两个时间相差的天数
+        int daydiff = t1.timeInterval(t2);        //求两个时间相差的天数
         if(daydiff < 0) return false;
         if(daydiff >=2) return true;
         t2.hour += 24*daydiff;                          //调用了拷贝构造函数，不会对原时间造成影响
