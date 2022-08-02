@@ -122,6 +122,7 @@ function getCity(city) {
     position: relative;
     /* 宽度固定 */
     width: 100%;
+    min-width: 650px;
     /* 背景颜色 */
     background: #fff;
     /* 边框 */
@@ -132,6 +133,9 @@ function getCity(city) {
 }
 
 .tips {
+    position: absolute;
+    left: 20px;
+    top: 10px;
     /* 字体大小 */
     font-size: 20px;
     /* 字体颜色 */
@@ -156,6 +160,7 @@ function getCity(city) {
     box-shadow: 0 0 12px 0 rgb(0 0 0 / 6%);
     padding: 10px;
     margin-bottom: 10px;
+    margin-top: 50px;
 }
 
 .ans_tips {
