@@ -68,7 +68,8 @@ int initialize(){
         return -1;
     }
     cout<<"start gathering flight....."<<endl;
-    SET->createSet(fp1);
+    vector<int> dates{1,2,3};
+    SET->createSet(fp1, dates);
     cout<<"gather finishing!"<<endl<<endl;
 
     //PT init

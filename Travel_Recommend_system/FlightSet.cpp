@@ -5,6 +5,11 @@
 #include "FlightSet.h"
 
 #include <utility>
+#include<iostream>
+#include<cstdlib>
+#include<ctime>
+using namespace std;
+clock_t start_time,end_time;
 
 //西藏拉萨
 
@@ -20,36 +25,57 @@ void FlightSet::initSet(const vector<string>& CityName, string t, int future_day
     }
 }
 
-void FlightSet::createSet(FILE *fp){
+void FlightSet::createSet(FILE *fp, vector<int> dates){
+    start_time = clock();
     char buffer[200];
-    string flightNo,sCity,dCity,carrier,tT,aT;
-    while (fgets(buffer, 200, fp) != nullptr) {
-        vector<string> str = mysplit(buffer, ";");
-        if(str.size()!=7){
-            cout<<"flight.txt pattern error!"<<endl;
-            continue;
-        }
-        carrier = str[0];
-        flightNo = str[1];
-        tT = str[2];
-        aT = str[3];
-        sCity = str[4];
-        dCity = str[5];
-        Time tTime,aTime{};
-        tTime.string2time(tT);
-        aTime.string2time(aT);
-        if(Time::compare_Time(today,tTime)){
-            cout<<"flight date error!"<<endl;
-            continue;
-        }
-
-        int index=today.timeInterval(tTime);
-        if(index>future_day){
-            cout<<"future day out!"<<endl;
-            continue;
-        }
-        flightSet[index].addFlight(sCity,dCity,flightNo,carrier,tTime,aTime);
+    vector<int> start_row;
+    FILE* fp2 = fopen("../flightSetting.txt","r");
+    if(fp2 == nullptr)
+        cout<<"open flightSetting error!";
+    while (fgets(buffer, 1024, fp2)) {
+        start_row.push_back(atoi(buffer));
     }
+    string flightNo,sCity,dCity,carrier,tT,aT;
+    for (int i = 0; i < dates.size(); i++) {
+        fseek(fp, start_row[dates[i]] * 48, SEEK_SET);
+        int cnt = 0, all_date;
+        if (dates[i] == start_row.size())
+            all_date = 10000;
+        else
+            all_date = start_row[dates[i] + 1] - start_row[dates[i]];
+        while (fgets(buffer, 200, fp) != nullptr && cnt < all_date) {
+            vector<string> str = mysplit(buffer, ";");
+            cnt++;
+            if (str.size() != 7) {
+                cout << "flight.txt pattern error!" << endl;
+                continue;
+            }
+            carrier = str[0];
+            flightNo = str[1];
+            tT = str[2];
+            aT = str[3];
+            sCity = str[4];
+            dCity = str[5];
+            Time tTime, aTime{};
+            tTime.string2time(tT);
+            aTime.string2time(aT);
+            if (Time::compare_Time(today, tTime)) {
+                cout << "flight date error!" << endl;
+                continue;
+            }
+
+            int index = today.timeInterval(tTime);
+            if (index > future_day) {
+                cout << "future day out!" << endl;
+                continue;
+            }
+            flightSet[index].addFlight(sCity, dCity, flightNo, carrier, tTime, aTime);
+        }
+    }
+    fclose(fp);
+    end_time = clock();
+    double total_time=(double)(end_time-start_time)/CLOCKS_PER_SEC;
+    cout<<"Total time:"<<total_time<<endl;
 }
 
 //堆模拟辅助结构
