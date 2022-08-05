@@ -13,11 +13,10 @@ private:
     string carrier;
     string sCity;
     string dCity;
-    int *price;//F,C,Y charge
+    int price[3];//F,C,Y charge
 public:
     void setPrice(string car,string sC,string dC,int F,int C,int Y){
         carrier=std::move(car),sCity=std::move(sC),dCity=std::move(dC);
-        price=(int *)malloc(sizeof(int)*3);
         price[0]=F,price[1]=C,price[2]=Y;
     }
     inline string Return_carrier(){ return carrier;};

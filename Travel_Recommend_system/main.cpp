@@ -16,6 +16,7 @@ using namespace std;
 #include "FluctuationTable.h"
 #include <vector>
 #include <string>
+#include <unistd.h>
 FlightSet *SET;
 PriceRuleTable *PRT;
 PriceTable *PT;
@@ -53,8 +54,8 @@ int initialize(){
     vector<string> cityName={"AQG", "AOG", "AVA", "AEB", "BSD", "BAV", "BHY", "PEK", "BFU", "CGQ", "CGD", "CSX", "CZX", "CTU", "CIF", "CKG", "DLU", "DLC", "DNH", "ENH", "FUO", "FUG", "HMI", "HGH", "HZG", "HFE", "HEK", "HNY", "TXN", "HET", "HUZ", "JMU", "KNC", "JGN", "JIL", "TNA", "JDZ", "JNG", "JNZ", "JIU", "CHW", "JZH", "KHG", "KRY", "KRL", "KMG", "LHW", "LXA", "LYG", "LJG", "LYI", "LHN", "LZH",
                              "LYA", "LUZ", "LZO", "LUM", "NZH", "MIG", "MDG", "KHN", "NAO", "NKG", "NNG", "NTG", "NNY", "NGB", "PZI", "TAO", "IQN", "SHP", "NDG", "JUZ", "SYX", "SHA", "PVG", "SWA", "SHS", "SHE", "SZX",
                              "SJW", "SZV", "TYN", "TSN", "TNH", "TGO", "TEN", "WEF", "WEH", "WNZ", "WUH", "WHU", "HLH", "URC", "WUX", "WUS", "WUZ", "XMN", "XIY", "SIA", "XIC", "XIL", "XNN", "XUZ", "ENY", "YNZ", "YNT", "YBP", "YIH", "YIN", "YIW", "LLF", "DYG", "ZHA", "ZAT", "CGO", "HJJ", "ZUH", "ZYI"};
-    //'JGN', 'DNH', 'MDG', 'WEF', 'NZH', 'JIL', 'LLF', 'WNZ', 'HFE', 'HGH', 'CTU', 'HLH', 'SHS', 'BHY', 'BSD', 'NNG', 'TEN', 'SHP', 'KRY', 'AVA'
-    vector<string> All_Agency = {"JGN","DNH","MDG","WEF","NZH","JIL","LLF","WNZ","HFE","HGH","CTU","HLH","SHS","BHY","BSD","NNG","TEN","SHP","KRY","AVA"};
+    //'SHS','XIC','WUX','SHE','NNG','DNH','SZX','AOG','XUZ','CGQ'
+    vector<string> All_Agency = {"SHS","XIC","WUX","SHE","NNG","DNH","SZX","AOG","XUZ","CGQ"};
     //fluctuation init
     FT->init_fluctuation(All_Agency);
 
@@ -119,6 +120,7 @@ void srv_setup(const string& ip_addr, int port)
         httplib::Server svr;
         // read:读取json
         Json::Reader read;
+        svr.new_task_queue = [] { return new httplib::ThreadPool(2); };
         svr.Post("/api/query", [&](const httplib::Request &req, httplib::Response &res)
         {
             // 获取request的数据

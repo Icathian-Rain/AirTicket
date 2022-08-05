@@ -1,6 +1,22 @@
 <template>
+    <div
+        class="
+            absolute
+            left-3
+            top-3
+            border-solid border-1
+            rounded-md
+            border-white
+        "
+    >
+        <span class="text-lg"> 航段时间: {{ timeBegin }} ~ {{ timeEnd }}</span>
+    </div>
     <div class="body">
-        <Update @setLoading="setLoading" @unsetLoading="unsetLoading" @setResData="setResData"/>
+        <Update
+            @setLoading="setLoading"
+            @unsetLoading="unsetLoading"
+            @setResData="setResData"
+        />
         <Loading v-show="isLoading" :title="LoadingMsg" />
         <SearchForm
             v-model:resData="resData"
@@ -8,7 +24,11 @@
             @setLoading="setLoading"
             @unsetLoading="unsetLoading"
         />
-        <Result :resData="resData" :cityOptions="cityOptions" v-if="resData !== null" />
+        <Result
+            :resData="resData"
+            :cityOptions="cityOptions"
+            v-if="resData !== null"
+        />
     </div>
 </template>
 
@@ -22,7 +42,9 @@ import Update1 from "./Update.vue";
 const resData = ref(null);
 const cityOptions = ref([]);
 const isLoading = ref(false);
-const LoadingMsg = ref('加载中...');
+const LoadingMsg = ref("加载中...");
+const timeBegin = ref("2022年9月1日");
+const timeEnd = ref("2023年8月31日");
 onMounted(async () => {
     const res = await fetch("cityOptions.json");
     const data = await res.json();
@@ -41,8 +63,6 @@ let unsetLoading = () => {
 let setResData = (data) => {
     resData.value = data;
 };
-
-
 </script>
 
 <style scoped>

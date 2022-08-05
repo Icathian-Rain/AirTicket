@@ -13,7 +13,7 @@ using namespace std;
 class FluctuationTable {
 
 private:
-    //'JGN', 'DNH', 'MDG', 'WEF', 'NZH', 'JIL', 'LLF', 'WNZ', 'HFE', 'HGH', 'CTU', 'HLH', 'SHS', 'BHY', 'BSD', 'NNG', 'TEN', 'SHP', 'KRY', 'AVA'
+    //'SHS','XIC','WUX','SHE','NNG','DNH','SZX','AOG','XUZ','CGQ'
     map<string,int> fluctuation;         //代理人不同造成的票价波动
     int fluctuation_price[3];            //票价波动值
 public:

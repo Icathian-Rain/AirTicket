@@ -112,6 +112,8 @@ vector<FlightAns> FlightSet::request(vector<FlightRequest> req) {           //�
     for(int i = 0; i < req_size; i++){
         int d = getDir(req[i]);     //date_index日期索引
         if( d < 0 || d >= flightSet.size()){
+            cout<<"d = "<<d<<endl;
+            cout<<"flightSet size ="<<flightSet.size()<<endl;
             cout<<"The date is error!"<<endl;
             ok = false;
             break;

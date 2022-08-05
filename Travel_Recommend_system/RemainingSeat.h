@@ -14,10 +14,10 @@ class RemainingSeat {       //航班余座信息
 private:
     string carrier;
     string flightNo;
-    string sCity;
-    string dCity;
+    //string sCity;
+    //string dCity;
     Time depatureDate{};
-    Time arrivalDate{};
+    //Time arrivalDate{};
     char seatF;         //头等舱座位数量，0:无座，9:9坐，A：10座以上
     char seatC;         //商务舱
     char seatY;         //经济舱
