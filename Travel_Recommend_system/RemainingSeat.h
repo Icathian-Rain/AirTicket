@@ -25,6 +25,7 @@ private:
 public:
     RemainingSeat();
     RemainingSeat(vector<string> record);
+    RemainingSeat(string t);//if date < 20220901 means no suitable flight returned
     //余座信息
     inline char Return_seatF() const{ return seatF;};
     inline char Return_seatC() const{ return seatC;};

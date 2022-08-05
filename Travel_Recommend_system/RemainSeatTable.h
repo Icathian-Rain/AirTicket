@@ -12,24 +12,29 @@ using namespace std;
 extern vector<string> mysplit(string str, const string& separator);
 class RemainSeatTable {
 private:
-    map<string,map<string,RemainingSeat>> seatTable;
+    map<string,long> seatTable;
+    string filename;
 public:
-    inline RemainingSeat getSeat(string &t,string &n){//Time is the DepatureTime and the string is the carruer+flighNo
-        map<string,map<string,RemainingSeat>>::iterator iter1;
-        iter1 = seatTable.find(t);
-        if(iter1!=seatTable.end()){
-            map<string ,RemainingSeat>::iterator iter2;
-            iter2 = (iter1->second).find(n);
-            if(iter2!=(iter1->second).end()){
-                return iter2->second;
+    inline RemainingSeat getSeat(string &t,string &n,string &dCity){//Time is the DepatureTime and the string is the carruer+flighNo
+        RemainingSeat ret("20200831");//if there is no suitable flight, return this object
+        if(seatTable.find(t)==seatTable.end()){
+            return ret;
+        }
+        long lines = seatTable[t];
+        FILE *fp = fopen(filename.c_str(),"r+");
+        fseek(fp,54L*lines,SEEK_SET);
+        char buffer[200];
+        while(fgets(buffer,200,fp)!= nullptr){
+            vector<string> data = mysplit(buffer,";");
+            if(data[4].find(t)!=0){
+                break;
             }
-            else{
-                return (iter1->second).end()->second;
+            if(data[3]==dCity){
+                RemainingSeat ans(data);
+                return ans;
             }
         }
-        else{
-            return (iter1->second).end()->second;//cannot find the seat
-        }
+        return ret;
     }
     inline bool isEmpty(){
         return seatTable.empty();

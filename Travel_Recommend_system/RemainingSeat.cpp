@@ -18,3 +18,9 @@ RemainingSeat::RemainingSeat(vector<string> record) {
     //sCity = record[2];
     //dCity = record[3];
 }
+
+RemainingSeat::RemainingSeat(std::string t) {
+    Time tmp{};
+    tmp.string2time(t);
+    depatureDate = tmp;
+}
