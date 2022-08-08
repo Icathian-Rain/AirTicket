@@ -1,5 +1,5 @@
 #include <iostream>
-#include <jsoncpp/json/json.h>
+#include <json/json.h>
 #include "httplib.h"
 using namespace std;
 //#include "Flight.h"
@@ -13,13 +13,15 @@ using namespace std;
 #include "PriceRuleTable.h"
 #include "PriceTable.h"
 #include "RemainSeatTable.h"
+#include "FluctuationTable.h"
 #include <vector>
 #include <string>
+#include <unistd.h>
 FlightSet *SET;
 PriceRuleTable *PRT;
 PriceTable *PT;
 RemainSeatTable *RST;
-
+FluctuationTable *FT;
 #if defined(__GNUC__)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
@@ -34,43 +36,12 @@ int initialize();
 void srv_setup(const string&, int);
 
 int main() {
-
+    srand((int)time(0));
+    //gathering data info
     if(initialize()==-1){
         return -1;
     }
-    srand((int)time(0));
-    // Test
-//    Time t[4];
-//    t[0].string2time("20220621000000");
-//    t[1].string2time("20220622000000");
-//    t[2].string2time("20220623000000");
-//    t[3].string2time("20220624000000");
-//    vector<string> agc = {"CIF001","BHY001","AOG001","CZX001","BFU001","DLU001","CKG001","CTU001","DNH001"};
-//    string sCity[4],dCity[4];
-//    cout<<"cin>>"<<endl;
-//    while(cin>>sCity[0] && cin>>dCity[0]){
-//        cin>>sCity[1]>>dCity[1]>>sCity[2]>>dCity[2]>>sCity[3]>>dCity[3];
-//        vector<FlightRequest> req;
-//        for(int i = 0; i < 4; i++) {
-//            FlightRequest a(t[i],sCity[i],dCity[i],agc,1,20);
-//            req.push_back(a);
-//        }
-//        vector<FlightAns> ans = SET->request(req);
-//        cout<<"ANs number:"<<ans.size()<<endl;
-//        for(int i = 0; i < ans.size(); i++) ans[i].ShowAns();
-//    }
-    //async(launch::async,[RST](){RST->update();});
-//    PT->findPrice("FM","KHG","DNH");
-//    PT->findPrice("JZ","WDF","FEG");
-//    PT->findPrice("CA","WDF","FEG");
-//    PRT->findAgency("FM","KHG","DNH");
-//    PRT->findSurcharge("FM","KHG","DNH");
-//    PRT->findAgency("JZ","WDF","FEG");
-//    PRT->findAgency("CA","WDF","FEG");
-
     srv_setup("0.0.0.0", 8080);
-
-
     return 0;
 }
 
@@ -79,11 +50,17 @@ int initialize(){
     PRT =new PriceRuleTable;
     PT =new PriceTable;
     RST =new RemainSeatTable;
+    FT = new FluctuationTable;
     vector<string> cityName={"AQG", "AOG", "AVA", "AEB", "BSD", "BAV", "BHY", "PEK", "BFU", "CGQ", "CGD", "CSX", "CZX", "CTU", "CIF", "CKG", "DLU", "DLC", "DNH", "ENH", "FUO", "FUG", "HMI", "HGH", "HZG", "HFE", "HEK", "HNY", "TXN", "HET", "HUZ", "JMU", "KNC", "JGN", "JIL", "TNA", "JDZ", "JNG", "JNZ", "JIU", "CHW", "JZH", "KHG", "KRY", "KRL", "KMG", "LHW", "LXA", "LYG", "LJG", "LYI", "LHN", "LZH",
                              "LYA", "LUZ", "LZO", "LUM", "NZH", "MIG", "MDG", "KHN", "NAO", "NKG", "NNG", "NTG", "NNY", "NGB", "PZI", "TAO", "IQN", "SHP", "NDG", "JUZ", "SYX", "SHA", "PVG", "SWA", "SHS", "SHE", "SZX",
                              "SJW", "SZV", "TYN", "TSN", "TNH", "TGO", "TEN", "WEF", "WEH", "WNZ", "WUH", "WHU", "HLH", "URC", "WUX", "WUS", "WUZ", "XMN", "XIY", "SIA", "XIC", "XIL", "XNN", "XUZ", "ENY", "YNZ", "YNT", "YBP", "YIH", "YIN", "YIW", "LLF", "DYG", "ZHA", "ZAT", "CGO", "HJJ", "ZUH", "ZYI"};
+    //'SHS','XIC','WUX','SHE','NNG','DNH','SZX','AOG','XUZ','CGQ'
+    vector<string> All_Agency = {"SHS","XIC","WUX","SHE","NNG","DNH","SZX","AOG","XUZ","CGQ"};
+    //fluctuation init
+    FT->init_fluctuation(All_Agency);
+
     //SET init
-    SET->initSet(cityName, "20220530000000", 370);
+    SET->initSet(cityName, "20220901000000", 370);
     FILE *fp1=fopen("../flight.txt","r");
     FILE *fp2=fopen("../price.txt","r");
     if(fp1==nullptr||fp2==nullptr){
@@ -91,8 +68,10 @@ int initialize(){
         return -1;
     }
     cout<<"start gathering flight....."<<endl;
-    SET->createSet(fp1);
+    vector<int> dates{1,2,3};
+    SET->createSet(fp1, dates);
     cout<<"gather finishing!"<<endl<<endl;
+    SET->freeSet();
 
     //PT init
     FILE *fp3=fopen("../price.txt","r");
@@ -119,6 +98,11 @@ int initialize(){
     cout<<"start gathering remaining seats....."<<endl;
     RST->CreatRemainSeatTable("../FlightSeats.txt");
     cout<<"gather finishing!"<<endl<<endl;
+    //close 并释放文件指针和有关缓冲区
+    fclose(fp1);
+    fclose(fp2);
+    fclose(fp3);
+    fclose(fp4);
 
     cout << "Down" << endl;
     return 1;
@@ -137,6 +121,7 @@ void srv_setup(const string& ip_addr, int port)
         httplib::Server svr;
         // read:读取json
         Json::Reader read;
+        svr.new_task_queue = [] { return new httplib::ThreadPool(2); };
         svr.Post("/api/query", [&](const httplib::Request &req, httplib::Response &res)
         {
             // 获取request的数据
@@ -172,12 +157,9 @@ void srv_setup(const string& ip_addr, int port)
             Json::Value res_data;
             Json::Value res_meta;
 
-            // cout<<"ANs number:"<<ans.size()<<endl;
-            // for(int i = 0; i < ans.size(); i++) ans[i].ShowAns();
-            // 将结果封装
             if(!ans.empty())
             {
-                res_meta["msg"] = "获取成功";
+                res_meta["msg"] = "query succeed";
                 res_meta["status"] = 200;
                 res_data["ansNum"] = (int)ans.size();
                 for(int i = 0; i<ans.size(); i++)
@@ -193,7 +175,7 @@ void srv_setup(const string& ip_addr, int port)
                     for(int j = 0; j<res_flight.size(); j++)
                     {
                         Json::Value res_flight_ans;
-                        res_flight_ans["flightNo"] = res_flight[j].Return_flightNo();
+                        res_flight_ans["flightNo"] = res_flight[j].carrierVal() + res_flight[j].Return_flightNo();
                         vector<string> rawAgc = res_flight[j].Return_agc();
                         for(int k = 0; k<rawAgc.size(); k++)
                             res_flight_ans["agc"][k] = rawAgc[k];
@@ -219,8 +201,8 @@ void srv_setup(const string& ip_addr, int port)
             }
             else
             {
-                res_meta["msg"] = "未获取到符合条件的航班";
-                res_meta["status"] = 400;
+                res_meta["msg"] = "Not Found";
+                res_meta["status"] = 404;
             }
             res_value["meta"] = res_meta;
             res_value["data"] = res_data;
@@ -228,14 +210,21 @@ void srv_setup(const string& ip_addr, int port)
             const string res_body = Json::writeString(builder, res_value);
             res.set_content(res_body, "text/plain");
         });
-        svr.Get("/api/reset", [&](const httplib::Request &req, httplib::Response &res)
+        svr.Get("/api/update", [&](const httplib::Request &req, httplib::Response &res)
         {
-            RST->update();
+            string updateFile=req.get_param_value("fileName");
             Json::Value value;
-            value["msg"] = "重置成功";
-            value["status"] = 200;
+            if(RST->update(updateFile) == true) {
+                value["msg"] = "update succeed";
+                value["status"] = 200;
+            }
+            else {
+                value["msg"] = "update failed";
+                value["status"] = 404;
+            }
             Json::StreamWriterBuilder builder;
             const string res_body = Json::writeString(builder, value);
+            res.set_content(res_body, "text/plain");
         });
 
         svr.listen(ip_addr.c_str(), port);

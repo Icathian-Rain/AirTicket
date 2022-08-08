@@ -14,8 +14,7 @@ class RemainSeatTable {
 private:
     map<string,map<string,RemainingSeat>> seatTable;
 public:
-    int cnt;
-    inline RemainingSeat getSeat(string &t,string &n){//Time is the DepatureTime and the string is the flighNo
+    inline RemainingSeat getSeat(string &t,string &n){//Time is the DepatureTime and the string is the carruer+flighNo
         map<string,map<string,RemainingSeat>>::iterator iter1;
         iter1 = seatTable.find(t);
         if(iter1!=seatTable.end()){
@@ -36,8 +35,9 @@ public:
         return seatTable.empty();
     }
     void CreatRemainSeatTable(const string& path);
-    void update();
-    void travel(map<string,RemainingSeat>);
+    //void update();
+    bool update(const string& path);
+//    void travel(map<string,RemainingSeat>);
 };
 
 

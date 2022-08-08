@@ -22,17 +22,13 @@ class FlightSet {//所有航班集合
 private:
     Time today;     //今天的日期
     int future_day; //未來天數
-    //vector <Flight> flightSet;  //未來所有天的航班按照日期排成數組
     vector<Net> flightSet;         //存储所有航班信息
 public:
     void initSet(const vector<string>& CityName, string t, int future_days);
-    void createSet(FILE *fp);
-    void showSet();
-    inline int getDir(FlightRequest req){return req.timeVal().day2int()-today.day2int();};//獲取待搜索的日期在日期數組中的位置
-    void update();      //日期更新时对航班信息更新,pop_front,push_back
+    void createSet(FILE *fp,vector<int> dates);
+    inline int getDir(FlightRequest req){return today.timeInterval(req.timeVal());};//獲取待搜索的日期在日期數組中的位置
+    void freeSet(){flightSet.clear();};
     vector <FlightAns> request(vector <FlightRequest> req); //輸入請求向量，獲取每一個請求的日期，分別調用當天航班的信息，最後返回結果向量
-//    vector <FlightAns> multiAgencyRequest(vector <FlightRequest> req);
-//    vector <FlightAns> multiPassengerRequest(vector <FlightRequest> req);
 };
 
 
