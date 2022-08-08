@@ -33,7 +33,7 @@ FluctuationTable *FT;
 
 int initialize();
 
-void srv_setup(const string&, int);
+void srv_setup(const char *, int);
 
 int main() {
     srand((int)time(0));
@@ -113,17 +113,16 @@ int initialize(){
  * @param port 端口
  */
 
-void srv_setup(const string& ip_addr, int port)
+void srv_setup(const char * ip_addr, int port)
 {
         // 初始化svr
-        httplib::Server svr;
+        httplib::HttpServer srv(ip_addr, port);
         // read:读取json
         Json::Reader read;
-        svr.new_task_queue = [] { return new httplib::ThreadPool(2); };
-        svr.Post("/api/query", [&](const httplib::Request &req, httplib::Response &res)
+        srv.Post("/api/query", [&](httplib::HttpRequest &req, httplib::HttpResponse &res)
         {
             // 获取request的数据
-            string req_data = req.body;
+            string req_data = req.get_body();
             Json::Value value;
             read.parse(req_data, value);
             // 获取乘客人数
@@ -150,7 +149,6 @@ void srv_setup(const string& ip_addr, int port)
             }
             // 获取结果
             vector<FlightAns> ans = SET->request(flightReq);
-            cout << ans.size() << endl;
             Json::Value res_value;
             Json::Value res_data;
             Json::Value res_meta;
@@ -206,11 +204,11 @@ void srv_setup(const string& ip_addr, int port)
             res_value["data"] = res_data;
             Json::StreamWriterBuilder builder;
             const string res_body = Json::writeString(builder, res_value);
-            res.set_content(res_body, "text/plain");
+            res.set_body(res_body, "text/plain");
         });
-        svr.Get("/api/update", [&](const httplib::Request &req, httplib::Response &res)
+        srv.Get("/api/update", [&](httplib::HttpRequest &req, httplib::HttpResponse &res)
         {
-            string updateFile=req.get_param_value("fileName");
+            string updateFile=req.get_param("fileName");
             Json::Value value;
             if(RST->update(updateFile) == true) {
                 value["msg"] = "update succeed";
@@ -222,8 +220,7 @@ void srv_setup(const string& ip_addr, int port)
             }
             Json::StreamWriterBuilder builder;
             const string res_body = Json::writeString(builder, value);
-            res.set_content(res_body, "text/plain");
+            res.set_body(res_body, "text/plain");
         });
-
-        svr.listen(ip_addr.c_str(), port);
+        srv.run();
 }
