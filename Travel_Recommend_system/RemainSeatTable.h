@@ -14,21 +14,21 @@ class RemainSeatTable {
 private:
     map<string,map<string,RemainingSeat>> seatTable;
 public:
-    inline RemainingSeat getSeat(string &t,string &n){//Time is the DepatureTime and the string is the carruer+flighNo
+    inline vector<char> getSeat(string &t,string &n){//Time is the DepatureTime and the string is the carruer+flighNo
         map<string,map<string,RemainingSeat>>::iterator iter1;
         iter1 = seatTable.find(t);
         if(iter1!=seatTable.end()){
             map<string ,RemainingSeat>::iterator iter2;
             iter2 = (iter1->second).find(n);
             if(iter2!=(iter1->second).end()){
-                return iter2->second;
+                return iter2->second.Return_seat();
             }
             else{
-                return (iter1->second).end()->second;
+                return (iter1->second).end()->second.Return_seat();
             }
         }
         else{
-            return (iter1->second).end()->second;//cannot find the seat
+            return (iter1->second).end()->second.Return_seat();//cannot find the seat
         }
     }
     inline bool isEmpty(){

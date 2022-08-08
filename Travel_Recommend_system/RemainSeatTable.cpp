@@ -16,8 +16,9 @@ void RemainSeatTable::CreatRemainSeatTable(const string& path) {
         string tmp = data[4];
         map<string,RemainingSeat> table;
         seatTable.insert(pair<string,map<string,RemainingSeat>>(tmp,table));
-        RemainingSeat st(data);
-        seatTable.at(tmp).insert(pair<string,RemainingSeat>(data[0]+data[1],st));       //修改为data[0]+data[1]
+//        RemainingSeat st(data);
+//        seatTable.at(tmp).insert(pair<string,RemainingSeat>(data[0]+data[1],st));       //修改为data[0]+data[1]
+        seatTable.at(tmp).emplace(data[0]+data[1],data);       //修改为data[0]+data[1]
     }
     in.close();
 }
