@@ -95,5 +95,4 @@ int Time::timeInterval(Time t) const {
         C+=t.day;
         return C>0?C:-C;
     }
-    return 0;
 }
