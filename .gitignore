@@ -13,4 +13,5 @@ Travel_Recommend_system/.idea/*
 */seats.txt
 */FlightSeats.txt
 */priceRule.txt
-
+*/.vscode/*
+*/build/*
