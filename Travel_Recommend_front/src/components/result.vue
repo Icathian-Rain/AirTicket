@@ -43,7 +43,7 @@ function getCity(city) {
                 <span> 结果: {{ i + 1 }} </span>
                 <span>
                     代理人:
-                    <span v-for="(agc_a, i) in ans_a['agc']">
+                    <span v-for="(agc_a, i) in ans_a['agc']" class="ml-2">
                         {{ agc_a }}
                     </span>
                 </span>
@@ -121,7 +121,7 @@ function getCity(city) {
     align-items: center;
     position: relative;
     /* 宽度固定 */
-    width: 100%;
+    width: auto;
     min-width: 650px;
     /* 背景颜色 */
     background: #fff;
