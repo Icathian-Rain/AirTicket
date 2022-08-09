@@ -11,6 +11,8 @@
 #include <netinet/in.h> // sockaddr_in结构体
 #include <arpa/inet.h>  // inet_addr函数
 #include <unistd.h>     // close函数
+#include <time.h>       // time函数
+
 
 namespace httplib //定义命名空间
 {
@@ -279,6 +281,7 @@ namespace httplib //定义命名空间
         }
         void handle_http_request(int client_sock)
         {
+            // clock_t start = clock();
             char buf[1024];                                   // 缓冲区
             memset(buf, 0, sizeof(buf));                      // 清空缓冲区
             int ret = recv(client_sock, buf, sizeof(buf), 0); // 接收客户端请求
@@ -292,8 +295,10 @@ namespace httplib //定义命名空间
                 std::cout << "client close" << std::endl;
                 return;
             }
+            // printf("recv takes %f s\n", (double)(clock() - start) / CLOCKS_PER_SEC);
             // 初始化响应与请求
             auto req = HttpRequest(client_sock, buf);
+            // printf("req takes %f s\n", (double)(clock() - start) / CLOCKS_PER_SEC);
             auto res = HttpResponse(client_sock);
             // 处理请求
             // get请求
@@ -334,8 +339,10 @@ namespace httplib //定义命名空间
                 res.set_status_message("Method Not Allowed");
                 res.set_body("<h1>Method Not Allowed</h1>", "text/html");
             }
+            // printf("res takes %f s\n", (double)(clock() - start) / CLOCKS_PER_SEC);
             send(client_sock, res.get_raw_response().c_str(), res.get_raw_response().size(), 0);
             // 关闭客户端socket
+            // printf("send takes %f s\n", (double)(clock() - start) / CLOCKS_PER_SEC);
             close(client_sock);
             return;
         }
