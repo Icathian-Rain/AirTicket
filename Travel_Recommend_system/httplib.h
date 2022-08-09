@@ -1,18 +1,21 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+
 #include <iostream>
 #include <vector>
 #include <string>
 #include <sstream>
 #include <unordered_map>
 #include <functional>
+
 #include <sys/socket.h> // socket 头文件
 #include <netinet/in.h> // sockaddr_in结构体
 #include <arpa/inet.h>  // inet_addr函数
 #include <unistd.h>     // close函数
 #include <time.h>       // time函数
 
+#include "ThreadPool.h" // 线程池
 
 namespace httplib //定义命名空间
 {
@@ -60,8 +63,8 @@ namespace httplib //定义命名空间
             if (path.find('?') != std::string::npos)
             {
                 // 按 ? 分割, ? 前为路径，? 后为参数
-                std::string param_str = path.substr(path.find('?') + 1);    // 参数段
-                path = path.substr(0, path.find('?'));  // 路径段
+                std::string param_str = path.substr(path.find('?') + 1); // 参数段
+                path = path.substr(0, path.find('?'));                   // 路径段
                 // 参数段按 & 分割
                 std::vector<std::string> param_vec;
                 std::stringstream param_ss(param_str);
@@ -74,13 +77,14 @@ namespace httplib //定义命名空间
                 {
                     std::string param_line = param_vec[i];
                     // 按 = 分割
-                    if(param_line.find('=') != std::string::npos)
+                    if (param_line.find('=') != std::string::npos)
                     {
                         std::string param_key = param_line.substr(0, param_line.find('='));
                         std::string param_value = param_line.substr(param_line.find('=') + 1);
                         params[param_key] = param_value;
                     }
-                    else {
+                    else
+                    {
                         std::cout << "params error" << std::endl;
                     }
                 }
@@ -90,14 +94,14 @@ namespace httplib //定义命名空间
             for (int i = 1; i < lines.size() - 1; i++)
             {
                 std::string header_line = lines[i];
-                if(header_line == "\r")
+                if (header_line == "\r")
                 {
                     break;
                 }
                 if (header_line.find(':') != std::string::npos)
                 {
                     std::string header_line_key = header_line.substr(0, header_line.find(':'));
-                    std::string header_line_value = header_line.substr(header_line.find(':') + 1, header_line.size()-header_line.find(':')-2);
+                    std::string header_line_value = header_line.substr(header_line.find(':') + 1, header_line.size() - header_line.find(':') - 2);
                     headers[header_line_key] = header_line_value;
                 }
                 else
@@ -219,6 +223,8 @@ namespace httplib //定义命名空间
         bool is_running;                                                                                   // 服务器是否运行
         std::unordered_map<std::string, std::function<void(HttpRequest &, HttpResponse &)>> get_handlers;  // get请求处理函数映射
         std::unordered_map<std::string, std::function<void(HttpRequest &, HttpResponse &)>> post_handlers; // post请求处理函数映射
+        ThreadPool *pool;                                                                                   // 线程池
+        std::vector< std::future<bool> > results;                                                           // 线程池结果
     public:
         HttpServer(const char *addr, int port)
         {
@@ -253,6 +259,7 @@ namespace httplib //定义命名空间
                 std::cout << "listen error" << std::endl;
                 return;
             }
+            this->pool = new ThreadPool(2);
         }
         void run()
         {
@@ -270,8 +277,11 @@ namespace httplib //定义命名空间
                     std::cout << "accept error" << std::endl;
                     return;
                 }
+                std::cout << "accept success" << std::endl;
                 // 响应客户端请求
-                handle_http_request(client_socket);
+                // handle_http_request(client_socket);
+                results.emplace_back(pool->enqueue(&HttpServer::handle_http_request, this, client_socket));
+                std::cout << "enqueue success" << std::endl;
             }
         }
         void stop()
@@ -279,7 +289,7 @@ namespace httplib //定义命名空间
             is_running = false;
             close(server_socket);
         }
-        void handle_http_request(int client_sock)
+        bool handle_http_request(int client_sock)
         {
             // clock_t start = clock();
             char buf[1024];                                   // 缓冲区
@@ -288,12 +298,12 @@ namespace httplib //定义命名空间
             if (ret == -1)
             {
                 std::cout << "recv error" << std::endl;
-                return;
+                return false;
             }
             else if (ret == 0)
             {
                 std::cout << "client close" << std::endl;
-                return;
+                return false;
             }
             // printf("recv takes %f s\n", (double)(clock() - start) / CLOCKS_PER_SEC);
             // 初始化响应与请求
@@ -344,7 +354,7 @@ namespace httplib //定义命名空间
             // 关闭客户端socket
             // printf("send takes %f s\n", (double)(clock() - start) / CLOCKS_PER_SEC);
             close(client_sock);
-            return;
+            return true;
         }
         void Get(std::string path, std::function<void(HttpRequest &, HttpResponse &)> callback)
         {
