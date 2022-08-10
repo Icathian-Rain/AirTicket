@@ -277,11 +277,11 @@ namespace httplib //定义命名空间
                     std::cout << "accept error" << std::endl;
                     return;
                 }
-                std::cout << "accept success" << std::endl;
+                // std::cout << "accept success" << std::endl;
                 // 响应客户端请求
                 // handle_http_request(client_socket);
                 results.emplace_back(pool->enqueue(&HttpServer::handle_http_request, this, client_socket));
-                std::cout << "enqueue success" << std::endl;
+                // std::cout << "enqueue success" << std::endl;
             }
         }
         void stop()
