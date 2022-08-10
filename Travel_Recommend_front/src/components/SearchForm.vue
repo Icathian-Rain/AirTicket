@@ -1,6 +1,9 @@
 <template>
     <div class="search-form">
-        <SearchNumber title="乘客人数" v-model="number" />
+        <div class="flex flex-row justify-between">
+            <SearchNumber title="乘客人数" v-model="number" :min="0" :max="8"/>
+            <SearchNumber title="最大结果数" v-model="maxAnswers" :min="0" :max="40" />
+        </div>
         <SearchAgent title="代理人" v-model="agents" />
         <span style="font-size: 20px">航段</span>
         <div class="serach-segments">
@@ -53,6 +56,7 @@ const props = defineProps(["cityOptions", "resData"]);
 const emit = defineEmits(["setLoading", "unsetLoading", "update:resData"]);
 const agents = ref([]);
 const number = ref(0);
+const maxAnswers = ref(0);
 const segments = ref([
     {
         // 出发地
@@ -81,6 +85,7 @@ const formSubmit = () => {
     let req_data = {
         N: Number(number.value),
         M: segments.value.length,
+        Max: Number(maxAnswers.value),
         agency: [],
         date: [],
         sCity: [],
@@ -95,7 +100,7 @@ const formSubmit = () => {
         req_data.dCity.push(segments.value[i].arrival);
         if (
             i > 0 &&
-            segments.value[i].departTime <= segments.value[i - 1].departTime
+            segments.value[i].departTime < segments.value[i - 1].departTime
         ) {
             showMsg("航段时间有误", "error");
             emit("unsetLoading");
