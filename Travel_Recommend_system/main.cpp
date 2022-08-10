@@ -127,6 +127,8 @@ void srv_setup(const char * ip_addr, int port)
             read.parse(req_data, value);
             // 获取乘客人数
             char passNum = value.get("N", 0).asInt();
+            // 获取最大结果数
+            int maxAnsnum = value.get("Max", 0).asInt();
             // 获取agc列表
             Json::Value rawAgc = value.get("agency", 0);
             vector<string> agc;
@@ -148,7 +150,7 @@ void srv_setup(const char * ip_addr, int port)
                 flightReq.push_back(a);
             }
             // 获取结果
-            vector<FlightAns> ans = SET->request(flightReq, 20);
+            vector<FlightAns> ans = SET->request(flightReq, maxAnsnum);
             Json::Value res_value;
             Json::Value res_data;
             Json::Value res_meta;

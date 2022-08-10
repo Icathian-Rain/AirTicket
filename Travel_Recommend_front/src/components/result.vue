@@ -4,6 +4,7 @@ import { ref, watch } from "vue";
 const props = defineProps(["resData", "cityOptions"]);
 
 const now_page = ref(1);
+const size = ref(5);
 
 watch(now_page, (newVal, oldVal) => {
     if (newVal !== oldVal) {
@@ -49,12 +50,12 @@ const getCity = (city) => {
             class="ans"
             :id="'ans' + i"
             v-for="(ans_a, i) in props.resData['ans'].slice(
-                (now_page - 1) * 10,
-                now_page * 10
+                (now_page - 1) * size,
+                now_page * size
             )"
         >
             <div class="ans_tips">
-                <span> 结果: {{ (now_page - 1) * 10 + i + 1 }} </span>
+                <span> 结果: {{ (now_page - 1) * size + i + 1 }} </span>
                 <span>
                     代理人:
                     <span v-for="(agc_a, i) in ans_a['agc']" class="ml-2">
@@ -122,8 +123,7 @@ const getCity = (city) => {
         <el-pagination
             background
             layout="prev, pager, next"
-            :total="props.resData['ansNum']"
-            :size="10"
+            :page-count="Math.ceil(props.resData['ansNum'] / size)"
             v-model:current-page="now_page"
         />
     </div>
