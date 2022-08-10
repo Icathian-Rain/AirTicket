@@ -1,7 +1,18 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
-const pros = defineProps(["resData", "cityOptions"]);
+const props = defineProps(["resData", "cityOptions"]);
+
+const now_page = ref(1);
+
+watch(now_page, (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+        window.scrollTo({
+            top: 450,
+            behavior: "smooth",
+        });
+    }
+});
 
 const seatType = ref({
     F: "头等舱",
@@ -9,38 +20,41 @@ const seatType = ref({
     Y: "经济舱",
 });
 
-function getSeatType(type) {
+const getSeatType = (type) => {
     return seatType.value[type];
-}
+};
 
-function getDate(date) {
+const getDate = (date) => {
     let year = date.substring(0, 4);
     let month = date.substring(4, 6);
     let day = date.substring(6, 8);
     let hour = date.substring(8, 10);
     let minute = date.substring(10, 12);
     return year + "-" + month + "-" + day + " " + hour + ":" + minute;
-}
+};
 
-function getCity(city) {
-    for (let i in pros.cityOptions) {
-        if (pros.cityOptions[i].value === city) {
-            return pros.cityOptions[i].label;
+const getCity = (city) => {
+    for (let i in props.cityOptions) {
+        if (props.cityOptions[i].value === city) {
+            return props.cityOptions[i].label;
         }
     }
-}
+};
 </script>
 
 <template>
     <div class="home">
-        <span class="tips"> 搜索到 {{ pros.resData["ansNum"] }} 条结果 </span>
+        <span class="tips"> 搜索到 {{ props.resData["ansNum"] }} 条结果 </span>
         <div
             class="ans"
             :id="'ans' + i"
-            v-for="(ans_a, i) in pros.resData['ans']"
+            v-for="(ans_a, i) in props.resData['ans'].slice(
+                (now_page - 1) * 10,
+                now_page * 10
+            )"
         >
             <div class="ans_tips">
-                <span> 结果: {{ i + 1 }} </span>
+                <span> 结果: {{ (now_page - 1) * 10 + i + 1 }} </span>
                 <span>
                     代理人:
                     <span v-for="(agc_a, i) in ans_a['agc']" class="ml-2">
@@ -105,6 +119,13 @@ function getCity(city) {
                 </div>
             </div>
         </div>
+        <el-pagination
+            background
+            layout="prev, pager, next"
+            :total="props.resData['ansNum']"
+            :size="10"
+            v-model:current-page="now_page"
+        />
     </div>
 </template>
 
@@ -129,7 +150,7 @@ function getCity(city) {
     padding: 10px 5% 30px 5%;
     /* 圆角 */
     border-radius: 6px;
-    top:100px;
+    top: 100px;
 }
 
 .tips {

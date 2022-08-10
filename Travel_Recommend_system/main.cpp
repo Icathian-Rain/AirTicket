@@ -144,11 +144,11 @@ void srv_setup(const char * ip_addr, int port)
             {
                 Time t{};
                 t.string2time(rawDate[i].asString());
-                FlightRequest a(t, rawsCity[i].asString(), rawdCity[i].asString(), agc, passNum, 20);
+                FlightRequest a(t, rawsCity[i].asString(), rawdCity[i].asString(), agc, passNum);
                 flightReq.push_back(a);
             }
             // 获取结果
-            vector<FlightAns> ans = SET->request(flightReq);
+            vector<FlightAns> ans = SET->request(flightReq, 20);
             Json::Value res_value;
             Json::Value res_data;
             Json::Value res_meta;

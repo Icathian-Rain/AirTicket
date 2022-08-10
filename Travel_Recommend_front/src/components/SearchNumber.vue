@@ -1,7 +1,13 @@
 <template>
     <div class="number">
         <span> {{ props.title }}</span>
-        <el-input v-model="value" type="number" style="width: 200px; left: 20px; font-size: 20px;" min="0"/>
+        <el-input
+            v-model="value"
+            type="number"
+            style="width: 200px; left: 20px; font-size: 20px"
+            :min="props.min"
+            :max="props.max"
+        />
     </div>
 </template>
 
@@ -17,15 +23,39 @@ const props = defineProps({
         type: Number,
         default: 0,
     },
+    min: {
+        type: Number,
+        default: 0,
+    },
+    max: {
+        type: Number,
+        default: 0,
+    },
 });
 
-const emit = defineEmits(['update:modelValue'])
+const showMsg = (msg, type) => {
+    ElMessage({
+        showClose: true,
+        duration: 2000,
+        message: msg,
+        type: type,
+    });
+};
+
+const emit = defineEmits(["update:modelValue"]);
 const value = computed({
     get() {
         return props.modelValue;
     },
     set(value) {
-        emit("update:modelValue", value);
+        value = Number(value);
+        if (value >= props.min && value <= props.max) {
+            emit("update:modelValue", value);
+        }
+        else {
+            showMsg(`请输入${props.min}-${props.max}之间的数字`, "warning");
+        }
+        
     },
 });
 </script>
@@ -41,5 +71,4 @@ const value = computed({
     font-size: 20px;
     display: inline-block;
 }
-
 </style>
