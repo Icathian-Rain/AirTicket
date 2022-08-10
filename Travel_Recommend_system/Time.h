@@ -14,7 +14,7 @@ public:
     char day;
     char hour;
     char minute;
-    inline Time T(int y, int m, int d, int h, int min) { year = y, month = m, day = d, hour = h, minute = min; };
+    inline void T(int y, int m, int d, int h, int min) { year = y, month = m, day = d, hour = h, minute = min; };
     int day2int() const;          //不考虑年份的情况
     int timeInterval(Time t) const;
     inline bool isLeapYear(){return (year % 4 == 0 && year % 100 !=0 )||year % 400 == 0;}
