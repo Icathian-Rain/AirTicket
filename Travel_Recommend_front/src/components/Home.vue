@@ -29,6 +29,14 @@
             :cityOptions="cityOptions"
             v-if="resData !== null"
         />
+        <a
+            href="https://beian.miit.gov.cn/#/Integrated/recordQuery"
+            target="_blank"
+            class="relative top-80"
+        >
+            <img src="/beian.webp" alt="备案" class="w-8 inline" />
+            苏ICP备2022022134号-1
+        </a>
     </div>
 </template>
 
