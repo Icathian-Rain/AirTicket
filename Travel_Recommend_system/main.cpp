@@ -116,7 +116,7 @@ int initialize(){
 void srv_setup(const char * ip_addr, int port)
 {
         // 初始化svr
-        httplib::HttpServer srv(ip_addr, port);
+        httplib::HttpServer srv(ip_addr, port, 2);
         // read:读取json
         Json::Reader read;
         srv.Post("/api/query", [&](httplib::HttpRequest &req, httplib::HttpResponse &res)

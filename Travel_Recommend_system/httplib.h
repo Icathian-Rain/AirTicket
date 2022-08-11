@@ -226,7 +226,7 @@ namespace httplib //定义命名空间
         ThreadPool *pool;                                                                                   // 线程池
         std::vector< std::future<bool> > results;                                                           // 线程池结果
     public:
-        HttpServer(const char *addr, int port)
+        HttpServer(const char *addr, int port, int thread_num)
         {
             // 初始化
             this->port = port;
@@ -259,7 +259,7 @@ namespace httplib //定义命名空间
                 std::cout << "listen error" << std::endl;
                 return;
             }
-            this->pool = new ThreadPool(2);
+            this->pool = new ThreadPool(thread_num);
         }
         void run()
         {
