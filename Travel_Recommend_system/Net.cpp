@@ -110,7 +110,7 @@ vector<AnsElement> Net::request(FlightRequest req){
         //RemainingSeat
         string str_A_time = A_time.time2string_forday();                                  //起飞时间转为字符串
         string Number = A_carrier+A_number;         //carrier + flightNumber
-        vector<char> A_Seat = RST->getSeat(str_A_time,Number).Return_seat();     //获取余座信息
+        vector<char> A_Seat = RST->getSeat(str_A_time,Number);     //获取余座信息
         if( A_Seat[0] - '0' + A_Seat[1] - '0' + A_Seat[2] - '0' < N) continue;        //check Seats is enough or not
 
         //surcharge

@@ -55,7 +55,7 @@
                         type="date"
                         placeholder="选择出发日期"
                         value-format="YYYYMMDD000000"
-                        default-value="2022-09-01"
+                        :default-value="new Date('2022-09-01')"
                     />
                 </el-config-provider>
             </div>
@@ -98,7 +98,6 @@ const value = computed({
         emit("update:modelValue", value);
     },
 });
-
 const exchange = () => {
     const depart = value.value.depart;
     const arrival = value.value.arrival;

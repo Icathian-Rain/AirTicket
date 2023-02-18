@@ -90,8 +90,9 @@ struct asdf{
 };
 //行程推荐算法优化：堆模拟搜索算法-->O(MNlogN)
 //多旅客、多代理人
-vector<FlightAns> FlightSet::request(vector<FlightRequest> req) {           //低价行程推荐
+vector<FlightAns> FlightSet::request(vector<FlightRequest> req, int MaxAnsNum) {           //低价行程推荐
     vector<FlightAns> ans;          //存放推荐结果
+    if(MaxAnsNum <= 0) return ans;
     int req_size = req.size();      //航段请求数量
     if(req_size <= 0 || req_size > 8) {
         cout<<"Request size is error!"<<endl;
@@ -132,7 +133,7 @@ vector<FlightAns> FlightSet::request(vector<FlightRequest> req) {           //�
     if(ok){             //查询成功
         sort(head, head+req_size);      //按照(次小-最小的值)给每一组排序
         q.push(asdf(tot,0,0,false));
-        while(cnt <20 && !q.empty()){               //we can modify cnt upper limit
+        while(cnt < MaxAnsNum && !q.empty()){               //we can modify cnt upper limit
             asdf np = q.top();
             q.pop();
             //根据输出构造一个FligntAns
