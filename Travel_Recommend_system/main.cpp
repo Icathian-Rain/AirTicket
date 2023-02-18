@@ -68,8 +68,10 @@ int initialize(){
         return -1;
     }
     cout<<"start gathering flight....."<<endl;
-    SET->createSet(fp1);
+    vector<int> dates{1,2,3};
+    SET->createSet(fp1, dates);
     cout<<"gather finishing!"<<endl<<endl;
+    SET->freeSet();
 
     //PT init
     FILE *fp3=fopen("../price.txt","r");
